@@ -362,11 +362,11 @@
 			if(1024 > beforeSize) {
 				$rform.find("#results").find("#befB").text(beforeSize + " B")
 					.end().find("#aftB").text(afterSize + " B")
-					.end().find("#minus").text(beforeSize == afterSize ? "±0B(0%)" : "-" + (beforeSize - afterSize) + " B("+(100-m.floor(afterSize*100/beforeSize))+"%)");
+					.end().find("#minus").text(beforeSize == afterSize ? "±0B(0%)" : "-" + (beforeSize - afterSize) + " B("+(100-afterSize*100/beforeSize).toFixed(2)+"%)");
 			} else {
 				$rform.find("#results").find("#befB").text(m.floor(beforeSize / 1024) + " KB(" + beforeSize + " B)")
 					.end().find("#aftB").text(m.floor(afterSize / 1024) + " KB(" + afterSize + " B)")
-					.end().find("#minus").text(beforeSize == afterSize ? "±0B(0%)" : "-" + m.floor((beforeSize - afterSize) / 1024) + " KB(" + (beforeSize - afterSize) + " B)("+(100-m.floor(afterSize*100/beforeSize))+"%)");
+					.end().find("#minus").text(beforeSize == afterSize ? "±0B(0%)" : "-" + m.floor((beforeSize - afterSize) / 1024) + " KB(" + (beforeSize - afterSize) + " B)("+(100-afterSize*100/beforeSize).toFixed(2)+"%)");
 			}
 			$lform.find("#mes").stop(true,false).addClass("on").css("opacity","1").fadeTo(1500, 0.3,function(){$(this).removeClass("on")})
 		}
