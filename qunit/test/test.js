@@ -1,0 +1,19 @@
+$(function(){
+	var $rform=$("<div/>").attr("id","rform").appendTo("body"),
+	$lform=$("<div/>").attr("id","lform").appendTo("body"),
+	$compress=$("<input/>").attr("type","button").addClass("inlinebutton").attr("value","設定を保存").attr("id","save").appendTo("#lform"),
+	$aft=$("<textarea/>").attr("id","aft").appendTo("#lform"),
+	$bef=$("<textarea/>").attr("id","bef").appendTo("#lform");
+	$rform.hide();
+	$lform.hide();
+	test("1",function(){
+		$bef.val("a{color:black}.a-black{background:black}");
+		$compress.trigger("click");
+		stop();
+		setTimeout(function(){
+			start();
+			console.log($aft.val())
+			deepEqual($aft.val(),"a{color:#000}.a-black{background:#000}","ok")
+		},30);
+	});
+});

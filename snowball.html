@@ -1,0 +1,87 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<base href="http://pandanoir.web.fc2.com/"><meta charset="utf-8"><meta name="author" content="Panda Noir"><link rel="stylesheet" href="css/all.css" type="text/css">
+		<link rel="stylesheet" href="snowball/body.css" type="text/css">
+		<!--[if lt IE 9]><script src="//html5shim.googlecode.com/svn/trunk/html5.js" defer></script><![endif]--><script src="js/LAB.js"></script><script>var _gaq=_gaq||[];_gaq[_gaq.length]=["_setAccount","UA-33345601-1"];_gaq[_gaq.length]=["_trackPageview"];(function(a){var a=a.document,b=a.createElement("script");b.async=!0;b.src=("https:"==a.location.protocol?"https://ssl":"http://www")+".google-analytics.com/ga.js";a=a.getElementsByTagName("script")[0];a.parentNode.insertBefore(b,a)})(this);</script>
+		<script>$LAB.script("//pandanoir.web.fc2.com/js/jquery.css3form.js").script("//pandanoir.web.fc2.com/js/jquery.placeholder.js").script("//pandanoir.web.fc2.com/js/jquery.skOuterClick.js").wait().script("//pandanoir.web.fc2.com/snowball/snowball.js");</script>
+		<meta name="description" content="最も圧縮できるCSSコンプレッサーの一つです。レイアウトをくずさず、高圧縮しファイルサイズを落とします。サイトの高速化にとても役立ちます。">
+		<meta name="keywords" content="htmlツール集,javascriptツール集,webツール,html,javascript,CSS圧縮,サイト高速化,軽量化,snowball,snow ball">
+		<link rel="canonical" href="http://pandanoir.web.fc2.com/snowball/snowball.html">
+		<title>Snowball</title>
+	</head>
+	<body>
+		<div id="body">
+			<header>
+				<h1 id="logo"><a href="snowball/snowball.html" id="logo_title">Snowball</a></h1>
+				<nav>
+				<ul id="nav">
+					<li class="now_location"><a href="snowball/snowball.html">Top</a></li>
+					<li><a href="snowball/about.html">About</a></li>
+					<li><a href="snowball/info.html">Info</a></li>
+					<li><a href="snowball/how-to-use.html">How to use</a></li>
+					<li><a href="snowball/contact.html">Contact</a></li>
+					<li><a href="snowball/en/snowball.html">English</a></li>
+				</ul>
+				</nav>
+			</header>
+			<div class="cf">
+				<div id="lform">
+					<div class="cf">
+					<form class="form">
+						<legend>Before</legend>
+						<textarea id="bef" placeholder="ここにファイルをドラッグ&ドロップするか、コードをペーストしてください。"></textarea><br>
+						<input type="reset" value="クリア" class="reset inlineRbutton"><input type="button" value="選択" class="select inlinebutton"><br>
+					</form>
+					<form class="form">
+						<legend>After</legend>
+						<textarea id="aft"></textarea><br>
+						<input type="reset" value="クリア" class="reset inlineRbutton"><input type="button" value="選択" class="select inlinebutton"><br>
+					</form>
+					</div>
+					<div>
+						<div id="mes">Compressed</div>
+						<input type="button" class="inlinebutton" id="compress" value="圧縮">
+					</div>
+				</div>
+				<div id="rform">
+					<div id="options">
+						<label for="comment">コメントを残さない</label><input type="checkbox" id="comment" checked>
+						<label for="zero">値が0なら単位を省略</label><input type="checkbox" id="zero" checked>
+						<label for="decimals">0.xとあったら0を省略</label><input type="checkbox" id="decimals" checked>
+						<label for="color">カラーコードを短くする</label><input type="checkbox" id="color" checked>
+						<label for="color_name">カラーネームを最適化する</label><input type="checkbox" id="color_name" checked>
+						<label for="padding">paddingを最短にする</label><input type="checkbox" id="padding" checked>
+						<label for="margin">marginを最短にする</label><input type="checkbox" id="margin" checked>
+						<label for="lower">カラーコードを小文字にする</label><input type="checkbox" id="lower">
+						<label for="option">一部だけ圧縮する</label><input type="checkbox" id="option">
+						<form id="option_menu">
+							<div id="option_show">Hide</div>
+							<label for="indent">インデントを消す</label><input type="checkbox" id="indent" checked>
+							<label for="line">改行を消す</label><input type="checkbox" id="line" checked>
+							<label for="comma">カンマ周辺の空白を消す</label><input type="checkbox" id="comma" checked>
+							<label for="colon">コロン周辺の空白を消す</label><input type="checkbox" id="colon" checked>
+							<label for="semicolon">セミコロン周辺の空白を消す</label><input type="checkbox" id="semicolon" checked>
+							<label for="important">!important周辺の空白を消す</label><input type="checkbox" id="important" checked>
+							<label for="sc_bracket">始め波括弧の空白を消す</label><input type="checkbox" id="sc_bracket" checked>
+							<label for="ec_bracket">終わり波括弧の空白を消す</label><input type="checkbox" id="ec_bracket" checked>
+						</form>
+						<select id="encode">
+							<option value="utf-8">UTF-8</option>
+							<option value="shift-jis">Shift-JIS</option>
+						</select>
+					</div>
+					<input type="button" class="inlinebutton" value="設定を保存" id="save">
+					<div id="results">
+						<span class="resultmes">Before</span><span id="befB">0 B</span><br>
+						<span class="resultmes">After</span><span id="aftB">0 B</span><br>
+						<span class="resultmes">Diff</span><span id="minus">-0 B</span>
+					</div>
+				</div>
+
+			</div>
+			<footer id="footer"><nav id="social"></nav><aside id="address"><small>&copy; 2012 <a href="index.html">Panda noir</a>.</small></aside></footer>
+
+			<noscript>このサイトは、JavaScriptを使用しています。<br>だから、きちんとonにしてください。<br></noscript>
+		</div>
+	</body></html>
