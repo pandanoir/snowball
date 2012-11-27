@@ -100,17 +100,18 @@ a.button, .button, .Rbutton, .inlinebutton, .inlineRbutton{
 #option_menu{
 	display: none;
 	position: absolute;
+	white-space:nowrap;
 	top: -30px;
 	width: 100%;
 }
-#option_show, .customCheckBox a{
+.option_menu_btn, .customCheckBox a{
 	background: #fff;
 	background: -webkit-gradient(linear, left top, left bottom, from(#FFF), to(#F3F3F3));
 	@include PPrefix(background, linear-gradient(#FFF, #F3F3F3));
 }
-#option_show{
+.option_menu_btn{
+	display:inline-block;
 	border: 1px solid #666;
-	border-radius: 5px;
 	cursor: pointer;
 	height: 24px;
 	width: 100px;
@@ -119,15 +120,21 @@ a.button, .button, .Rbutton, .inlinebutton, .inlineRbutton{
 	@include userselect;
 	white-space: nowrap;
 	color: #333;
-	box-shadow: 1px 1px 0 rgba(0, 0, 0, .1);
+	box-shadow: 1px 1px 0 #666;
 	position: relative;
 	top: 0;
 	left: 0;
 }
-#option_show:active{
+.option_menu_btn:active{
 	box-shadow: none;
 	top: 1px;
 	left: 1px;
+}
+#option_show{
+	border-radius:5px 0 0 5px;
+}
+#option_all{
+	border-radius:0 5px 5px 0;
 }
 .customCheckBox a{
 	border: 1px solid #666;
