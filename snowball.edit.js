@@ -14,9 +14,13 @@
 			$menu = $options.find("#option_menu"),
 			$option=$options.find("#option"),
 			$option_show = $menu.find("#option_show"),
+			$option_all = $menu.find("#option_all"),
 			$aft=$lform.find("#aft"),
+			$bef=$lform.find("#bef"),
 			ls=localStorage,
-			$json=JSON;
+			$json=JSON,
+			toggle=true,
+			App={trace:!0,log:function(){if(this.trace&&"undefined"!=typeof console){console.log.apply(console,arguments)}}};
 			
 		if($json.parse(ls.getItem("input_option"))!=null){
 			var InputOption=$json.parse(ls.getItem("input_option")),
@@ -42,22 +46,13 @@
 		
 		$rform.css3form();
 		var $custom = $menu.find(".customCheckBox").find("a"),
-			$customWid = $custom.css("width");
-			
-			
-		$menu.show().on("click","input", function (event) {
-			event.stopPropagation();
-			if(window.event.altKey){
-				$menu.find("input").removeAttr("checked")
-				$custom.removeClass("checked");
-				$(this).attr("checked", "checked");
-			}
-		});
+			$customWid = $custom.css("width"),
+			$menuWid = $menu.css("width");
 		
-		var $menuWid = $menu.css("width");
-		$menu.hide().find(".customCheckBox").skOuterClick(function(){
+		$menu.skOuterClick(function(){
 			if($custom.is(":visible")) $option_show.trigger("click");
-		},$option_show,$option,$lform.find("#bef"),$aft);
+			//Outerクリックの設定
+		},$option,$bef,$aft,$option_all);
 		
 		$lform.on("click", ".select , .reset", function (event) {
 			//リセットボタンとセレクトボタンを押した時に選択状態にする
@@ -65,14 +60,14 @@
 			$(this).siblings("textarea").select()
 		}).on("click","#compress",compress).find("#bef").select();
 		if(window.File){
-			$lform.on("dragenter","#bef",function(event){
+			$bef.on("dragenter",function(event){
 				event.preventDefault();
 				event.stopPropagation();
-			}).on("dragover","#bef",function(event){
+			}).on("dragover",function(event){
 				event.originalEvent.dataTransfer.dropEffect="copy";
 				event.preventDefault();
 				event.stopPropagation();
-			}).on("drop","#bef",function(event){
+			}).on("drop",function(event){
 				//ドラッグアンドドロップ
 				event.preventDefault();
 				event.stopPropagation();
@@ -90,18 +85,14 @@
 			})
 		}
 		$(window).on("keydown",function(e){
-			if(e.keyCode==13&&e.metaKey) $compress.trigger("click")//Ctrl+Enterで圧縮
-			else if(e.keyCode==80&&e.metaKey&&e.altKey){
+			if(!e.metaKey) return;
+			if(e.keyCode==13) $compress.trigger("click")//Ctrl+Enterで圧縮
+			else if(e.altKey&&(e.keyCode==80||e.keyCode==83)){
 				event.preventDefault();
 				event.stopPropagation();
 				$compress.trigger("click");
-				$aft.val($aft.val().replace(/(http:\/\/)/g,"//"));//http://を省略
-				return false;
-			}else if(e.keyCode==83&&e.metaKey&&e.altKey){
-				event.preventDefault();
-				event.stopPropagation();
-				$compress.trigger("click");
-				$aft.val($aft.val().replace(/(https:\/\/)/g,"//"));//https://を省略
+				if(e.keyCode==80) $aft.val($aft.val().replace(/(http:\/\/)/g,"//"));//http://を省略
+				else if(e.keyCode==83) $aft.val($aft.val().replace(/(https:\/\/)/g,"//"));//https://を省略
 				return false;
 			}
 		})
@@ -109,7 +100,7 @@
 			e.stopPropagation();
 			if($custom.is(":animated")||$menu.is(":animated")) return;
 			else if($option.attr("checked")) {
-				/*メニューが表示されていたら非表示にする*/
+				//メニューが表示されていたら非表示にする
 				$option_show.text("Show");
 				$menu.stop(true,false).animate({
 					width: "0"
@@ -119,7 +110,7 @@
 				})
 				$option_show.removeClass("show hide").addClass("show");
 			} else {
-				/*メニューが非表示だったら表示する*/
+				//メニューが非表示だったら表示する
 				$option_show.text("Hide");
 				$menu.css({
 					width: "0"
@@ -133,7 +124,7 @@
 			e.stopPropagation();
 			if($custom.is(":animated")||$menu.is(":animated")) return;
 			else if($custom.is(":visible")) {
-				/*チェックボックスが表示されてたら非表示にする*/
+				//チェックボックスが表示されてたら非表示にする
 				$option_show.text("Show");
 				$custom.stop(true,false).animate({
 					width: "0"
@@ -142,7 +133,7 @@
 				});
 				$option_show.removeClass("show hide").addClass("hide");
 			} else {
-				/*チェックボックスが非表示だったら表示する*/
+				//チェックボックスが非表示だったら表示する
 				$option_show.text("Hide");
 				$custom.css({
 					width: "0"
@@ -151,6 +142,22 @@
 				},200);
 				$option_show.removeClass("show hide").addClass("show")
 			}
+		});
+		$option_all.on("click",function(e){
+			e.preventDefault();
+			e.stopPropagation();
+			//Allボタンの挙動
+			if(!$custom.is(":visible")) return
+			for(var i=0,j=$custom.length;i<j;i++){
+				if(!toggle){
+					if(!$custom.eq(i).hasClass("checked")) $custom.eq(i).trigger("click")
+					//trueにする
+				}else{
+					if($custom.eq(i).hasClass("checked")) $custom.eq(i).trigger("click")
+					//falseにする
+				}
+			}
+			toggle=!toggle;
 		});
 		$rform.on("click","#save",function(event){
 			event.preventDefault();
@@ -288,10 +295,9 @@
 				})
 				return str
 			}
-			var b = $lform.find("#bef").val(),
+			var b = $bef.val(),
 				beforeSize = cb(b),
 				m = Math;
-			var App={trace:!0,log:function(){if(this.trace&&"undefined"!=typeof console){var a=Array.prototype.slice.call(arguments,0);a.unshift("(App)");console.log.apply(console,a)}}};
 			for(var i=0,j=$input.length;i<j;i++){
 				InputOption[$input.eq(i).attr("id")]=$input.eq(i).attr("checked");
 			}
