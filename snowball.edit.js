@@ -315,7 +315,7 @@
 					.replace(/[\r\n]/g, "")
 					.replace(/[\t ]*([,:;\{]|(?:!important))[\t ]*/g, "$1")
 					.replace(/[\t ]*;[\t ]*\}[\t\d]*/g, "}")
-					.replace(/(^\t )+[\t ]*}[\t ]*/g, "$1}");
+					.replace(/([^\t ]+?)[\t ]*}[\t ]*/g, "$1}");
 				//上からインデント、改行、いらないスペース、いらないセミコロン、いらない}前後の空白の削除
 			} else {
 				var InputPartOption={
@@ -327,7 +327,7 @@
 					"sc_bracket":[/[\t ]*[\{][\t ]*/g, "{"],//{周辺のスペース
 					"important":[/[\t ]*(!important)[\t ]*/g, "$1"],//!important周辺のスペース
 					"ec_bracket":[/[\t ]*;[\t ]*\}[\t\d]*/g, "}"],//}周辺のスペース
-					"ec_bracket":[/(^\t )+[\t ]*\}[\t ]*/g, "$1}"]//}周辺のスペース
+					"ec_bracket":[/([^\t ]+?)[\t ]*\}[\t ]*/g, "$1}"]//}周辺のスペース
 				}
 				$.each(InputPartOption,function(Chara,replaces){
 					if(InputOption[Chara]) b=b.replace(replaces[0],replaces[1]);
