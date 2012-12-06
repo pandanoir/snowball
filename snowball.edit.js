@@ -1,3 +1,4 @@
+/*skOuterClick - A simple event-binder-plugin to handle click events of outside elements.(c) 2012 SUKOBUTO.*/(function(e,f){e.fn.skOuterClick=function(c){var a={init:function(c){var b=[$(this)],a=arguments.length;if(1<a)for(i=1;i<a;i++)b[b.length]=arguments[i];return this.each(function(){var a=this,d=!1,g;for(g in b)e(f.document).find(b[g]).on("click",function(){d=!0}).on("mouseleave",function(){d=!1});e(f.document).on("click",function(b){d?d=!1:c.call(a,b)})})}};if(a[c])return a[c].apply(this,Array.prototype.slice.call(arguments,1));if("function"===typeof c)return a.init.apply(this,arguments)}})(jQuery,this);
 (function(window,$){
 	$(function () {
 		$("body").on("dragover",function(event){
@@ -42,18 +43,14 @@
 				SelectOption[$select.eq(i).attr("id")]=$select.eq(i).find("option:selected").val();
 			}
 		}
-		
-		
 		$rform.css3form();
 		var $custom = $menu.find(".customCheckBox").find("a"),
 			$customWid = $custom.css("width"),
 			$menuWid = $menu.css("width");
-		
 		$menu.skOuterClick(function(){
 			if($custom.is(":visible")) $option_show.trigger("click");
 			//Outerクリックの設定
 		},$option,$bef,$aft,$option_all);
-		
 		$lform.on("click", ".select , .reset", function (event) {
 			//リセットボタンとセレクトボタンを押した時に選択状態にする
 			event.stopPropagation();
@@ -83,9 +80,11 @@
 					},this)
 				}
 			})
+		}else{
+			$bef.attr("placeholder","ここにコードをペーストしてください。どうやらお使いのブラウザではドラッグアンドドロップは対応していないようです。");
 		}
 		$(window).on("keydown",function(e){
-			if(!e.metaKey) return;
+			if( !((e.metaKey&&!e.ctrlKey) || (!e.ctrlKey&&e.metaKey)) ) return;
 			if(e.keyCode==13) $compress.trigger("click")//Ctrl+Enterで圧縮
 			else if(e.altKey&&(e.keyCode==80||e.keyCode==83)){
 				event.preventDefault();
