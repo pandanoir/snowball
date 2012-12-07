@@ -79,19 +79,20 @@
 						$compress.trigger("click")
 					},this)
 				}
+				files=reader=event=void 0;
 			})
 		}else{
 			$bef.attr("placeholder","ここにコードをペーストしてください。どうやらお使いのブラウザではドラッグアンドドロップは対応していないようです。");
 		}
 		$(window).on("keydown",function(e){
-			if( !((e.metaKey&&!e.ctrlKey) || (!e.ctrlKey&&e.metaKey)) ) return;
+			if( !((!e.metaKey&&e.ctrlKey)||(e.metaKey&&!e.ctrlKey)) ) return;
 			if(e.keyCode==13) $compress.trigger("click")//Ctrl+Enterで圧縮
 			else if(e.altKey&&(e.keyCode==80||e.keyCode==83)){
 				event.preventDefault();
 				event.stopPropagation();
 				$compress.trigger("click");
 				if(e.keyCode==80) $aft.val($aft.val().replace(/(http:\/\/)/g,"//"));//http://を省略
-				else if(e.keyCode==83) $aft.val($aft.val().replace(/(https:\/\/)/g,"//"));//https://を省略
+				else $aft.val($aft.val().replace(/(https:\/\/)/g,"//"));//https://を省略
 				return false;
 			}
 		})
@@ -177,6 +178,7 @@
 			function cb(g) {
 				//バイト数カウント
 				for(var c = d = 0, b = g.length; d < b; d++) c += 4 > escape(g.charAt(d)).length ? 1 : 2;
+				b=d=void 0;
 				return c
 			}
 			/*		function g(a) {
@@ -213,13 +215,6 @@
 				return false
 			};
 			*/
-			String.prototype.count = function (a) {
-				for(var cnt = i = 0; - 1 != this.indexOf(a, i);) {
-					i = this.indexOf(a, i) + 1, cnt++;
-				}
-				return cnt
-			}
-	
 			function makeshort(str, pm) {
 				var block_pattern = /([.#\w ,:-\[\]=\"\']+?)\{([\s\S]*?)\}/gim,
 					block = str.match(block_pattern),
@@ -229,10 +224,11 @@
 					pattern = new RegExp("(" + pm + "(?:-left|-right|-top|-bottom)? ?: ?([^;$]+)([;$]?))", "gim");
 				for(; bi < bj; bi++) {
 					var before = block[bi].match(/([.#\w ,:-\[\]=\"\']+?)\{([\s\S]*?)\}/im)[2],
-						properties = before,
+						properties = block[bi].match(/([.#\w ,:-\[\]=\"\']+?)\{([\s\S]*?)\}/im)[2],
 						paddings = properties.match(pattern);
+
 					if(paddings != null) {
-						var ptop = null,pbottom = null,pright = null,pleft = null;
+						var paddingsData={top:null,bottom:null,right:null,left:null};
 						for(var i = 0, j = paddings.length; i < j; i++) {
 							paddings[i] = paddings[i].replace(pattern, "$1:$2").split(":");
 							paddings[i][1] = paddings[i][1].replace(/;$/, "");
@@ -241,36 +237,44 @@
 							if(property == pm){
 								a = paddings[i][1].replace(/;/g, "").replace(/ /g, ",").split(",");
 								g = a.length;
-								if(2 == g) ptop = pbottom = a[0],pright = pleft = a[1];
-								else if(3 == g) ptop = a[0],pright = pleft = a[1],pbottom = a[2];
-								else if(4 == g) ptop = a[0],pright = a[1],pbottom = a[2],pleft = a[3];
-								else ptop = pright = pbottom = pleft = a[0];
-							}else if(property == pm + "-top") ptop = paddings[i][1];
-							else if(property == pm + "-right") pright = paddings[i][1];
-							else if(property == pm + "-bottom") pbottom = paddings[i][1];
-							else if(property == pm + "-left") pleft = paddings[i][1];
+								if(2 == g) paddingsData.t = paddingsData.b = a[0],paddingsData.r = paddingsData.l = a[1];
+								else if(3 == g) paddingsData.t = a[0],paddingsData.r = paddingsData.l = a[1],paddingsData.b = a[2];
+								else if(4 == g) paddingsData.t = a[0],paddingsData.r = a[1],paddingsData.b = a[2],paddingsData.l = a[3];
+								else paddingsData.t = paddingsData.r = paddingsData.b = paddingsData.l = a[0];
+							}else if(property == pm + "-top") paddingsData.t = paddings[i][1];
+							else if(property == pm + "-right") paddingsData.r = paddings[i][1];
+							else if(property == pm + "-bottom") paddingsData.b = paddings[i][1];
+							else if(property == pm + "-left") paddingsData.l = paddings[i][1];
 						}
-						if(ptop != null && pright != null && pleft != null && pbottom != null) {
-							var c = ptop == pright && ptop == pbottom && ptop == pleft ? ptop : ptop == pbottom && pright == pleft && ptop != pright ? ptop + " " + pright : pright == pleft && ptop != pbottom ? ptop + " " + pright + " " + pbottom : ptop + " " + pright + " " + pbottom + " " + pleft,
+						if(paddingsData.t != null && paddingsData.r != null && paddingsData.l != null && paddingsData.b != null) {
+							var c = paddingsData.t == paddingsData.r && paddingsData.t == paddingsData.b && paddingsData.t == paddingsData.l ?
+									paddingsData.t
+								: paddingsData.t == paddingsData.b && paddingsData.r == paddingsData.l && paddingsData.t != paddingsData.r ?
+									paddingsData.t + " " + paddingsData.r
+								: paddingsData.r == paddingsData.l && paddingsData.t != paddingsData.b ?
+									paddingsData.t + " " + paddingsData.r + " " + paddingsData.b
+								: paddingsData.t + " " + paddingsData.r + " " + paddingsData.b + " " + paddingsData.l,
 								j = properties.match(pattern),
 								j = j != null ? j.length : 0,
 								i = 0;
-							properties = properties.replace(RegExp("(" + pm + "(?:-left|-right|-top|-bottom)? ?: ?([^;$]+)([;$]?)([\r\n]?))", "gim"), function (a, b, cc, d,endl) {
-								d = d || "";
+							properties = properties.replace(RegExp("("+pm+"(?:-left|-right|-top|-bottom)? ?: ?([^;$]+)([;$]?)([\r\n]?))","gim"),function (a,b,cc,d,endl){
 								if(++i == j) {
-									return pm + ":" + c + d+endl;
+									return pm + ":" + c + (d||"")+endl;
 								} else {
 									return ""
 								}
 							})
 							block[bi] = block[bi].replace(before, properties);
+							properties=i=j=void 0;
 						}
+						paddingsData=void 0;
 					}
 				}
 				for(var i = 0; i < bj; i++) {
 					if(beforeblock[i] != block[i]) str = str.replace(beforeblock[i], block[i])
 				}
-				str = str.replace(RegExp("(" + pm + "[\s]?:[\s]?)([^;$]+?[;$])", "gi"), function (a, property, b) {
+				blockpattern=pattern=beforeblock=block=before=properties=paddings=property=bi=bj=void 0;
+				return str.replace(RegExp("(" + pm + "[\s]?:[\s]?)([^;$]+?[;$])", "gi"), function (a, property, b) {
 					var values = b.replace(/ /g, ",").split(","),
 						d = values.length,
 						result = b;
@@ -290,9 +294,10 @@
 							}
 						}
 					}
-					return property + result
+					property=property + result
+					d=values=result=void 0;
+					return property
 				})
-				return str
 			}
 			var b = $bef.val(),
 				beforeSize = cb(b),
@@ -308,6 +313,7 @@
 			$.each(InputPartOption,function(Chara,replaces){
 				if(InputOption[Chara]) b=b.replace(replaces[0],replaces[1]);
 			});
+			InputPartOption=void 0;
 			if(!InputOption.option) {
 				//一部圧縮の際のオプション
 				b = b.replace(/^[\s]*/gm, "")
@@ -331,6 +337,7 @@
 				$.each(InputPartOption,function(Chara,replaces){
 					if(InputOption[Chara]) b=b.replace(replaces[0],replaces[1]);
 				})
+				InputPartOption=void 0;
 			}
 			/*	if (InputOption.font && (block = b.match(/([\#\w\.\, \:\[\]\"\'=-\_]+?)\{([^\{\}]*?)\}/g))) {
 				h = 0;
@@ -344,7 +351,9 @@
 					if(-1 != b.indexOf(h)){
 						b = b.replace(RegExp("([: ,\)\(]|[\t ]?:[\t ]?)([^;\{\}]*?)" + h + "((?:!important)|[, )(;}\n\r])", "gim"), "$1$2" + color[h] + "$3")
 					}
+				
 				}
+				color=void 0;
 			}
 			if(-1 != b.indexOf("padding") && InputOption.padding) b = makeshort(b, "padding");//パディング最適化
 			if(-1 != b.indexOf("margin") && InputOption.margin) b = makeshort(b, "margin");//マージン最適化
@@ -361,6 +370,7 @@
 						b=b.replace(beforeblock[i],block[i])
 					}
 				}
+				block_pattern=beforeblock=block=void 0;
 			}
 			var afterSize = cb(b);
 			$aft.val(b).select();
@@ -373,6 +383,7 @@
 					.end().find("#aftB").text(m.floor(afterSize / 1024) + " KB(" + afterSize + " B)")
 					.end().find("#minus").text(beforeSize == afterSize ? "±0B(0%)" : "-" + m.floor((beforeSize - afterSize) / 1024) + " KB(" + (beforeSize - afterSize) + " B)("+(100-afterSize*100/beforeSize).toFixed(2)+"%)");
 			}
+			i=j=b=beforeSize=afterSize=m=void 0;
 			$lform.find("#mes").stop(true,false).addClass("on").css("opacity","1").fadeTo(1500, 0.3,function(){$(this).removeClass("on")})
 		}
 	});
