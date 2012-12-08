@@ -175,6 +175,16 @@ a.button, .button, .Rbutton, .inlinebutton, .inlineRbutton{
 		box-shadow: inset 1px 1px 0 #FFF;
 	}
 }
+#cse-search-box{
+	display: inline-block;
+	margin: 2px 0;
+	vertical-align: middle;
+}
+#footer{
+	#cse_input, #cse_submit{
+		height:17px;
+	}
+}
 #option_menu .customCheckBox .checked{
 	background:#FDE;
 }
