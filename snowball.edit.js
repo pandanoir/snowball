@@ -84,6 +84,10 @@
 		}else{
 			$bef.attr("placeholder","ここにコードをペーストしてください。どうやらお使いのブラウザではドラッグアンドドロップは対応していないようです。");
 		}
+		$("#wrench").on("click",function(){
+			if($options.is(":visible")) $options.hide();
+			else $options.show();
+		});
 		$(window).on("keydown",function(e){
 			if( !((!e.metaKey&&e.ctrlKey)||(e.metaKey&&!e.ctrlKey)) ) return;
 			if(e.keyCode==13) $compress.trigger("click")//Ctrl+Enterで圧縮
@@ -273,7 +277,7 @@
 				for(var i = 0; i < bj; i++) {
 					if(beforeblock[i] != block[i]) str = str.replace(beforeblock[i], block[i])
 				}
-				blockpattern=pattern=beforeblock=block=before=properties=paddings=property=bi=bj=void 0;
+				block_pattern=pattern=beforeblock=block=before=properties=paddings=property=bi=bj=void 0;
 				return str.replace(RegExp("(" + pm + "[\s]?:[\s]?)([^;$]+?[;$])", "gi"), function (a, property, b) {
 					var values = b.replace(/ /g, ",").split(","),
 						d = values.length,

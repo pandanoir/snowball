@@ -25,7 +25,7 @@
 				</ul>
 				</nav>
 			</header>
-			<div class="cf">
+			<div id="board" class="cf">
 				<div id="lform">
 					<div class="cf">
 					<form class="form">
@@ -45,6 +45,7 @@
 					</div>
 				</div>
 				<div id="rform">
+					<img src="snowball/wrench.png" id="wrench"><br>
 					<div id="options">
 						<label for="comment">コメントを残さない</label><input type="checkbox" id="comment" checked>
 						<label for="zero">値が0なら単位を省略</label><input type="checkbox" id="zero" checked>
@@ -70,8 +71,8 @@
 							<option value="utf-8">UTF-8</option>
 							<option value="shift-jis">Shift-JIS</option>
 						</select>
+						<input type="button" class="inlinebutton" value="設定を保存" id="save">
 					</div>
-					<input type="button" class="inlinebutton" value="設定を保存" id="save">
 					<div id="results">
 						<span class="resultmes">Before</span><span id="befB">0 B</span><br>
 						<span class="resultmes">After</span><span id="aftB">0 B</span><br>
