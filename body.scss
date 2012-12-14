@@ -1,32 +1,32 @@
-$set-prefix: '' , -moz- , -webkit-,-o-,-ms-;
-$rformWid:310px;
-@mixin PP($name, $value) {
-    @each $prefix in $set-prefix {
-        #{$prefix}#{$name}: $value;
-    }
+$set-prefix: '', -moz-, -webkit-, -o-, -ms-;
+$rformWid: 310px;
+@mixin PP($name, $value){
+	@each $prefix in $set-prefix{
+		#{$prefix}#{$name}: $value;
+	}
 }
-@mixin VP($name, $value) {
-    @each $prefix in $set-prefix {
-        #{$name}: #{$prefix}#{$value};
-    }
+@mixin VP($name, $value){
+	@each $prefix in $set-prefix{
+		#{$name}:#{$prefix}#{$value}
+	}
 }
 @mixin userselect{
-	$Uprefix: '',-khtml-,-moz-,-webkit-;
+	$Uprefix: '', -khtml-, -moz-, -webkit-;
 	@each $prefix in $Uprefix{
-		#{$prefix}user-select: none;
+		#{$prefix}user-select: none
 	}
 }
 @mixin bg($main){
-	background:$main;
-    @each $prefix in $set-prefix {
-		background: #{$prefix}linear-gradient(top,#{$main} 0%,#{$main} 50%, darken( $main , 13.5%) 51%, darken( $main , 20%) 100%);
-    }
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(1.00, darken($main,20%)), color-stop(0.51, darken($main,13.5%)), color-stop(0.50, $main), color-stop(0.00, $main));
+	background: $main;
+	@each $prefix in $set-prefix{
+		background:#{$prefix}linear-gradient(top, #{$main}0%, #{$main}50%, darken( $main, 13.5%) 51%, darken( $main, 20%) 100%);
+	}
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(1.00, darken($main, 20%)), color-stop(0.51, darken($main, 13.5%)), color-stop(0.50, $main), color-stop(0.00, $main));
 }
 body{
-	background: #f3f3f3;
+	background: #F3F3F3;
 	color: #000;
-	font-family:"Gill sans",Osaka,Arial;
+	font-family: "Gill sans", Osaka, Arial;
 }
 #body{
 	margin: 0 auto;
@@ -34,7 +34,7 @@ body{
 	width: 1000px;
 	border: 1px solid #666;
 	border-radius: 5px;
-	background: #fff;
+	background: #FFF;
 }
 #footer{
 	border-top: 1px solid #999;
@@ -43,6 +43,8 @@ body{
 	clear: both;
 }
 #results{
+	position: absolute;
+	bottom: 0;
 	width: 200px;
 }
 .form{
@@ -53,18 +55,18 @@ body{
 	width: 48%;
 	border: none;
 	textarea{
-		@include VP(white-space,pre-wrap);
+		@include VP(white-space, pre-wrap);
 		width: 100%;
 		height: 15em;
-		padding:2px;
+		padding: 2px;
 		border: 2px solid #666;
 		border-top: none;
 		border-radius: 0 0 5px 5px;
-		background: #fff;
+		background: #FFF;
 		box-shadow: -1px -1px 0 #FFF inset, 1px 1px 0 #DDD inset;
 		color: #000;
 		word-break: break-all;
-		font-family:"Gill sans",Osaka,Arial;
+		font-family: "Gill sans", Osaka, Arial;
 		resize: none;
 	}
 	.button, .Rbutton{
@@ -78,12 +80,15 @@ body{
 		border-radius: 0 5px 5px 0;
 	}
 }
+#board{
+	height: 340px;
+}
 legend{
 	padding: 8px 2px;
 	width: 100%;
 	border: 2px solid #666;
 	border-radius: 5px 5px 0 0;
-	@include bg(#efefef);
+	@include bg(#EFEFEF);
 	box-shadow: 1px 1px 0 #FFF inset, -1px -1px 0 #DDD inset;
 	color: #000;
 }
@@ -108,27 +113,32 @@ a.button, .button, .Rbutton, .inlinebutton, .inlineRbutton{
 	width: 120px;
 	text-align: right;
 }
+#options{
+	display: none;
+	background: #FFF;
+	position: absolute;
+}
 #option_menu{
 	position: absolute;
 	top: -30px;
 	display: none;
 	width: 100%;
-	white-space:nowrap;
+	white-space: nowrap;
 }
 .option_menu_btn, .customCheckBox a{
-	background: #efefef;
+	background: #EFEFEF;
 	@include VP("background", "linear-gradient(#FFF, #F3F3F3)");
 	background: -webkit-gradient(linear, left top, left bottom, from(#FFF), to(#F3F3F3));
 }
 .option_menu_btn{
 	@include userselect;
-	$thisBorder:1px;
-	$thisPadding:7px;
+	$thisBorder: 1px;
+	$thisPadding: 7px;
 	position: relative;
 	position: relative;
 	top: 0;
 	left: 0;
-	display:inline-block;
+	display: inline-block;
 	padding: 2px $thisPadding;
 	width: ($rformWid/2)-($thisPadding*2)-($thisBorder*2);
 	height: 24px;
@@ -143,14 +153,14 @@ a.button, .button, .Rbutton, .inlinebutton, .inlineRbutton{
 	}
 }
 #option_show{
-	border-radius:5px 0 0 5px;
+	border-radius: 5px 0 0 5px;
 }
 #option_all{
-	border-radius:0 5px 5px 0;
+	border-radius: 0 5px 5px 0;
 }
 .customCheckBox a{
-	$thisPadding:5px;
-	$thisBorder:1px;
+	$thisPadding: 5px;
+	$thisBorder: 1px;
 	position: relative;
 	top: -2px;
 	display: inline-block;
@@ -158,20 +168,23 @@ a.button, .button, .Rbutton, .inlinebutton, .inlineRbutton{
 	margin: 2px 0;
 	padding: $thisPadding;
 	width: ($rformWid)-($thisPadding*2)-($thisBorder*2);
-	border: #{$thisBorder} solid #666;
+	border:#{
+		$thisBorder;
+	}
+	solid #666;
 	border-radius: 5px;
 	box-shadow: 0 1px 0 #222, 0 2px 0 #999, inset 1px 1px 0 #FFF;
-	@include VP("background","linear-gradient(top, white 0%, white 50%, #EEE 51%, #DDD 100%)");
+	@include VP("background", "linear-gradient(top, white 0%, white 50%, #EEE 51%, #DDD 100%)");
 	color: #222;
 	text-decoration: none;
 	white-space: nowrap;
 	font-weight: bold;
 	font-size: 13px;
-	font-family:"Gill sans",Osaka,Arial;
+	font-family: "Gill sans", Osaka, Arial;
 	line-height: 1;
 	&.checked{
 		top: 0;
-		background:#DEF;
+		background: #DEF;
 		box-shadow: inset 1px 1px 0 #FFF;
 	}
 }
@@ -182,31 +195,36 @@ a.button, .button, .Rbutton, .inlinebutton, .inlineRbutton{
 }
 #footer{
 	#cse_input, #cse_submit{
-		height:17px;
+		height: 17px;
 	}
 }
 #option_menu .customCheckBox .checked{
-	background:#FDE;
+	background: #FDE;
 }
 #rform{
 	@include userselect;
 	position: relative;
 	float: left;
-	width: #{$rformWid}px;
-	input,label{
+	width:#{
+		$rformWid;
+	}
+	px;
+	input, label{
 		display: none;
 	}
+	height: 100%;
 }
 #lform{
 	float: left;
 	width: 690px;
+	height: 100%;
 }
 .customCheckBox{
 	li{
 		list-style: none;
-		height:29px;
+		height: 29px;
 	}
-	&,ul{
+	&, ul{
 		margin: 0;
 		padding: 0;
 	}
@@ -228,7 +246,7 @@ a.button, .button, .Rbutton, .inlinebutton, .inlineRbutton{
 	}
 }
 #nav li:hover, .now_location{
-	background: #def;
+	background: #DEF;
 }
 #nav a{
 	display: block;
