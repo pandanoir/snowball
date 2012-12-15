@@ -28,6 +28,14 @@ body{
 	color: #000;
 	font-family: "Gill sans", Osaka, Arial;
 }
+#wrench{
+	border: 2px solid #666;
+	padding: 3px;
+	border-radius: 5px;
+	cursor: pointer;
+	width: 22px;
+	height: 22px;
+}
 #body{
 	margin: 0 auto;
 	padding: 10px;
@@ -117,10 +125,12 @@ a.button, .button, .Rbutton, .inlinebutton, .inlineRbutton{
 	display: none;
 	background: #FFF;
 	position: absolute;
+	z-index:5;
 }
 #option_menu{
 	position: absolute;
 	top: -30px;
+	right:100%;
 	display: none;
 	width: 100%;
 	white-space: nowrap;
@@ -168,9 +178,7 @@ a.button, .button, .Rbutton, .inlinebutton, .inlineRbutton{
 	margin: 2px 0;
 	padding: $thisPadding;
 	width: ($rformWid)-($thisPadding*2)-($thisBorder*2);
-	border:#{
-		$thisBorder;
-	}
+	border:#{$thisBorder}
 	solid #666;
 	border-radius: 5px;
 	box-shadow: 0 1px 0 #222, 0 2px 0 #999, inset 1px 1px 0 #FFF;
@@ -182,6 +190,7 @@ a.button, .button, .Rbutton, .inlinebutton, .inlineRbutton{
 	font-size: 13px;
 	font-family: "Gill sans", Osaka, Arial;
 	line-height: 1;
+	text-align:left;
 	&.checked{
 		top: 0;
 		background: #DEF;
@@ -205,9 +214,7 @@ a.button, .button, .Rbutton, .inlinebutton, .inlineRbutton{
 	@include userselect;
 	position: relative;
 	float: left;
-	width:#{
-		$rformWid;
-	}
+	width:#{$rformWid}
 	px;
 	input, label{
 		display: none;
@@ -227,6 +234,7 @@ a.button, .button, .Rbutton, .inlinebutton, .inlineRbutton{
 	&, ul{
 		margin: 0;
 		padding: 0;
+		text-align:right;
 	}
 }
 #nav{
