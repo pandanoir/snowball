@@ -172,6 +172,11 @@
 			ls.setItem("select_option",$json.stringify(SelectOption));
 			//オプション設定の保存
 		})
+		$("#wrench").on("click",function(event){
+			event.preventDefault();
+			event.stopPropagation();
+			$options.toggle();
+		});
 		function compress(event) {
 			event.preventDefault();
 			event.stopPropagation();
