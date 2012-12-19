@@ -1,5 +1,6 @@
 $set-prefix: '', -moz-, -webkit-, -o-, -ms-;
-$rformWid: 310px;
+$rformWid: 40px;
+$lformWid: 1000-$rformWid;
 @mixin PP($name, $value){
 	@each $prefix in $set-prefix{
 		#{$prefix}#{$name}: $value;
@@ -31,6 +32,7 @@ body{
 #wrench{
 	border: 2px solid #666;
 	padding: 3px;
+	margin-top:3px;
 	border-radius: 5px;
 	cursor: pointer;
 	width: 22px;
@@ -53,18 +55,19 @@ body{
 #results{
 	position: absolute;
 	bottom: 0;
+	right:0;
 	width: 200px;
 }
 .form{
 	display: block;
 	float: left;
-	margin: 0 2% 0 0;
+	margin: 3px floor($lformWid * 0.01) 0;
 	padding: 0;
-	width: 48%;
+	width: floor($lformWid * 0.48);
 	border: none;
 	textarea{
 		@include VP(white-space, pre-wrap);
-		width: 100%;
+		width: round($lformWid * 0.48 - 4 - 4);
 		height: 15em;
 		padding: 2px;
 		border: 2px solid #666;
@@ -89,11 +92,11 @@ body{
 	}
 }
 #board{
-	height: 340px;
+	height: 370px;
 }
 legend{
 	padding: 8px 2px;
-	width: 100%;
+	width: round($lformWid * 0.48 - 4 - 4);
 	border: 2px solid #666;
 	border-radius: 5px 5px 0 0;
 	@include bg(#EFEFEF);
@@ -125,15 +128,22 @@ a.button, .button, .Rbutton, .inlinebutton, .inlineRbutton{
 	display: none;
 	background: #FFF;
 	position: absolute;
-	z-index:5;
+	right: 100%;
+	top: 0;
+	padding: 0 3px;
+	z-index: 5;
+	height: 100%;
 }
 #option_menu{
 	position: absolute;
-	top: -30px;
+	top: 0;
 	right:100%;
+	background:#FFF;
 	display: none;
-	width: 100%;
 	white-space: nowrap;
+	height: 100%;
+	padding: 0 4px;
+	border-left: 3px solid #CCC;
 }
 .option_menu_btn, .customCheckBox a{
 	background: #EFEFEF;
@@ -150,7 +160,7 @@ a.button, .button, .Rbutton, .inlinebutton, .inlineRbutton{
 	left: 0;
 	display: inline-block;
 	padding: 2px $thisPadding;
-	width: ($rformWid/2)-($thisPadding*2)-($thisBorder*2);
+	width: 100px-($thisPadding*2)-($thisBorder*2);
 	height: 24px;
 	border: $thisBorder solid #666;
 	box-shadow: 0 1px 0 #666;
@@ -177,9 +187,8 @@ a.button, .button, .Rbutton, .inlinebutton, .inlineRbutton{
 	overflow: hidden;
 	margin: 2px 0;
 	padding: $thisPadding;
-	width: ($rformWid)-($thisPadding*2)-($thisBorder*2);
-	border:#{$thisBorder}
-	solid #666;
+	width: 200px-($thisPadding*2)-($thisBorder*2);
+	border:#{$thisBorder} solid #666;
 	border-radius: 5px;
 	box-shadow: 0 1px 0 #222, 0 2px 0 #999, inset 1px 1px 0 #FFF;
 	@include VP("background", "linear-gradient(top, white 0%, white 50%, #EEE 51%, #DDD 100%)");
@@ -214,8 +223,7 @@ a.button, .button, .Rbutton, .inlinebutton, .inlineRbutton{
 	@include userselect;
 	position: relative;
 	float: left;
-	width:#{$rformWid}
-	px;
+	width:#{$rformWid};
 	input, label{
 		display: none;
 	}
@@ -223,12 +231,13 @@ a.button, .button, .Rbutton, .inlinebutton, .inlineRbutton{
 }
 #lform{
 	float: left;
-	width: 690px;
+	width: $lformWid;
 	height: 100%;
 }
 .customCheckBox{
 	li{
 		list-style: none;
+		background:#FFF;
 		height: 29px;
 	}
 	&, ul{
@@ -238,7 +247,6 @@ a.button, .button, .Rbutton, .inlinebutton, .inlineRbutton{
 	}
 }
 #nav{
-	margin: 3px 0;
 	padding: 0;
 	border-bottom: 1px solid #666;
 	font-size: 0;

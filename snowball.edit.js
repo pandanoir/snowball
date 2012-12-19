@@ -1,4 +1,3 @@
-/*skOuterClick - A simple event-binder-plugin to handle click events of outside elements.(c) 2012 SUKOBUTO.*/(function(e,f){e.fn.skOuterClick=function(c){var a={init:function(c){var b=[$(this)],a=arguments.length;if(1<a)for(i=1;i<a;i++)b[b.length]=arguments[i];return this.each(function(){var a=this,d=!1,g;for(g in b)e(f.document).find(b[g]).on("click",function(){d=!0}).on("mouseleave",function(){d=!1});e(f.document).on("click",function(b){d?d=!1:c.call(a,b)})})}};if(a[c])return a[c].apply(this,Array.prototype.slice.call(arguments,1));if("function"===typeof c)return a.init.apply(this,arguments)}})(jQuery,this);
 (function(window,$){
 	$(function () {
 		$("body").on("dragover",function(event){
@@ -16,6 +15,7 @@
 			$option=$options.find("#option"),
 			$option_show = $menu.find("#option_show"),
 			$option_all = $menu.find("#option_all"),
+			$results=$rform.find("#results"),
 			$aft=$lform.find("#aft"),
 			$bef=$lform.find("#bef"),
 			ls=localStorage,
@@ -43,14 +43,14 @@
 				SelectOption[$select.eq(i).attr("id")]=$select.eq(i).find("option:selected").val();
 			}
 		}
+		if($option.attr("checked")){
+			$option_show.text("Hide");
+			$menu.show()
+		}
 		$rform.css3form();
 		var $custom = $menu.find("div.customCheckBox").find("a"),
 			$customWid = $custom.css("width"),
 			$menuWid = $menu.css("width");
-		$menu.skOuterClick(function(){
-			if($custom.is(":visible")) $option_show.trigger("click");
-			//Outerクリックの設定
-		},$option,$bef,$aft,$option_all);
 		$lform.on("click", ".select , .reset", function (event) {
 			//リセットボタンとセレクトボタンを押した時に選択状態にする
 			event.stopPropagation();
@@ -79,7 +79,7 @@
 						$compress.trigger("click")
 					},this)
 				}
-				files=reader=event=void 0;
+				files=event=void 0;
 			})
 		}else{
 			$bef.attr("placeholder","ここにコードをペーストしてください。どうやらお使いのブラウザではドラッグアンドドロップは対応していないようです。");
@@ -97,50 +97,36 @@
 			}
 		})
 		$option.on("click",function (e) {
+			//一部だけ圧縮するを押した際の挙動。
+			//ここでのメニューは一部圧縮時メニューのこと
 			e.stopPropagation();
 			if($custom.is(":animated")||$menu.is(":animated")) return;
 			else if($option.attr("checked")) {
 				//メニューが表示されていたら非表示にする
-				$option_show.text("Show");
-				$menu.stop(true,false).animate({
-					width: "0"
-				},200, function () {
-					$menu.hide();
-					$custom.show().css("width", $customWid)
-				})
-				$option_show.removeClass("show hide").addClass("show");
+				$option_show.text("Show").removeClass("show hide").addClass("show");
+				$menu.hide();
+				$options.css("border-left","3px solid #CCC");
+				$custom.show().css("width", $customWid);
 			} else {
 				//メニューが非表示だったら表示する
 				$option_show.text("Hide");
-				$menu.css({
-					width: "0"
-				}).show().stop(true,false).animate({
-					width: $menuWid
-				},200);
+				$menu.show();
+				$options.css("border-left","none");
 			}
 		});
 		$option_show.on("click",function (e) {
 			e.preventDefault();
 			e.stopPropagation();
+			//Show、Hideボタンの動作
 			if($custom.is(":animated")||$menu.is(":animated")) return;
 			else if($custom.is(":visible")) {
 				//チェックボックスが表示されてたら非表示にする
-				$option_show.text("Show");
-				$custom.stop(true,false).animate({
-					width: "0"
-				},200, function () {
-					$custom.hide()
-				});
-				$option_show.removeClass("show hide").addClass("hide");
+				$option_show.text("Show").removeClass("show hide").addClass("hide");
+				$custom.parent().hide();
 			} else {
 				//チェックボックスが非表示だったら表示する
-				$option_show.text("Hide");
-				$custom.css({
-					width: "0"
-				}).show().stop(true,false).animate({
-					width: $customWid
-				},200);
-				$option_show.removeClass("show hide").addClass("show")
+				$option_show.text("Hide").removeClass("show hide").addClass("show");
+				$custom.parent().show();
 			}
 		});
 		$option_all.on("click",function(e){
@@ -176,6 +162,7 @@
 			event.preventDefault();
 			event.stopPropagation();
 			$options.toggle();
+			$results.toggle();
 		});
 		function compress(event) {
 			event.preventDefault();
@@ -336,8 +323,7 @@
 					"semicolon":[/[\t ]*[;][\t ]*/g, ";"],//セミコロン周辺のスペース
 					"sc_bracket":[/[\t ]*[\{][\t ]*/g, "{"],//{周辺のスペース
 					"important":[/[\t ]*(!important)[\t ]*/g, "$1"],//!important周辺のスペース
-					"ec_bracket":[/[\t ]*;[\t ]*\}[\t\d]*/g, "}"],//}周辺のスペース
-					"ec_bracket":[/([^\t ]+?)[\t ]*\}[\t ]*/g, "$1}"]//}周辺のスペース
+					"ec_bracket":[/([^\t ]+?)[\t ]*;[\t ]*\}[\t ]*/g, "$1}"]//}周辺のスペース
 				}
 				$.each(InputPartOption,function(Chara,replaces){
 					if(InputOption[Chara]) b=b.replace(replaces[0],replaces[1]);
@@ -380,11 +366,11 @@
 			var afterSize = cb(b);
 			$aft.val(b).select();
 			if(1024 > beforeSize) {
-				$rform.find("#results").find("#befB").text(beforeSize + " B")
+				$results.find("#befB").text(beforeSize + " B")
 					.end().find("#aftB").text(afterSize + " B")
 					.end().find("#minus").text(beforeSize == afterSize ? "±0B(0%)" : "-" + (beforeSize - afterSize) + " B("+(100-afterSize*100/beforeSize).toFixed(2)+"%)");
 			} else {
-				$rform.find("#results").find("#befB").text(m.floor(beforeSize / 1024) + " KB(" + beforeSize + " B)")
+				$results.find("#befB").text(m.floor(beforeSize / 1024) + " KB(" + beforeSize + " B)")
 					.end().find("#aftB").text(m.floor(afterSize / 1024) + " KB(" + afterSize + " B)")
 					.end().find("#minus").text(beforeSize == afterSize ? "±0B(0%)" : "-" + m.floor((beforeSize - afterSize) / 1024) + " KB(" + (beforeSize - afterSize) + " B)("+(100-afterSize*100/beforeSize).toFixed(2)+"%)");
 			}
