@@ -45,7 +45,9 @@
 		}
 		if($option.attr("checked")){
 			$option_show.text("Hide");
-			$menu.show()
+			$menu.show();
+		}else{
+			$options.css("border-left","3px solid #CCC");
 		}
 		$rform.css3form();
 		var $custom = $menu.find("div.customCheckBox").find("a"),
