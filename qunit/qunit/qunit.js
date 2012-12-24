@@ -221,7 +221,7 @@ Test.prototype = {
 				next.style.display = display === "none" ? "block" : "none";
 			});
 
-			addEvent(b, "dblclick", function( e ) {
+/*			addEvent(b, "dblclick", function( e ) {
 				var target = e && e.target ? e.target : window.event.srcElement;
 				if ( target.nodeName.toLowerCase() == "span" || target.nodeName.toLowerCase() == "b" ) {
 					target = target.parentNode;
@@ -229,7 +229,7 @@ Test.prototype = {
 				if ( window.location && target.nodeName.toLowerCase() === "strong" ) {
 					window.location = QUnit.url({ testNumber: test.testNumber });
 				}
-			});
+			});*/
 
 			// `li` initialized at top of scope
 			li = id( this.id );
@@ -801,18 +801,18 @@ extend( QUnit, {
 		if ( !result ) {
 			expected = escapeInnerText( QUnit.jsDump.parse(expected) );
 			actual = escapeInnerText( QUnit.jsDump.parse(actual) );
-			output += "<table><tr class='test-expected'><th>Expected: </th><td><pre>" + expected + "</pre></td></tr>";
+			output += "<table><tr class='test-expected'><th>予想: </th><td><pre>" + expected + "</pre></td></tr>";
 
 			if ( actual != expected ) {
-				output += "<tr class='test-actual'><th>Result: </th><td><pre>" + actual + "</pre></td></tr>";
-				output += "<tr class='test-diff'><th>Diff: </th><td><pre>" + QUnit.diff( expected, actual ) + "</pre></td></tr>";
+				output += "<tr class='test-actual'><th>結果: </th><td><pre>" + actual + "</pre></td></tr>";
+				output += "<tr class='test-diff'><th>違い: </th><td><pre>" + QUnit.diff( expected, actual ) + "</pre></td></tr>";
 			}
 
 			source = sourceFromStacktrace();
 
 			if ( source ) {
 				details.source = source;
-				output += "<tr class='test-source'><th>Source: </th><td><pre>" + escapeInnerText( source ) + "</pre></td></tr>";
+				output += "<tr class='test-source'><th>ソース: </th><td><pre>" + escapeInnerText( source ) + "</pre></td></tr>";
 			}
 
 			output += "</table>";
