@@ -5,8 +5,8 @@
 		<base href="http://pandanoir.web.fc2.com">
 		<title>QUnit Test Suite</title>
 		<link rel="stylesheet" href="snowball/qunit/qunit/qunit.css">
-		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-		<!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+		<!--[if lt IE 9]><script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 		<script src="snowball/qunit/qunit/qunit.js"></script>
 		<script src="js/jquery.css3form.js"></script>
 		<script src="snowball/qunit/test/set.js"></script>
@@ -22,12 +22,15 @@
 		.customCheckBox a.checked{
 			background:#9CF;
 		}
+		#rform input, #rform label{
+			display: none;
+		}
 		</style>
 	</head>
 	<body>
 		<div id="qunit"></div>
 		<div id="qunit-fixture">test markup</div>
-		<div id="board">
+		<div class="cf" id="board">
 			<div id="lform">
 				<div class="cf">
 				<form class="form">
@@ -80,6 +83,8 @@
 					<span class="resultmes">After</span><span id="aftB">0 B</span><br>
 					<span class="resultmes">Diff</span><span id="minus">-0 B</span>
 				</div>
-			</div></div>
+			</div>
+
+		</div>
 	</body>
 </html>

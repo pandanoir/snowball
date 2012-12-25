@@ -98,7 +98,7 @@ $(function(){
 			return TParts;
 		}
 	};
-	test("TParts",function(){
+	test("TParts",4,function(){
 		deepEqual(TParts.custom("comment"),$custom.eq(0),"custom ok");
 		TParts.change("comment",false);
 		equal(TParts.custom("comment").hasClass("checked"),false,"false change ok");
@@ -138,85 +138,98 @@ $(function(){
 	function Clicked(){
 		ok(true,"compress clicked");
 	}
-	test("コメントを残さない true",function(){
+	test("コメントを残さない true",4,function(){
 		TParts.change("comment",true);$compress.trigger("click")
 		equal($aft.val(),".white-space{\n\twhite-space: nowrap;\n\tbackground :#FFF!important;\n\tcolor : #FFFFFF !important ;\n\t margin:3px 3px 5px 3px;\n}\n@media screen and (max-device-width:480px){\n\t.black , .button {\n\t color:black;\n\t margin: 0px;\n\t opacity:0.9;\n\t padding:3px 3px 3px 3px;\n\t}\n}","コメントを残さない true ok");
 	});
 	falseCheck("コメントを残さない","comment")
-	test("値が0なら単位を省略 true",function(){
+	test("値が0なら単位を省略 true",4,function(){
 		TParts.change("zero",true);$compress.trigger("click")
 		equal($aft.val(),".white-space{\n\twhite-space: nowrap;\n\tbackground :#FFF!important;\n\tcolor : #FFFFFF !important ;\n\t margin:3px 3px 5px 3px;\n}\n@media screen and (max-device-width:480px){\n\t.black , .button {\n\t color:black;/*OK*/\n\t margin: 0;\n\t opacity:0.9;\n\t padding:3px 3px 3px 3px;\n\t}\n}","値が0なら単位を省略 true ok");
 	});
 	falseCheck("値が0なら単位を省略","zero")
-	test("0.xとあったら0を省略 true",function(){
+	test("0.xとあったら0を省略 true",4,function(){
 		TParts.change("decimals",true);$compress.trigger("click")
 		equal($aft.val(),".white-space{\n\twhite-space: nowrap;\n\tbackground :#FFF!important;\n\tcolor : #FFFFFF !important ;\n\t margin:3px 3px 5px 3px;\n}\n@media screen and (max-device-width:480px){\n\t.black , .button {\n\t color:black;/*OK*/\n\t margin: 0px;\n\t opacity:.9;\n\t padding:3px 3px 3px 3px;\n\t}\n}","0.xとあったら0を省略 true ok");
 	});
 	falseCheck("0.xとあったら0を省略","decimals")
-	test("カラーコードを短くする true",function(){
+	test("カラーコードを短くする true",4,function(){
 		TParts.change("color",true);$compress.trigger("click")
 		equal($aft.val(),".white-space{\n\twhite-space: nowrap;\n\tbackground :#FFF!important;\n\tcolor : #FFF !important ;\n\t margin:3px 3px 5px 3px;\n}\n@media screen and (max-device-width:480px){\n\t.black , .button {\n\t color:black;/*OK*/\n\t margin: 0px;\n\t opacity:0.9;\n\t padding:3px 3px 3px 3px;\n\t}\n}","カラーコードを短くする true ok");
 	});
 	falseCheck("カラーコードを短くする","color")
-	test("カラーネームを最適化する true",function(){
+	test("カラーネームを最適化する true",4,function(){
 		TParts.change("color_name",true);$compress.trigger("click")
 		equal($aft.val(),".white-space{\n\twhite-space: nowrap;\n\tbackground :#FFF!important;\n\tcolor : #FFFFFF !important ;\n\t margin:3px 3px 5px 3px;\n}\n@media screen and (max-device-width:480px){\n\t.black , .button {\n\t color:#000;/*OK*/\n\t margin: 0px;\n\t opacity:0.9;\n\t padding:3px 3px 3px 3px;\n\t}\n}","カラーネームを最適化する true ok");
 	});
 	falseCheck("カラーネームを最適化する","color_name")
-	test("paddingを最短にする true",function(){
+	test("paddingを最短にする true",4,function(){
 		TParts.change("padding",true);$compress.trigger("click")
 		equal($aft.val(),".white-space{\n\twhite-space: nowrap;\n\tbackground :#FFF!important;\n\tcolor : #FFFFFF !important ;\n\t margin:3px 3px 5px 3px;\n}\n@media screen and (max-device-width:480px){\n\t.black , .button {\n\t color:black;/*OK*/\n\t margin: 0px;\n\t opacity:0.9;\n\t padding:3px;\n\t}\n}","paddingを最短にする true ok");
 	});
 	falseCheck("paddingを最短にする","padding")
-	test("marginを最短にする true",function(){
+	test("marginを最短にする true",4,function(){
 		TParts.change("margin",true);$compress.trigger("click")
 		equal($aft.val(),".white-space{\n\twhite-space: nowrap;\n\tbackground :#FFF!important;\n\tcolor : #FFFFFF !important ;\n\t margin:3px 3px 5px;\n}\n@media screen and (max-device-width:480px){\n\t.black , .button {\n\t color:black;/*OK*/\n\t margin: 0px;\n\t opacity:0.9;\n\t padding:3px 3px 3px 3px;\n\t}\n}","marginを最短にする true ok");
 	});
 	falseCheck("marginを最短にする","margin")
-	test("カラーコードを小文字にする true",function(){
+	test("カラーコードを小文字にする true",4,function(){
 		TParts.change("lower",true);$compress.trigger("click")
 		equal($aft.val(),".white-space{\n\twhite-space: nowrap;\n\tbackground :#fff!important;\n\tcolor : #ffffff !important ;\n\t margin:3px 3px 5px 3px;\n}\n@media screen and (max-device-width:480px){\n\t.black , .button {\n\t color:black;\/*OK*\/\n\t margin: 0px;\n\t opacity:0.9;\n\t padding:3px 3px 3px 3px;\n\t}\n}","カラーコードを小文字にする true ok");
 	});
 	falseCheck("カラーコードを小文字にする","lower")
-	test("インデントを消す true",function(){
+	test("インデントを消す true",4,function(){
 		TParts.change("indent",true);$compress.trigger("click")
 		equal($aft.val(),".white-space{\nwhite-space: nowrap;\nbackground :#FFF!important;\ncolor : #FFFFFF !important ;\nmargin:3px 3px 5px 3px;\n}\n@media screen and (max-device-width:480px){\n.black , .button {\ncolor:black;/*OK*/\nmargin: 0px;\nopacity:0.9;\npadding:3px 3px 3px 3px;\n}\n}","インデントを消す true ok");
 	});
 	falseCheck("インデントを消す","indent")
-	test("改行を消す true",function(){
+	test("改行を消す true",4,function(){
 		TParts.change("line",true);$compress.trigger("click")
 		equal($aft.val(),".white-space{\twhite-space: nowrap;\tbackground :#FFF!important;\tcolor : #FFFFFF !important ;\t margin:3px 3px 5px 3px;}@media screen and (max-device-width:480px){\t.black , .button {\t color:black;/*OK*/\t margin: 0px;\t opacity:0.9;\t padding:3px 3px 3px 3px;\t}}","改行を消す true ok");
 	});
 	falseCheck("改行を消す","line")
-	test("カンマ周辺の空白を消す true",function(){
+	test("カンマ周辺の空白を消す true",4,function(){
 		TParts.change("comma",true);$compress.trigger("click")
 		equal($aft.val(),".white-space{\n\twhite-space: nowrap;\n\tbackground :#FFF!important;\n\tcolor : #FFFFFF !important ;\n\t margin:3px 3px 5px 3px;\n}\n@media screen and (max-device-width:480px){\n\t.black,.button {\n\t color:black;/*OK*/\n\t margin: 0px;\n\t opacity:0.9;\n\t padding:3px 3px 3px 3px;\n\t}\n}","カンマ周辺の空白を消す true ok");
 	});
 	falseCheck("カンマ周辺の空白を消す","comma")
-	test("コロン周辺の空白を消す true",function(){
+	test("コロン周辺の空白を消す true",4,function(){
 		TParts.change("colon",true);$compress.trigger("click")
 		equal($aft.val(),".white-space{\n\twhite-space:nowrap;\n\tbackground:#FFF!important;\n\tcolor:#FFFFFF !important ;\n\t margin:3px 3px 5px 3px;\n}\n@media screen and (max-device-width:480px){\n\t.black , .button {\n\t color:black;/*OK*/\n\t margin:0px;\n\t opacity:0.9;\n\t padding:3px 3px 3px 3px;\n\t}\n}","コロン周辺の空白を消す true ok");
 	});
 	falseCheck("コロン周辺の空白を消す","colon")
-	test("セミコロン周辺の空白を消す true",function(){
+	test("セミコロン周辺の空白を消す true",4,function(){
 		TParts.change("semicolon",true);$compress.trigger("click")
 		equal($aft.val(),".white-space{\n\twhite-space: nowrap;\n\tbackground :#FFF!important;\n\tcolor : #FFFFFF !important;\n\t margin:3px 3px 5px 3px;\n}\n@media screen and (max-device-width:480px){\n\t.black , .button {\n\t color:black;/*OK*/\n\t margin: 0px;\n\t opacity:0.9;\n\t padding:3px 3px 3px 3px;\n\t}\n}","セミコロン周辺の空白を消す true ok");
 	});
 	falseCheck("セミコロン周辺の空白を消す","semicolon")
-	test("!important周辺の空白を消す true",function(){
+	test("!important周辺の空白を消す true",4,function(){
 		TParts.change("important",true);$compress.trigger("click")
 		equal($aft.val(),".white-space{\n\twhite-space: nowrap;\n\tbackground :#FFF!important;\n\tcolor : #FFFFFF!important;\n\t margin:3px 3px 5px 3px;\n}\n@media screen and (max-device-width:480px){\n\t.black , .button {\n\t color:black;/*OK*/\n\t margin: 0px;\n\t opacity:0.9;\n\t padding:3px 3px 3px 3px;\n\t}\n}","!important周辺の空白を消す true ok");
 	});
 	falseCheck("!important周辺の空白を消す","important")
-	test("始め波括弧の空白を消す true",function(){
+	test("始め波括弧の空白を消す true",4,function(){
 		TParts.change("sc_bracket",true);$compress.trigger("click")
 		equal($aft.val(),".white-space{\n\twhite-space: nowrap;\n\tbackground :#FFF!important;\n\tcolor : #FFFFFF !important ;\n\t margin:3px 3px 5px 3px;\n}\n@media screen and (max-device-width:480px){\n\t.black , .button{\n\t color:black;/*OK*/\n\t margin: 0px;\n\t opacity:0.9;\n\t padding:3px 3px 3px 3px;\n\t}\n}","始め波括弧の空白を消す true ok");
 	});
 	falseCheck("始め波括弧の空白を消す","sc_bracket")
-	test("終わり波括弧の空白を消す true",function(){
+	test("終わり波括弧の空白を消す true",4,function(){
 		TParts.change("ec_bracket",true);$compress.trigger("click")
 		equal($aft.val(),".white-space{\n\twhite-space: nowrap;\n\tbackground :#FFF!important;\n\tcolor : #FFFFFF !important ;\n\t margin:3px 3px 5px 3px;\n}\n@media screen and (max-device-width:480px){\n\t.black , .button {\n\t color:black;/*OK*/\n\t margin: 0px;\n\t opacity:0.9;\n\t padding:3px 3px 3px 3px;\n\t}\n}","終わり波括弧の空白を消す true ok");
 	});
 	falseCheck("終わり波括弧の空白を消す","ec_bracket")
-	function falseCheck(name,id){test(name+" false",function(){TParts.change(id,false);$compress.trigger("click");equal($aft.val(),str,name+" false ok");})}
+	test("全部ON",5,function(){
+		TParts.init();
+		var values=[true,true,true,true,true,true,true,false,false,true,true,true,true,true,true,true,true]
+		for(var i=0,j=$custom.length,initCheck=true;i<j;i++){
+			if($custom.eq(i).hasClass("checked")!=values[i]) initCheck=false;
+		}
+		equal(initCheck,true,"init ok");
+		$compress.trigger("click")
+		equal($aft.val(),".white-space{white-space:nowrap;background:#FFF!important;color:#FFF!important;margin:3px 3px 5px}@media screen and (max-device-width:480px){.black,.button{color:#000;margin:0;opacity:.9;padding:3px}}","全部ON ok")
+	})
+	function falseCheck(name,id){test(name+" false",4,function(){TParts.change(id,false);$compress.trigger("click");equal($aft.val(),str,name+" false ok");})}
+	setTimeout(function(){
+		$("#board").html("")
+	},200)
 });
