@@ -17,8 +17,8 @@ $(function(){
 		 padding:3px 3px 3px 3px;
 		}
 	}*/
-	module("TParts",function(){
-	});
+	var $end=$("<div/>");
+	module("TParts");
 	var TParts={
 		reset:function(){
 			for(var i=0,j=$custom.length;i<j;i++){
@@ -227,9 +227,11 @@ $(function(){
 		equal(initCheck,true,"init ok");
 		$compress.trigger("click")
 		equal($aft.val(),".white-space{white-space:nowrap;background:#FFF!important;color:#FFF!important;margin:3px 3px 5px}@media screen and (max-device-width:480px){.black,.button{color:#000;margin:0;opacity:.9;padding:3px}}","全部ON ok")
+		$end.trigger("end")
 	})
 	function falseCheck(name,id){test(name+" false",4,function(){TParts.change(id,false);$compress.trigger("click");equal($aft.val(),str,name+" false ok");})}
-	setTimeout(function(){
-		$("#board").html("")
-	},200)
+	$end.on("end",function(){
+		$("#board").remove()
+		$(this).remove()
+	})
 });
