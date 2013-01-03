@@ -210,15 +210,15 @@
 			};
 			*/
 			function makeshort(str, pm) {
-				var block_pattern = /([.#\w ,:-\[\]=\"\']+?)\{([\s\S]*?)\}/gim,
+				var block_pattern = /([.#\w ,:\-\[\]=\"\']+?)\{([\s\S]*?)\}/gim,
 					block = str.match(block_pattern),
 					beforeblock = str.match(block_pattern),
 					bj = block != null ? block.length : 0,
 					bi = 0,
-					pattern = new RegExp("(" + pm + "(?:-left|-right|-top|-bottom)? ?: ?([^;$]+)([;$]?))", "gim");
+					pattern = new RegExp("(" + pm + "(?:\-left|\-right|\-top|\-bottom)? ?: ?([^;$]+)([;$]?))", "gim");
 				for(; bi < bj; bi++) {
-					var before = block[bi].match(/([.#\w ,:-\[\]=\"\']+?)\{([\s\S]*?)\}/im)[2],
-						properties = block[bi].match(/([.#\w ,:-\[\]=\"\']+?)\{([\s\S]*?)\}/im)[2],
+					var before = block[bi].match(/([.#\w ,:\-\[\]=\"\']+?)\{([\s\S]*?)\}/im)[2],
+						properties = block[bi].match(/([.#\w ,:\-\[\]=\"\']+?)\{([\s\S]*?)\}/im)[2],
 						paddings = properties.match(pattern);
 
 					if(paddings != null) {
@@ -251,7 +251,7 @@
 								j = properties.match(pattern),
 								j = j != null ? j.length : 0,
 								i = 0;
-							properties = properties.replace(RegExp("("+pm+"(?:-left|-right|-top|-bottom)? ?: ?([^;$]+)([;$]?)([\r\n]?))","gim"),function (a,b,cc,d,endl){
+							properties = properties.replace(RegExp("("+pm+"(?:\-left|\-right|\-top|\-bottom)? ?: ?([^;$]+)([;$]?)([\r\n]?))","gim"),function (a,b,cc,d,endl){
 								if(++i == j) {
 									return pm + ":" + c + (d||"")+endl;
 								} else {
@@ -313,9 +313,9 @@
 				//一部圧縮の際のオプション
 				b = b.replace(/^[\s]*/gm, "")
 					.replace(/[\r\n]/g, "")
-					.replace(/[\t ]*([,:;\{]|(?:!important))[\t ]*/g, "$1")
+					.replace(/[\t ]*([,:;\{]|!important)[\t ]*/g, "$1")
 					.replace(/[\t ]*;[\t ]*\}[\t\d]*/g, "}")
-					.replace(/([^\t ]+?)[\t ]*}[\t ]*/g, "$1}");
+					.replace(/([^\t ]+?)[\t ]*\}[\t ]*/g, "$1}");
 				//上からインデント、改行、いらないスペース、いらないセミコロン、いらない}前後の空白の削除
 			} else {
 				var InputPartOption={
@@ -354,7 +354,7 @@
 			if(-1 != b.indexOf("margin") && InputOption.margin) b = makeshort(b, "margin");//マージン最適化
 			if(InputOption.color) b = b.replace(/\#([0-9a-fA-F])\1([0-9a-fA-F])\2([0-9a-fA-F])\3/g, "#$1$2$3");//カラーを6桁から3桁へ
 			if(InputOption.lower){
-				var block_pattern = /([.#\w ,:-\[\]=\"\']+?)\{([\s\S]*?)\}/gim,
+				var block_pattern = /([.#\w ,:\-\[\]=\"\']+?)\{([\s\S]*?)\}/gim,
 					block = b.match(block_pattern),
 					beforeblock = b.match(block_pattern);
 				if(block != null ){
