@@ -16,7 +16,7 @@
 			}
 
 			var logs = ["begin", "testStart", "testDone", "log", "moduleStart", "moduleDone", "done"];
-			for (var i = 0; i < logs.length; i++) {
+			for (var i = 0,j=logs.length; i < j; i++) {
 				createCallback(logs[i]);
 			}
 		}());
