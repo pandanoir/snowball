@@ -308,7 +308,6 @@
 				if(InputOption[Chara]) b=b.replace(replaces[0],replaces[1]);
 			});
 			InputPartOption=void 0;
-			console.log(b)
 			if(!InputOption.option) {
 				//一部圧縮の際のオプション
 				b = b.replace(/^[\s]*/gm, "")
@@ -333,7 +332,6 @@
 				})
 				InputPartOption=void 0;
 			}
-			console.log(b)
 			/*	if (InputOption.font && (block = b.match(/([\#\w\.\, \:\[\]\"\'=-\_]+?)\{([^\{\}]*?)\}/g))) {
 				h = 0;
 				for (e = block.length; h < e; h++) if (selector = block[h].match(/([\#\w\.\, \:\[\]\"\'=-\_]+?)\{([^\{\}]*?)\}/)[1], pro = block[h].match(/([\#\w\.\, \:\[\]\"\'=-\_]+?)\{([^\{\}]*?)\}/)[2], truepro = "", font = [], (fonts = pro.match(/(font-size):(.+?)[\r\n;\}]/gi)) && (fonts = pro.match(/(font-family):(.+?)[\r\n;\}]/gi))) pro = g("(font-style|font-variant|font-weight)"), pro = g("(font-size)"), pro = g("(line-height)"), pro = g("(font-family)"), 0 != font.length && (pro = "font:" + font.join(" ") + ";\n" + pro), truepro = selector + "{" + pro + "}", re = RegExp(block[h]), b = b.replace(re, truepro)
