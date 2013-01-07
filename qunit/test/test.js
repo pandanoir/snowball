@@ -205,5 +205,40 @@
 			$sub.trigger("click");
 			equal($aft.val(), ".white-space{white-space:nowrap;background:#FFF!important;color:#FFF!important;margin:3px 3px 5px}@media screen and (max-device-width:480px){.black,.button{color:#000;margin:0;opacity:.9;padding:3px}}", "\u5168\u90e8ON ok")
 		})
+		test("option click",2,function(){
+			var $option=TParts.custom("option");
+			for(var i=0;i<2;i++){
+				if($option.hasClass("checked")){
+					$option.trigger("click");
+					equal($("#option_menu").is(":hidden"),true,"changed hidden ok")
+				}else{
+					$option.trigger("click");
+					equal($("#option_menu").is(":visible"),true,"changed visible ok")
+				}
+			}
+		})
+		test("option show click",2,function(){
+			var $custom=$("#option_menu").find("div.customCheckBox").find("a"),$cLen=$custom.length
+			for(var ii=0;ii<2;ii++){
+				if($custom.eq(0).is(":visible")){
+					$("#option_show").trigger("click")
+					for(var i=0,check=true;i<$cLen;i++) $custom.eq(i).is(":visible")&&(check=false)
+					equal(check,true,"changed hidden ok")
+				}else{
+					$("#option_show").trigger("click")
+					for(var i=0,check=true;i<$cLen;i++) $custom.eq(i).is(":hidden")&&(check=false)
+					equal(check,true,"changed visible ok")
+				}
+			}
+		})
+		test("option all click",2,function(){
+			var $custom=$("#option_menu").find("div.customCheckBox").find("a"),$cLen=$custom.length
+			$("#option_all").trigger("click")
+			for(var i=0,check=true;i<$cLen;i++) $custom.eq(i).hasClass("checked")&&(check=false)
+			equal(check,true,"change all non checked");
+			$("#option_all").trigger("click")
+			for(var i=0,check=true;i<$cLen;i++) !$custom.eq(i).hasClass("checked")&&(check=false)
+			equal(check,true,"change all checked");
+		})
 	})
 })(jQuery);
