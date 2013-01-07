@@ -1,10 +1,17 @@
 (function(window,$){
 	$(function () {
 		$("body").on("dragover",function(event){
-			event.preventDefault();
-			event.stopPropagation();
+			event.pd();
+			event.sp();
 			return false;
 		});
+		$.Event.fn=$.Event.prototype
+		$.Event.fn.pd=function(){
+			this.preventDefault();
+		}
+		$.Event.fn.sp=function(){
+			this.stopPropagation();
+		}
 		var $rform = $("#rform"),
 			$lform=$("#lform"),
 			$compress=$lform.find("#compress"),
@@ -43,33 +50,35 @@
 				SelectOption[$select.eq(i).attr("id")]=$select.eq(i).find("option:selected").val();
 			}
 		}
+		
 		if($option.attr("checked")){
 			$option_show.text("Hide");
 			$menu.show();
 		}else{
 			$options.css("border-left","3px solid #CCC");
 		}
+		
 		$rform.css3form();
 		var $custom = $menu.find("div.customCheckBox").find("a"),
 			$customWid = $custom.css("width"),
 			$menuWid = $menu.css("width");
 		$lform.on("click", ".select , .reset", function (event) {
 			//リセットボタンとセレクトボタンを押した時に選択状態にする
-			event.stopPropagation();
+			event.sp();
 			$(this).siblings("textarea").select()
 		}).on("click","#compress",compress).find("#bef").select();
 		if(window.File){
 			$bef.on("dragenter",function(event){
-				event.preventDefault();
-				event.stopPropagation();
+				event.pd();
+				event.sp();
 			}).on("dragover",function(event){
 				event.originalEvent.dataTransfer.dropEffect="copy";
-				event.preventDefault();
-				event.stopPropagation();
+				event.pd();
+				event.sp();
 			}).on("drop",function(event){
 				//ドラッグアンドドロップ
-				event.preventDefault();
-				event.stopPropagation();
+				event.pd();
+				event.sp();
 				event=event.originalEvent;
 				var files=event.dataTransfer.files;
 				SelectOption.encode=$select.filter("#encode").find("option:selected").val();
@@ -89,8 +98,8 @@
 			if( !((!e.metaKey&&e.ctrlKey)||(e.metaKey&&!e.ctrlKey)) ) return;
 			if(e.keyCode==13) $compress.trigger("click")//Ctrl+Enterで圧縮
 			else if(e.altKey&&(e.keyCode==80||e.keyCode==83)){
-				event.preventDefault();
-				event.stopPropagation();
+				event.pd();
+				event.sp();
 				$compress.trigger("click");
 				if(e.keyCode==80) $aft.val($aft.val().replace(/(http:\/\/)/g,"//"));//http://を省略
 				else $aft.val($aft.val().replace(/(https:\/\/)/g,"//"));//https://を省略
@@ -100,7 +109,7 @@
 		$option.on("click",function (e) {
 			//一部だけ圧縮するを押した際の挙動。
 			//ここでのメニューは一部圧縮時メニューのこと
-			e.stopPropagation();
+			e.sp();
 			if($custom.is(":animated")||$menu.is(":animated")) return;
 			else if($option.attr("checked")) {
 				//メニューが表示されていたら非表示にする
@@ -116,8 +125,8 @@
 			}
 		});
 		$option_show.on("click",function (e) {
-			e.preventDefault();
-			e.stopPropagation();
+			e.pd();
+			e.sp();
 			//Show、Hideボタンの動作
 			if($custom.is(":animated")||$menu.is(":animated")) return;
 			else if($custom.is(":visible")) {
@@ -131,8 +140,8 @@
 			}
 		});
 		$option_all.on("click",function(e){
-			e.preventDefault();
-			e.stopPropagation();
+			e.pd()
+			e.sp();
 			//Allボタンの挙動
 			if(!$custom.is(":visible")) return
 			for(var i=0,j=$custom.length;i<j;i++){
@@ -147,8 +156,8 @@
 			toggle=!toggle;
 		});
 		$rform.on("click","#save",function(event){
-			event.preventDefault();
-			event.stopPropagation();
+			event.pd();
+			event.sp();
 			for(var i=0,j=$input.length;i<j;i++){
 				InputOption[$input.eq(i).attr("id")]=($input.eq(i).attr("checked")=="checked");
 			}
@@ -160,14 +169,14 @@
 			//オプション設定の保存
 		})
 		$("#wrench").on("click",function(event){
-			event.preventDefault();
-			event.stopPropagation();
+			event.pd();
+			event.sp();
 			$options.toggle();
 			$results.toggle();
 		});
 		function compress(event) {
-			event.preventDefault();
-			event.stopPropagation();
+			event.pd();
+			event.sp();
 			function cb(g) {
 				//バイト数カウント
 				for(var c = d = 0, b = g.length; d < b; d++) c += 4 > escape(g.charAt(d)).length ? 1 : 2;
