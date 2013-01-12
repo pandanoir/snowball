@@ -221,6 +221,14 @@
 							push(block[i]);
 						}
 					}else{
+						str={
+							properties:str,
+							string:str,
+							change:function(str){
+								this.string=str;
+								this.properties=/\{([\s\S]+?)\}/.exec(str)[1];
+							}
+						}
 						push(str)
 					}
 				}
