@@ -124,24 +124,27 @@
 		".white-space{\n\twhite-space: nowrap;\n\tbackground :#FFF!important;\n\tcolor : #FFFFFF!important;\n\t margin:3px 3px 5px 3px;\n}\n@media screen and (max-device-width:480px){\n\t.black , .button {\n\t color:black;/*OK*/\n\t margin: 0px;\n\t opacity:0.9;\n\t padding:3px 3px 3px 3px;\n\t}\n}",
 		".white-space{\n\twhite-space: nowrap;\n\tbackground :#FFF!important;\n\tcolor : #FFFFFF !important ;\n\t margin:3px 3px 5px 3px;\n}\n@media screen and (max-device-width:480px){\n\t.black , .button{\n\t color:black;/*OK*/\n\t margin: 0px;\n\t opacity:0.9;\n\t padding:3px 3px 3px 3px;\n\t}\n}",
 		".white-space{\n\twhite-space: nowrap;\n\tbackground :#FFF!important;\n\tcolor : #FFFFFF !important ;\n\t margin:3px 3px 5px 3px;\n}\n@media screen and (max-device-width:480px){\n\t.black , .button {\n\t color:black;/*OK*/\n\t margin: 0px;\n\t opacity:0.9;\n\t padding:3px 3px 3px 3px;\n\t}\n}"]
-		test("Each true",function(){
+		test("Each true",1+$cLen,function(){
 			var ng = !1;
 			for (var i = 0; i < $cLen; i++) {
 				TParts.reset().change(i, !0).change("option", !0);
 				$sub.clicked();
 				if ($aft.val() !== resultStr[i]){
 					ng = !0;
-					break
-				}
+					break;
+				}else ok(true,i);
 			}
-			equal(ng, !1, "Each true ok")
+			equal(ng, !1, "Each true ok");
 		})
-		test("Each false",1, function () {
+		test("Each false",1+$cLen, function () {
 			var ng = !1;
 			for (var i = 0; i < $cLen; i++) {
 				TParts.reset().change(i, !1).change("option", !0);
 				$sub.clicked();
-				if ($aft.val() !== str) ng = !0
+				if ($aft.val() !== str){
+					ng = !0;
+					break;
+				}else ok(true,i);
 			}
 			equal(ng, !1, "Each false ok")
 		});
