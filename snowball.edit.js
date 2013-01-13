@@ -204,6 +204,8 @@
 					return result;
 				}
 				that.init=function(str){
+					blocks=[]
+					that.length=0;
 					if(-1!=str.indexOf("{")){
 						var block=str.match(/([.#a-zA-Z ,:\-\[\]=\"\']+?)\{([\s\S]*?)\}/gim);
 						for(var i=0,j=block.length;i<j;i+=1){
@@ -365,13 +367,18 @@
 			for(var i=0,j=$input.length;i<j;i++){
 				InputOption[$input.eq(i).attr("id")]=$input.eq(i).attr("checked");
 			}
+			if(InputOption["comment"]) b=b.replace(/(\/\*([\s]|.)+?\*\/)/g, "");//コメントの削除
 			var InputPartOption={
-				"comment":[/(\/\*([\s]|.)+?\*\/)/g, ""],//コメントの削除
 				"zero":[/(\D)[0](?:em|px|%)/g, "$10"],//0pxなどの単位を削除
 				"decimals":[/([\D])0\.(\d)/g, "$1.$2"]//0.nの0を削除
 			}
 			$.each(InputPartOption,function(Chara,replaces){
-				if(InputOption[Chara]) b=b.replace(replaces[0],replaces[1]);
+				if(InputOption[Chara]){
+					CSSBlock.init(b)
+					for(var i = 0, j = CSSBlock.length ; i<j ; i+=1){
+						b=b.replace(CSSBlock.select(i).properties,CSSBlock.select(i).properties.replace(replaces[0],replaces[1]));//0pxなどの単位を削除
+					}
+				}
 			});
 			if(!InputOption.option) {
 				//一部圧縮の際のオプション
@@ -412,22 +419,16 @@
 			if(-1 !== b.indexOf("margin") && InputOption.margin) b = makeshort(b, "margin");//マージン最適化
 			if(InputOption.color){
 				CSSBlock.init(b)
-				var block=CSSBlock.select()
 				for(var i=0,j=CSSBlock.length;i<j;i++){
 					b = b.replace(CSSBlock.select(i).properties,CSSBlock.select(i).properties.replace(/\#([0-9a-fA-F])\1([0-9a-fA-F])\2([0-9a-fA-F])\3/g, "#$1$2$3"));//カラーを6桁から3桁へ
 				}
 			}
 			if(InputOption.lower){
 				CSSBlock.init(b)
-				var block = CSSBlock.select(),
-					beforeblock = CSSBlock.select();
-				if(block.properties !== "" ){
-					for(var i=0,j=block.length;i<j;i++){
-						block[i].properties = block[i].properties.replace(/([: ,)(]|[\t ]?:[\t ]?)(#[0-9a-fA-F][0-9a-fA-F]?[0-9a-fA-F][0-9a-fA-F]?[0-9a-fA-F][0-9a-fA-F]?)/g, function(all,prop,one){
-							return prop+(one.toLowerCase())
-						});//カラーを小文字か大文字に
-						b=b.replace(beforeblock[i].properties,block[i].properties)
-					}
+				for(var i=0,j=CSSBlock.length;i<j;i++){
+					b=b.replace(CSSBlock.select(i).properties,CSSBlock.select(i).properties.replace(/([: ,)(]|[\t ]?:[\t ]?)(#[0-9a-fA-F][0-9a-fA-F]?[0-9a-fA-F][0-9a-fA-F]?[0-9a-fA-F][0-9a-fA-F]?)/g,function(all,prop,one){
+						return prop+(one.toLowerCase())//カラーを小文字か大文字に
+					}))
 				}
 			}
 			var afterSize = cb(b);
