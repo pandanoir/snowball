@@ -1,23 +1,21 @@
-module("update")
-$(function(){
-	var $clone=String($("#board").html());
-	test("update",function(){
-		var $board=$("<div/>").appendTo("body").load("//pandanoir.web.fc2.com/snowball/snowball.html #board",null,function(){
-			loadComplete=true;
-			ok(true,"html loaded")
-		});
-		var loadComplete=false,stopTime=true;
-		ok(!loadComplete,"loadComplete is ready")
-		stop();
-		setTimeout(checker,10)
-		function checker(){
-			if(stopTime){start();stopTime=false}
-			if(loadComplete){
-				equal($clone.replace(/	/g,""),$board.children().unwrap().html().replace(/	/g,""),"Async");
-				$board.remove()
-			}else{
-				setTimeout(checker,10)
+(function (a) {
+	module("update");
+	a(function () {
+		var $clone = String(a("#board").html());
+		test("update", function () {
+			function b() {
+				stopTime && (start(), stopTime = !1);
+				loadComplete ? (equal($clone.replace(/\t/g, ""), $board.children().unwrap().html().replace(/\t/g, ""), "Async"), $board.remove()) : setTimeout(b, 1)
 			}
-		}
+			$board = a("<div/>").load("//pandanoir.web.fc2.com/snowball/snowball.html #board", null, function () {
+				loadComplete = !0;
+				ok(!0, "html loaded")
+			});
+			var loadComplete = !1,
+				stopTime = !0;
+			ok(!loadComplete, "loadComplete is ready");
+			stop();
+			setTimeout(b,1)
+		})
 	})
-})
+})(jQuery);
