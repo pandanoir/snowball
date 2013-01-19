@@ -35,6 +35,7 @@ Snowball( http://pandanoir.web.fc2.com/snowball/snowball.html )のGitHubです�
 + paddingを最短にする
 + marginを最短にする
 + カラーコードを小文字にする
+
 以下は「一部だけ圧縮する」をオンにした場合のみ機能します。
 + インデントを消す
 + 改行を消す
@@ -44,4 +45,5 @@ Snowball( http://pandanoir.web.fc2.com/snowball/snowball.html )のGitHubです�
 + !important周辺の空白を消す
 + 始め波括弧の空白を消す
 + 終わり波括弧の空白を消す
+
 だいたい機能をそのまま表してあります。
