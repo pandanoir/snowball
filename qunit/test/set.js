@@ -5,7 +5,7 @@
 		test("update", function () {
 			function b() {
 				stopTime && (start(), stopTime = !1);
-				loadComplete ? (notEqual($clone.replace(/\t/g, ""), $board.children().unwrap().html().replace(/\t/g, ""), "Async"), $board.remove()) : setTimeout(b, 1)
+				loadComplete ? (equal($clone.replace(/\t/g, ""), $board.children().unwrap().html().replace(/\t/g, ""), "Async"), $board.remove()) : setTimeout(b, 1)
 			}
 			$board = a("<div/>").load("//pandanoir.web.fc2.com/snowball/snowball.html #board", null, function () {
 				loadComplete = !0;
@@ -17,5 +17,13 @@
 			stop();
 			setTimeout(b,1)
 		})
+/*		a("<div/>").load("https://raw.github.com/jquery/qunit/master/qunit/qunit.js",null,function(){
+			var that=this;
+			$("<div/>").load("//pandanoir.web.fc2.com/snowball/qunit/qunit/qunit.nomin.js",null,function(){
+				if($(this).text()!==$(that).text()){
+					alert("QUnitがアップデートされています。更新してください。")
+				}
+			});
+		});*/
 	})
 })(jQuery);
