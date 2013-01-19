@@ -5,7 +5,7 @@
 		test("update", function () {
 			function b() {
 				stopTime && (start(), stopTime = !1);
-				loadComplete ? (equal($clone.replace(/\t/g, ""), $board.children().unwrap().html().replace(/\t/g, ""), "Async"), $board.remove()) : setTimeout(b, 1)
+				loadComplete ? (notEqual($clone.replace(/\t/g, ""), $board.children().unwrap().html().replace(/\t/g, ""), "Async"), $board.remove()) : setTimeout(b, 1)
 			}
 			$board = a("<div/>").load("//pandanoir.web.fc2.com/snowball/snowball.html #board", null, function () {
 				loadComplete = !0;
