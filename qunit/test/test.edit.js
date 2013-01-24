@@ -13,7 +13,7 @@
 				return this.hasClass("checked")
 			},
 			clicked:function(){
-				this.trigger("click")
+				this.click()
 			}
 		})
 		/*str
@@ -53,10 +53,11 @@
 			カンマ周辺の空白を消す true
 			コロン周辺の空白を消す true
 			セミコロン周辺の空白を消す true
+			不要なセミコロンを消す true
 			!important周辺の空白を消す true
 			始め波括弧の空白を消す true
 			終わり波括弧の空白を消す true*/
-				var values = [!0, !0, !0, !0, !0, !0, !0, !1, !1, !0, !0, !0, !0, !0, !0, !0, !0];
+				var values = [!0, !0, !0, !0, !0, !0, !0, !1, !1, !0, !0, !0, !0,!0, !0, !0, !0, !0];
 				for (var i = 0; i < $cLen; i++) if (TParts.sel(i).isCheck() !== values[i]) TParts.sel(i).clicked();
 				return this
 			}
@@ -66,7 +67,7 @@
 				return this
 			}
 			that.sel= function () {
-				var id={comment: 0,zero: 1,decimals: 2,color: 3,color_name: 4,padding: 5,margin: 6,lower: 7,option: 8,indent: 9,line: 10,comma: 11,colon: 12,semicolon: 13,important: 14,sc_bracket: 15,ec_bracket: 16},$custom = $(".customCheckBox").find("a");
+				var id={comment: 0,zero: 1,decimals: 2,color: 3,color_name: 4,padding: 5,margin: 6,lower: 7,option: 8,indent: 9,line: 10,comma: 11,colon: 12,semicolon: 13,needlessSemi:14,important: 15,sc_bracket: 16,ec_bracket: 17},$custom = $(".customCheckBox").find("a");
 				return function(name){
 					if(typeof name === "string") return $custom.eq(id[name]);
 					else if(typeof name === "number") return $custom.eq(name);
