@@ -312,20 +312,17 @@
 					}
 				}
 			});
-			console.log(b)
 			if (!InputOption.option) {
 				//一部圧縮の際のオプション
 				CSSBlock.init(b)
 				for (var i = 0, j = CSSBlock.length; i < j; i += 1) {
-					console.log(CSSBlock.select(i).properties)
 					b = b.replace(CSSBlock.select(i).properties, CSSBlock.select(i).properties.replace(/^[\s]*/gm, "")
 							.replace(/[\r\n]/g, "")
 							.replace(/[\t ]*([,:;\{]|!important)[\t ]*/g, "$1")
 							.replace(/[\t ]*;[\t ]*$/g, "")
 							.replace(/([^\t ]+?)[\t ]*$/g, "$1"))
-					console.log(CSSBlock.select(i).properties)
 				}
-				b=b.replace(/^[\s]*/gm, "")
+				b=b.replace(/^[\t ]*/gm, "")
 					.replace(/[\r\n]/g, "")
 					.replace(/[\t ]*([,:;\{]|!important)[\t ]*/g, "$1")
 					.replace(/[\t ]*;[\t ]*\}[\t\d]*/g, "}")
@@ -333,7 +330,7 @@
 				//上からインデント、改行、いらないスペース、いらないセミコロン、いらない}前後の空白の削除
 			} else {
 				var InputPartOption = {
-					"indent": [/^[\s]*/gm, ""], //インデント
+					"indent": [/^[\t ]*/gm, ""], //インデント
 					"line": [/[\r\n]/g, ""], //改行
 					"comma": [/[\t ]*,[\t ]*/g, ","], //コンマ周辺のスペース
 					"colon": [/[\t ]*:[\t ]*/g, ":"], //コロン周辺のスペース
