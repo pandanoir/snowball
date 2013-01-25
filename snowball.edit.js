@@ -96,7 +96,7 @@
 						blocks[blocks.length] = block;
 						that.length += 1;
 					};
-					function select(num) {
+					function eq(num) {
 						var result, key;
 						if (typeof num === "number") {
 							result = {};
@@ -153,7 +153,7 @@
 						}
 					}
 					that.push = push;
-					that.select = select
+					that.eq = eq
 					that.init = init
 					return that
 				}
@@ -209,12 +209,12 @@
 			//makeshort開始
 			function makeshort(str, pm) {
 				CSSBlock.init(str)
-				var block = CSSBlock.select(),
-					beforeblock = CSSBlock.select(),
+				var block = CSSBlock.eq(),
+					beforeblock = CSSBlock.eq(),
 					pattern = new RegExp("(" + pm + "(?:\-left|\-right|\-top|\-bottom)? ?: ?([^;$]+)([;$]?))", "gim");
 				for (var bi = 0, bj = CSSBlock.length; bi < bj; bi += 1) {
-					var before = CSSBlock.select(bi),
-						after = CSSBlock.select(bi),
+					var before = CSSBlock.eq(bi),
+						after = CSSBlock.eq(bi),
 						paddings = after.properties.match(pattern);
 
 					if (paddings !== null) {
@@ -299,7 +299,8 @@
 				if (InputOption[Chara]) {
 					CSSBlock.init(b)
 					for (var i = 0, j = CSSBlock.length; i < j; i += 1) {
-						b = b.replace(CSSBlock.select(i).properties, CSSBlock.select(i).properties.replace(replaces[0], replaces[1])); //0pxなどの単位を削除
+						var now=CSSBlock.eq(i);
+						b = b.replace(now.string,now.string.replace(now.properties, now.properties.replace(replaces[0], replaces[1]))); //0pxなどの単位を削除
 					}
 				}
 			});
@@ -307,7 +308,9 @@
 				//一部圧縮の際のオプション
 				CSSBlock.init(b)
 				for (var i = 0, j = CSSBlock.length; i < j; i += 1) {
-					b = b.replace(CSSBlock.select(i).properties, CSSBlock.select(i).properties.replace(/^[\s]*/gm, "")
+					var now=CSSBlock.eq(i);
+					b = b.replace(now.string,now.string
+							.replace(now.properties, now.properties.replace(/^[\s]*/gm, ""))
 							.replace(/[\r\n]/g, "")
 							.replace(/[\t ]*([,:;\{]|!important)[\t ]*/g, "$1")
 							.replace(/[\t ]*;[\t ]*$/g, "")
@@ -335,7 +338,8 @@
 					if (InputOption[Chara]){
 						CSSBlock.init(b)
 						for (var i = 0, j = CSSBlock.length; i < j; i += 1) {
-							b = b.replace(CSSBlock.select(i).properties, CSSBlock.select(i).properties.replace(replaces[0], replaces[1]))
+							var now=CSSBlock.eq(i);
+							b = b.replace(now.string,now.string.replace(now.properties,now.properties.replace(replaces[0], replaces[1])))
 						}
 						if(Chara!=="needlessSemi")b=b.replace(replaces[0], replaces[1]);
 						else b=b.replace(/[\t ]*;[\t ]*\}[\t\d]*/g, "}");
@@ -479,8 +483,9 @@
 				CSSBlock.init(b);
 				for (h in color) {
 					for (var i = 0, j = CSSBlock.length; i < j; i += 1) {
-						if (-1 !== CSSBlock.select(i).properties.indexOf(h)) {
-							b = b.replace(CSSBlock.select(i).properties, CSSBlock.select(i).properties.replace(RegExp("([: ,\)\(]|[\t ]?:[\t ]?)([^;\{\}]*?)" + h + "((?:!important)|[, )(;}\n\r])", "gim"), "$1$2" + color[h] + "$3"))
+						if (-1 !== CSSBlock.eq(i).properties.indexOf(h)) {
+							var now=CSSBlock.eq(i);
+							b = b.replace(now.string,now.string.replace(now.properties, now.properties.replace(RegExp("([: ,\)\(]|[\t ]?:[\t ]?)([^;\{\}]*?)" + h + "((?:!important)|[, )(;}\n\r])", "gim"), "$1$2" + color[h] + "$3")))
 						}
 					}
 				}
@@ -490,15 +495,17 @@
 			if (InputOption.color) {
 				CSSBlock.init(b)
 				for (var i = 0, j = CSSBlock.length; i < j; i += 1) {
-					b = b.replace(CSSBlock.select(i).properties, CSSBlock.select(i).properties.replace(/\#([0-9a-fA-F])\1([0-9a-fA-F])\2([0-9a-fA-F])\3/g, "#$1$2$3")); //カラーを6桁から3桁へ
+					var now=CSSBlock.eq(i);
+					b = b.replace(now.string,now.string.replace(now.properties, now.properties.replace(/\#([0-9a-fA-F])\1([0-9a-fA-F])\2([0-9a-fA-F])\3/g, "#$1$2$3"))); //カラーを6桁から3桁へ
 				}
 			}
 			if (InputOption.lower) {
 				CSSBlock.init(b)
 				for (var i = 0, j = CSSBlock.length; i < j; i += 1) {
-					b = b.replace(CSSBlock.select(i).properties, CSSBlock.select(i).properties.replace(/([: ,)(]|[\t ]?:[\t ]?)(#[0-9a-fA-F][0-9a-fA-F]?[0-9a-fA-F][0-9a-fA-F]?[0-9a-fA-F][0-9a-fA-F]?)/g, function (all, prop, one) {
+					var now=CSSBlock.eq(i)
+					b = b.replace(now.string,now.string.replace(now.properties, now.properties.replace(/([: ,)(]|[\t ]?:[\t ]?)(#[0-9a-fA-F][0-9a-fA-F]?[0-9a-fA-F][0-9a-fA-F]?[0-9a-fA-F][0-9a-fA-F]?)/g, function (all, prop, one) {
 						return prop + (one.toLowerCase()) //カラーを小文字か大文字に
-					}))
+					})))
 				}
 			}
 			var afterSize = cb(b);

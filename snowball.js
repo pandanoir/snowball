@@ -1,1 +1,632 @@
-(function(J,l){l(function(){l("body").on("dragover",function(b){b.pd().sp();return!1});var D=l("#rform"),y=l("#lform"),F=y.find("#compress"),v=D.find("#options"),h=v.find("input"),p=v.find("select"),j=v.find("#option_menu"),G=v.find("#option"),w=j.find("#option_show"),L=j.find("#option_all"),E=D.find("#results"),A=y.find("#aft"),H=y.find("#bef"),B=localStorage,C=JSON,I=!0,q,r,b,m,s,K;if(null!==C.parse(B.getItem("input_option"))){q=C.parse(B.getItem("input_option"));r=C.parse(B.getItem("select_option"));b=0;for(m=h.length;b<m;b+=1)q[h.eq(b).attr("id")]?h.eq(b).attr("checked",!0):h.eq(b).attr("checked",!1);b=0;for(m=p.length;b<m;b+=1)p.eq(b).val(r[p.eq(b).attr("id")])}else{q={};r={};b=0;for(m=h.length;b<m;b+=1)q[h.eq(b).attr("id")]=h.eq(b).attr("checked");b=0;for(m=p.length;b<m;b+=1)r[p.eq(b).attr("id")]=p.eq(b).find("option:selected").val()}G.attr("checked")?(w.text("Hide"),j.show()):v.css("border-left","3px solid #CCC");D.css3form();s=j.find("div.customCheckBox").find("a");K=s.css("width");j.css("width");y.on("click",".select , .reset",function(b){b.sp();l(this).siblings("textarea").select()}).on("click","#compress",function(b){function m(b){for(var c=0,d=0,e=b.length;d<e;)c+=4>escape(b.charAt(d)).length?1:2,d+=1;return c}function s(b,c){e.init(b);for(var d=e.select(),f=e.select(),m=RegExp("("+c+"(?:-left|-right|-top|-bottom)? ?: ?([^;$]+)([;$]?))","gim"),z=0,q=e.length;z<q;z+=1){var t=e.select(z),p=e.select(z),h=p.properties.match(m);if(null!==h){for(var u=null,j=null,k=null,l=null,n=0,v=h.length;n<v;n+=1){h[n]=h[n].replace(m,"$1:$2").split(":");h[n][1]=h[n][1].replace(/;$/,"");var r=h[n][0].toLowerCase();r===c?(a=h[n][1].replace(/;/g,"").replace(/ /g,",").split(","),g=a.length,2===g?(u=j=a[0],k=l=a[1]):3===g?(u=a[0],k=l=a[1],j=a[2]):4===g?(u=a[0],k=a[1],j=a[2],l=a[3]):u=k=j=l=a[0]):r===c+"-top"?u=h[n][1]:r===c+"-right"?k=h[n][1]:r===c+"-bottom"?j=h[n][1]:r===c+"-left"&&(l=h[n][1])}if(null!==u&&null!==k&&null!==l&&null!==j){var x=u===k&&u===j&&u===l?u:u===j&&k===l&&u!==k?u+" "+k:k===l&&u!==j?u+" "+k+" "+j:u+" "+k+" "+j+" "+l,w=p.properties.match(m),w=null!==w?w.length:0,y=0;p.properties=p.properties.replace(RegExp("("+c+"(?:-left|-right|-top|-bottom)? ?: ?([^;$]+)([;$]?)([\r\n]?))","gim"),function(b,d,e,f,k){y+=1;return y===w?c+":"+x+(f||"")+k:""});d[z].change(d[z].string.replace(t.properties,p.properties))}}}for(n=0;n<q;n+=1)f[n].string!==d[n].string&&(b=b.replace(f[n].string,d[n].string));return b.replace(RegExp("("+c+"[s]?:[s]?)([^;$]+?[;$])","gi"),function(b,c,d){b=d.replace(/ /g,",").split(",");var f=b.length;2===f?b[0]===b[1]&&(d=b[0]):3===f?b[0]===b[2]&&(d=b[0]===b[1]?b[0]:b[0]+" "+b[1]):4===f&&b[1]===b[3]&&(b[0]===b[2]?b[0]!==b[1]&&(d=b[0]+" "+b[1]):d=b[0]+" "+b[1]+" "+b[2]);return c+d})}var d=H.val(),x=m(d),p=Math,e=function(){function b(c){f[f.length]=c;d.length+=1}var d={},f=[];d.length=0;d.push=b;d.select=function(b){var d,e;if("number"===typeof b)for(e in d={},f[b])f[b].hasOwnProperty(e)&&(d[e]=f[b][e]);else{d=[];c=0;for(k=f.length;c<k;c+=1)for(e in d[c]={},f[c])f[c].hasOwnProperty(e)&&(d[c][e]=f[c][e])}return d};d.init=function(e){f=[];d.length=0;if(-1!==e.indexOf("{")){var h=e.match(/([.#a-zA-Z ,:\-\[\] = \"\']+?)\{([\s\S]*?)\}/gim),j=function(b){this.string=b;this.selector=/\{([\s\S]+?)\}/.exec(b)[1];this.properties=/\{([\s\S]+?)\}/.exec(b)[1]};c=0;for(k=h.length;c<k;c+=1)e.replace(h[c],""),h[c]={selector:/([^\{]+?)\{/.exec(h[c])[1],properties:/\{([\s\S]*?)\}/.exec(h[c])[1],string:h[c],change:j},b(h[c])}else j=function(b){this.properties=this.string=b},e={properties:e,string:e,change:j},b(e)};return d},e=e();e.init(d);b.pd().sp();if(!j)var j=E.find("#befB");if(!v)var v=E.find("#aftB");if(!r)var r=E.find("#minus");if(!w)var w=y.find("#mes");for(var c=0,k=h.length;c<k;c+=1)q[h.eq(c).attr("id")]=h.eq(c).attr("checked");q.comment&&(d=d.replace(/(\/\*([\s]|.)+?\*\/)/g,""));b={zero:[/(\D)[0](?:em|px|%)/g,"$10"],decimals:[/([\D])0\.(\d)/g,"$1.$2"]};l.each(b,function(b,c){if(q[b]){e.init(d);for(var f=0,h=e.length;f<h;f+=1)d=d.replace(e.select(f).properties,e.select(f).properties.replace(c[0],c[1]))}});if(q.option)b={indent:[/^[\t ]*/gm,""],line:[/[\r\n]/g,""],comma:[/[\t ]*,[\t ]*/g,","],colon:[/[\t ]*:[\t ]*/g,":"],semicolon:[/[\t ]*;[\t ]*$/g,";"],needlessSemi:[/[\t ]*;[\t ]*([\r\n]*?[\t\r\n ]*?)$/,"$1"],sc_bracket:[/[\t ]*[\{][\t ]*/g,"{"],important:[/[\t ]*(!important)[\t ]*/g,"$1"],ec_bracket:[/([^\t ]+?)[\t ]*;[\t ]*\}[\t ]*/g,"$1}"]},l.each(b,function(b,c){if(q[b]){e.init(d);for(var f=0,h=e.length;f<h;f+=1)d=d.replace(e.select(f).properties,e.select(f).properties.replace(c[0],c[1]));d="needlessSemi"!==b?d.replace(c[0],c[1]):d.replace(/[\t ]*;[\t ]*\}[\t\d]*/g,"}")}});else{e.init(d);c=0;for(k=e.length;c<k;c+=1)d=d.replace(e.select(c).properties,e.select(c).properties.replace(/^[\s]*/gm,"").replace(/[\r\n]/g,"").replace(/[\t ]*([,:;\{]|!important)[\t ]*/g,"$1").replace(/[\t ]*;[\t ]*$/g,"").replace(/([^\t ]+?)[\t ]*$/g,"$1"));d=d.replace(/^[\t ]*/gm,"").replace(/[\r\n]/g,"").replace(/[\t ]*([,:;\{]|!important)[\t ]*/g,"$1").replace(/[\t ]*;[\t ]*\}[\t\d]*/g,"}").replace(/([^\t ]+?)[\t ]*\}[\t ]*/g,"$1}")}if(q.color_name){b={aliceblue:"#f0f8ff",antiquewhite:"#faebd7",aquamarine:"#7fffd4",black:"#000",blanchedalmond:"#ffebcd",blueviolet:"#8a2be2",burlywood:"#deb887",cadetblue:"#5f9ea0",chartreuse:"#7fff00",chocolate:"#d2691e",cornflowerblue:"#6495ed",cornsilk:"#fff8dc",darkblue:"#00008b",darkcyan:"#008b8b",darkgoldenrod:"#b8860b",darkgray:"#a9a9a9",darkgreen:"#006400",darkkhaki:"#bdb76b",darkmagenta:"#8b008b",darkolivegreen:"#556b2f",darkorange:"#ff8c00",darkorchid:"#9932cc",darksalmon:"#e9967a",darkseagreen:"#8fbc8f",darkslateblue:"#483d8b",darkslategray:"#2f4f4f",darkturquoise:"#00ced1",darkviolet:"#9400d3",deeppink:"#ff1493",deepskyblue:"#00bfff",dodgerblue:"#1e90ff",firebrick:"#b22222",floralwhite:"#fffaf0",forestgreen:"#228b22",fuchsia:"#f0f",gainsboro:"#dcdcdc",ghostwhite:"#f8f8ff",goldenrod:"#daa520",greenyellow:"#adff2f",honeydew:"#f0fff0",indianred:"#cd5c5c",lavendar:"#e6e6fa",lavenderblush:"#fff0f5",lawngreen:"#7cfc00",lemonchiffon:"#fffacd",lightblue:"#add8e6",lightcoral:"#f08080",lightcyan:"#e0ffff",lightgoldenrodyellow:"#fafad2",lightgray:"#d3d3d3",lightgreen:"#90ee90",lightpink:"#ffb6c1",lightsalmon:"#ffa07a",lightseagreen:"#20b2aa",lightskyblue:"#87cefa",lightslategray:"#789",lightsteelblue:"#b0c4de",lightyellow:"#ffffe0",limegreen:"#32cd32",magenta:"#f0f",mediumaquamarine:"#66cdaa",mediumblue:"#0000cd",mediumorchid:"#ba55d3",mediumpurple:"#9370db",mediumseagreen:"#3cb371",mediumslateblue:"#7b68ee",mediumspringgreen:"#00fa9a",mediumturquoise:"#48d1cc",mediumvioletred:"#c71585",midnightblue:"#191970",mintcream:"#f5fffa",mistyrose:"#ffe4e1",moccasin:"#ffe4b5",navajowhite:"#ffdead",olivedrab:"#6b8e23",orangered:"#ff4500",palegoldenrod:"#eee8aa",palegreen:"#98fb98",paleturquoise:"#afeeee",palevioletred:"#db7093",papayawhite:"#ffefd5",peachpuff:"#ffdab9",powderblue:"#b0e0e6",rosybrown:"#bc8f8f",royalblue:"#4169e1",saddlebrown:"#8b4513",sandybrown:"#f4a460",seagreen:"#2e8b57",seashell:"#fff5ee",slateblue:"#6a5acd",slategray:"#708090",springgreen:"#00ff7f",steelblue:"#4682b4",turquoise:"#40e0d0",white:"#fff",whitesmoke:"#f5f5f5",yellow:"#ff0",yellowgreen:"#9acd32","#f0ffff":"azure","#f5f5dc":"beige","#ffe4c4":"bisque","#a52a2a":"brown","#ff7f50":"coral","#ffd700":"gold","#808080":"gray","#008000":"green","#4b0082":"indigo","#fffff0":"ivory","#f0e68c":"khaki","#faf0e6":"linen","#800000":"maroon","#000080":"navy","#808000":"olive","#ffa500":"orange","#da70d6":"orchid","#cd853f":"peru","#ffc0cb":"pink","#dda0dd":"plum","#800080":"purple","#ff0000":"red","#f00":"red","#fa8072":"salmon","#a0522d":"sienna","#c0c0c0":"silver","#fffafa":"snow","#d2b48c":"tan","#008080":"teal","#ff6347":"tomato","#ee82ee":"violet","#f5deb3":"wheat"};var t;e.init(d);for(t in b){c=0;for(k=e.length;c<k;c+=1)-1!==e.select(c).properties.indexOf(t)&&(d=d.replace(e.select(c).properties,e.select(c).properties.replace(RegExp("([: ,)(]|[\t ]?:[\t ]?)([^;{}]*?)"+t+"((?:!important)|[, )(;}\n\r])","gim"),"$1$2"+b[t]+"$3")))}}-1!==d.indexOf("padding")&&q.padding&&(d=s(d,"padding"));-1!==d.indexOf("margin")&&q.margin&&(d=s(d,"margin"));if(q.color){e.init(d);c=0;for(k=e.length;c<k;c+=1)d=d.replace(e.select(c).properties,e.select(c).properties.replace(/\#([0-9a-fA-F])\1([0-9a-fA-F])\2([0-9a-fA-F])\3/g,"#$1$2$3"))}if(q.lower){e.init(d);c=0;for(k=e.length;c<k;c+=1)d=d.replace(e.select(c).properties,e.select(c).properties.replace(/([: ,)(]|[\t ]?:[\t ]?)(#[0-9a-fA-F][0-9a-fA-F]?[0-9a-fA-F][0-9a-fA-F]?[0-9a-fA-F][0-9a-fA-F]?)/g,function(b,c,d){return c+d.toLowerCase()}))}t=m(d);A.val(d).select();1024>x?(j.text(x+" B"),v.text(t+" B"),r.text(x===t?"\u00b10B(0%)":"-"+(x-t)+" B("+(100-100*t/x).toFixed(2)+"%)")):(j.text(p.floor(x/1024)+" KB("+x+" B)"),v.text(p.floor(t/1024)+" KB("+t+" B)"),r.text(x===t?"\u00b10B(0%)":"-"+p.floor((x-t)/1024)+" KB("+(x-t)+" B)("+(100-100*t/x).toFixed(2)+"%)"));w.stop(!0,!1).addClass("on").css("opacity","1").fadeTo(1500,0.3,function(){l(this).removeClass("on")})}).find("#bef").select();if(J.File)H.on("dragenter",function(b){b.pd().sp()}).on("dragover",function(b){b.originalEvent.dataTransfer.dropEffect="copy";b.pd().sp()}).on("drop",function(f){f.pd().sp();f=f.originalEvent;f=f.dataTransfer.files;r.encode=p.filter("#encode").find("option:selected").val();b=0;for(m=f.length;b<m;b+=1){var h=new FileReader;h.readAsText(f[b],r.encode);h.onload=l.proxy(function(){l(this).val(h.result);F.trigger("click")},this)}});else H.attr("placeholder","\u3053\u3053\u306b\u30b3\u30fc\u30c9\u3092\u30da\u30fc\u30b9\u30c8\u3057\u3066\u304f\u3060\u3055\u3044\u3002\u3069\u3046\u3084\u3089\u304a\u4f7f\u3044\u306e\u30d6\u30e9\u30a6\u30b6\u3067\u306f\u30c9\u30e9\u30c3\u30b0\u30a2\u30f3\u30c9\u30c9\u30ed\u30c3\u30d7\u306f\u5bfe\u5fdc\u3057\u3066\u3044\u306a\u3044\u3088\u3046\u3067\u3059\u3002");l(J).on("keydown",function(b){if(!b.metaKey&&b.ctrlKey||b.metaKey&&!b.ctrlKey)if(13===b.keyCode)F.trigger("click");else if(b.altKey&&(80===b.keyCode||83===b.keyCode))return event.pd().sp(),F.trigger("click"),80===b.keyCode?A.val(A.val().replace(/(http:\/\/)/g,"//")):A.val(A.val().replace(/(https:\/\/)/g,"//")),!1});G.on("click",function(b){b.sp();!s.is(":animated")&&!j.is(":animated")&&(G.attr("checked")?(w.text("Show").removeClass("show hide").addClass("show"),j.hide(),v.css("border-left","3px solid #CCC"),s.show().css("width",K)):(w.text("Hide"),j.show(),v.css("border-left","none")))});w.on("click",function(b){b.pd().sp();!s.is(":animated")&&!j.is(":animated")&&(s.is(":visible")?(w.text("Show").removeClass("show hide").addClass("hide"),s.parent().hide()):(w.text("Hide").removeClass("show hide").addClass("show"),s.parent().show()))});L.on("click",function(f){f.pd().sp();if(s.is(":visible")){b=0;for(m=s.length;b<m;b+=1)I?s.eq(b).hasClass("checked")&&s.eq(b).click():s.eq(b).hasClass("checked")||s.eq(b).click();I=!I}});D.on("click","#save",function(f){f.pd().sp();b=0;for(m=h.length;b<m;b+=1)q[h.eq(b).attr("id")]="checked"===h.eq(b).attr("checked");b=0;for(m=p.length;b<m;b+=1)r[p.eq(b).attr("id")]=p.eq(b).find("option:selected").val();B.setItem("input_option",C.stringify(q));B.setItem("select_option",C.stringify(r))});l("#wrench").on("click",function(b){b.pd().sp();v.toggle();E.toggle()})})})(this,jQuery);
+/*global $,escape */
+(function (window, $) {
+	$(function () {
+		$("body").on("dragover", function (event) {
+			event.pd().sp();
+			return false;
+		});
+		var $rform = $("#rform"),
+			$lform = $("#lform"),
+			$compress = $lform.find("#compress"),
+			$options = $rform.find("#options"),
+			$input = $options.find("input"),
+			$select = $options.find("select"),
+			$menu = $options.find("#option_menu"),
+			$option = $options.find("#option"),
+			$option_show = $menu.find("#option_show"),
+			$option_all = $menu.find("#option_all"),
+			$results = $rform.find("#results"),
+			$aft = $lform.find("#aft"),
+			$bef = $lform.find("#bef"),
+			ls = localStorage,
+			$json = JSON,
+			toggle = true,
+			App = {
+				trace: true,
+				log: function () {
+					if (this.trace && "undefined" !== typeof console) {
+						console.log.apply(console, arguments);
+					}
+				}
+			},
+			InputOption,
+			SelectOption,
+			i,
+			j,
+			$custom,
+			$customWid,
+			$menuWid;
+
+		if ($json.parse(ls.getItem("input_option")) !== null) {
+			InputOption = $json.parse(ls.getItem("input_option"));
+			SelectOption = $json.parse(ls.getItem("select_option"));
+			for (i = 0, j = $input.length; i < j; i += 1) {
+				if (InputOption[$input.eq(i).attr("id")]) {
+					$input.eq(i).attr("checked", true);
+				} else {
+					$input.eq(i).attr("checked", false);
+				}
+			}
+			for (i = 0, j = $select.length; i < j; i += 1) {
+				$select.eq(i).val(SelectOption[$select.eq(i).attr("id")]);
+			}
+			//オプション設定の読み込み
+		} else {
+			InputOption = {};
+			SelectOption = {};
+			for (i = 0, j = $input.length; i < j; i += 1) {
+				InputOption[$input.eq(i).attr("id")] = $input.eq(i).attr("checked");
+			}
+			for (i = 0, j = $select.length; i < j; i += 1) {
+				SelectOption[$select.eq(i).attr("id")] = $select.eq(i).find("option:selected").val();
+			}
+		}
+
+		if ($option.attr("checked")) {
+			$option_show.text("Hide");
+			$menu.show();
+		} else {
+			$options.css("border-left", "3px solid #CCC");
+		}
+
+		$rform.css3form();
+		$custom = $menu.find("div.customCheckBox").find("a");
+		$customWid = $custom.css("width");
+		$menuWid = $menu.css("width");
+
+		function compress(event) {
+			function cb(g) {
+				//バイト数カウント
+				var c = 0, d = 0, b = g.length;
+				while (d < b) {
+					c += 4 > escape(g.charAt(d)).length ? 1 : 2;
+					d += 1;
+				}
+				return c;
+			}
+			var b = $bef.val(),
+				beforeSize = cb(b),
+				m = Math,
+				CSSBlock = function () {
+					var that = {},
+						blocks = [];
+					that.length = 0;
+
+					function push(block) {
+						blocks[blocks.length] = block;
+						that.length += 1;
+					};
+					function eq(num) {
+						var result, key;
+						if (typeof num === "number") {
+							result = {};
+							for (key in blocks[num]) {
+								if (blocks[num].hasOwnProperty(key)) {
+									result[key] = blocks[num][key];
+								}
+							}
+						} else {
+							result = [];
+							for (i = 0, j = blocks.length; i < j; i += 1) {
+								result[i] = {};
+								for (key in blocks[i]) {
+									if (blocks[i].hasOwnProperty(key)) {
+										result[i][key] = blocks[i][key];
+									}
+								}
+							}
+						}
+						return result;
+					};
+					function init(str) {
+						blocks = [];
+						that.length = 0;
+						if (-1 !== str.indexOf("{")) {
+							var block = str.match(/([.#a-zA-Z ,:\-\[\] = \"\']+?)\{([\s\S]*?)\}/gim),//ブロックでわける
+								change = function (str) {
+									this.string = str;
+									this.selector = /\{([\s\S]+?)\}/.exec(str)[1];
+									this.properties = /\{([\s\S]+?)\}/.exec(str)[1];
+								};
+							for (i = 0, j = block.length; i < j; i += 1) {
+								str.replace(block[i], "");
+								block[i] = {
+									selector: /([^\{]+?)\{/.exec(block[i])[1],//セレクタ
+									properties: /\{([\s\S]*?)\}/.exec(block[i])[1],//プロパティ
+									string: block[i],//全体
+									change: change
+								};
+								push(block[i]);
+							}
+						} else {
+						   var change = function (str) {
+								this.string = str;
+								this.properties = str;
+							}
+							str = {
+								properties: str,//プロパティ
+								string: str,//全体
+								//セレクタは存在しない。
+								change: change
+							}
+							push(str)
+						}
+					}
+					that.push = push;
+					that.eq = eq
+					that.init = init
+					return that
+				}
+			CSSBlock = CSSBlock()
+			CSSBlock.init(b);
+			event.pd().sp();
+			if (!$befB) {
+				var $befB = $results.find("#befB")
+			}
+			if (!$aftB) {
+				var $aftB = $results.find("#aftB")
+			}
+			if (!$minus) {
+				var $minus = $results.find("#minus")
+			}
+			if (!$mes) {
+				var $mes = $lform.find("#mes")
+			}
+			/*		function g(a) {
+				var b = pro,c = fonts,a = a + "(.+?)[\r\n;}]",f = 0;
+				if (c = b.match(RegExp(a, "gi"))) {
+					b = b.replace(RegExp(a, "i"), "");
+					for (a = c.length; f < a; f += 1) {
+						font[font.length] = c[f].match(/(.+?)[:](.+?)[\r\n;\}]/)[2]
+					}
+				}
+				return b
+			}*/
+			/*Temp 文字列中かどうか
+			function matchStr(point,str) {
+				var i = 0,start = end = null;
+				while(true) {
+					for (; - 1 != str.indexOf('"', i);) {
+						if (str.indexOf("\\", i) > str.indexOf('"', i) || str.indexOf("\\",i)==-1) {
+							if (null == start) {
+								start = str.indexOf('"', i);
+								i = start+1;
+								if (i>point) return false;
+							} else if (null == end) {
+								end = str.indexOf('"', i);
+								i = end+1;
+								if (end>point && start < point) return true
+								else if (i>point) break
+							}
+						} else {
+							i = str.indexOf("\\", i) + 2;
+						}
+					}
+				}
+				return false
+			};
+			*/
+			//makeshort開始
+			function makeshort(str, pm) {
+				CSSBlock.init(str)
+				var block = CSSBlock.eq(),
+					beforeblock = CSSBlock.eq(),
+					pattern = new RegExp("(" + pm + "(?:\-left|\-right|\-top|\-bottom)? ?: ?([^;$]+)([;$]?))", "gim");
+				for (var bi = 0, bj = CSSBlock.length; bi < bj; bi += 1) {
+					var before = CSSBlock.eq(bi),
+						after = CSSBlock.eq(bi),
+						paddings = after.properties.match(pattern);
+
+					if (paddings !== null) {
+						var paddingsData = {
+							t: null,
+							b: null,
+							r: null,
+							l: null
+						};
+						for (var i = 0, j = paddings.length; i < j; i += 1) {
+							paddings[i] = paddings[i].replace(pattern, "$1:$2").split(":");
+							paddings[i][1] = paddings[i][1].replace(/;$/, "");
+							var property = paddings[i][0].toLowerCase();
+
+							if (property === pm) {
+								a = paddings[i][1].replace(/;/g, "").replace(/ /g, ",").split(",");
+								g = a.length;
+								if (2 === g) paddingsData.t = paddingsData.b = a[0], paddingsData.r = paddingsData.l = a[1];
+								else if (3 === g) paddingsData.t = a[0], paddingsData.r = paddingsData.l = a[1], paddingsData.b = a[2];
+								else if (4 === g) paddingsData.t = a[0], paddingsData.r = a[1], paddingsData.b = a[2], paddingsData.l = a[3];
+								else paddingsData.t = paddingsData.r = paddingsData.b = paddingsData.l = a[0];
+							} else if (property === pm + "-top") paddingsData.t = paddings[i][1];
+							else if (property === pm + "-right") paddingsData.r = paddings[i][1];
+							else if (property === pm + "-bottom") paddingsData.b = paddings[i][1];
+							else if (property === pm + "-left") paddingsData.l = paddings[i][1];
+						}
+						if (paddingsData.t !== null && paddingsData.r !== null && paddingsData.l !== null && paddingsData.b !== null) {
+							var c = paddingsData.t === paddingsData.r && paddingsData.t === paddingsData.b && paddingsData.t === paddingsData.l ? paddingsData.t : paddingsData.t === paddingsData.b && paddingsData.r === paddingsData.l && paddingsData.t !== paddingsData.r ? paddingsData.t + " " + paddingsData.r : paddingsData.r === paddingsData.l && paddingsData.t !== paddingsData.b ? paddingsData.t + " " + paddingsData.r + " " + paddingsData.b : paddingsData.t + " " + paddingsData.r + " " + paddingsData.b + " " + paddingsData.l,
+								jjj = after.properties.match(pattern),
+								jjj = jjj !== null ? jjj.length : 0,
+								iii = 0;
+							after.properties = after.properties.replace(RegExp("(" + pm + "(?:\-left|\-right|\-top|\-bottom)? ?: ?([^;$]+)([;$]?)([\r\n]?))", "gim"), function (a, b, cc, d, endl) {
+								iii += 1
+								if (iii === jjj) {
+									return pm + ":" + c + (d || "") + endl;
+								} else {
+									return ""
+								}
+							})
+							block[bi].change(block[bi].string.replace(before.properties, after.properties));
+						}
+					}
+				}
+				for (var i = 0; i < bj; i += 1) {
+					if (beforeblock[i].string !== block[i].string) str = str.replace(beforeblock[i].string, block[i].string)
+				}
+				return str.replace(RegExp("(" + pm + "[\s]?:[\s]?)([^;$]+?[;$])", "gi"), function (a, property, b) {
+					var values = b.replace(/ /g, ",").split(","),
+						d = values.length,
+						result = b;
+					if (d === 2) {
+						if (values[0] === values[1]) result = values[0]
+					} else if (d === 3) {
+						if (values[0] === values[2]) {
+							if (values[0] === values[1]) result = values[0]
+							else result = values[0] + " " + values[1]
+						}
+					} else if (d === 4) {
+						if (values[1] === values[3]) {
+							if (values[0] === values[2]) {
+								if (values[0] !== values[1]) result = values[0] + " " + values[1]
+							} else {
+								result = values[0] + " " + values[1] + " " + values[2]
+							}
+						}
+					}
+					property = property + result
+					return property
+				})
+			}
+
+			//makeshort終わり
+			for (var i = 0, j = $input.length; i < j; i += 1) {
+				InputOption[$input.eq(i).attr("id")] = $input.eq(i).attr("checked");
+			}
+			if (InputOption["comment"]) b = b.replace(/(\/\*([\s]|.)+?\*\/)/g, ""); //コメントの削除
+			var InputPartOption = {
+				"zero": [/(\D)[0](?:em|px|%)/g, "$10"], //0pxなどの単位を削除
+				"decimals": [/([\D])0\.(\d)/g, "$1.$2"] //0.nの0を削除
+			}
+			$.each(InputPartOption, function (Chara, replaces) {
+				if (InputOption[Chara]) {
+					CSSBlock.init(b)
+					for (var i = 0, j = CSSBlock.length; i < j; i += 1) {
+						var now=CSSBlock.eq(i);
+						b = b.replace(now.string,now.string.replace(now.properties, now.properties.replace(replaces[0], replaces[1]))); //0pxなどの単位を削除
+					}
+				}
+			});
+			if (!InputOption.option) {
+				//一部圧縮の際のオプション
+				CSSBlock.init(b)
+				for (var i = 0, j = CSSBlock.length; i < j; i += 1) {
+					var now=CSSBlock.eq(i);
+					b = b.replace(now.string,now.string
+							.replace(now.properties, now.properties.replace(/^[\s]*/gm, ""))
+							.replace(/[\r\n]/g, "")
+							.replace(/[\t ]*([,:;\{]|!important)[\t ]*/g, "$1")
+							.replace(/[\t ]*;[\t ]*$/g, "")
+							.replace(/([^\t ]+?)[\t ]*$/g, "$1"))
+				}
+				b=b.replace(/^[\t ]*/gm, "")
+					.replace(/[\r\n]/g, "")
+					.replace(/[\t ]*([,:;\{]|!important)[\t ]*/g, "$1")
+					.replace(/[\t ]*;[\t ]*\}[\t\d]*/g, "}")
+					.replace(/([^\t ]+?)[\t ]*\}[\t ]*/g, "$1}");
+				//上からインデント、改行、いらないスペース、いらないセミコロン、いらない}前後の空白の削除
+			} else {
+				var InputPartOption = {
+					"indent": [/^[\t ]*/gm, ""], //インデント
+					"line": [/[\r\n]/g, ""], //改行
+					"comma": [/[\t ]*,[\t ]*/g, ","], //コンマ周辺のスペース
+					"colon": [/[\t ]*:[\t ]*/g, ":"], //コロン周辺のスペース
+					"semicolon": [/[\t ]*;[\t ]*$/g, ";"], //セミコロン周辺のスペース
+					"needlessSemi":[/[\t ]*;[\t ]*([\r\n]*?[\t\r\n ]*?)$/, "$1"],//不要なセミコロン
+					"sc_bracket": [/[\t ]*[\{][\t ]*/g, "{"], // "{" 周辺のスペース
+					"important": [/[\t ]*(!important)[\t ]*/g, "$1"], //!important周辺のスペース
+					"ec_bracket": [/([^\t ]+?)[\t ]*;[\t ]*\}[\t ]*/g, "$1}"] // "}" 周辺のスペース
+				}
+				$.each(InputPartOption, function (Chara, replaces) {
+					if (InputOption[Chara]){
+						CSSBlock.init(b)
+						for (var i = 0, j = CSSBlock.length; i < j; i += 1) {
+							var now=CSSBlock.eq(i);
+							b = b.replace(now.string,now.string.replace(now.properties,now.properties.replace(replaces[0], replaces[1])))
+						}
+						if(Chara!=="needlessSemi")b=b.replace(replaces[0], replaces[1]);
+						else b=b.replace(/[\t ]*;[\t ]*\}[\t\d]*/g, "}");
+					}
+				})
+			}
+			if (InputOption.color_name) {
+				//カラーネームの最適化
+				var color = {
+					aliceblue: "#f0f8ff",
+					antiquewhite: "#faebd7",
+					aquamarine: "#7fffd4",
+					black: "#000",
+					blanchedalmond: "#ffebcd",
+					blueviolet: "#8a2be2",
+					burlywood: "#deb887",
+					cadetblue: "#5f9ea0",
+					chartreuse: "#7fff00",
+					chocolate: "#d2691e",
+					cornflowerblue: "#6495ed",
+					cornsilk: "#fff8dc",
+					darkblue: "#00008b",
+					darkcyan: "#008b8b",
+					darkgoldenrod: "#b8860b",
+					darkgray: "#a9a9a9",
+					darkgreen: "#006400",
+					darkkhaki: "#bdb76b",
+					darkmagenta: "#8b008b",
+					darkolivegreen: "#556b2f",
+					darkorange: "#ff8c00",
+					darkorchid: "#9932cc",
+					darksalmon: "#e9967a",
+					darkseagreen: "#8fbc8f",
+					darkslateblue: "#483d8b",
+					darkslategray: "#2f4f4f",
+					darkturquoise: "#00ced1",
+					darkviolet: "#9400d3",
+					deeppink: "#ff1493",
+					deepskyblue: "#00bfff",
+					dodgerblue: "#1e90ff",
+					firebrick: "#b22222",
+					floralwhite: "#fffaf0",
+					forestgreen: "#228b22",
+					fuchsia: "#f0f",
+					gainsboro: "#dcdcdc",
+					ghostwhite: "#f8f8ff",
+					goldenrod: "#daa520",
+					greenyellow: "#adff2f",
+					honeydew: "#f0fff0",
+					indianred: "#cd5c5c",
+					lavendar: "#e6e6fa",
+					lavenderblush: "#fff0f5",
+					lawngreen: "#7cfc00",
+					lemonchiffon: "#fffacd",
+					lightblue: "#add8e6",
+					lightcoral: "#f08080",
+					lightcyan: "#e0ffff",
+					lightgoldenrodyellow: "#fafad2",
+					lightgray: "#d3d3d3",
+					lightgreen: "#90ee90",
+					lightpink: "#ffb6c1",
+					lightsalmon: "#ffa07a",
+					lightseagreen: "#20b2aa",
+					lightskyblue: "#87cefa",
+					lightslategray: "#789",
+					lightsteelblue: "#b0c4de",
+					lightyellow: "#ffffe0",
+					limegreen: "#32cd32",
+					magenta: "#f0f",
+					mediumaquamarine: "#66cdaa",
+					mediumblue: "#0000cd",
+					mediumorchid: "#ba55d3",
+					mediumpurple: "#9370db",
+					mediumseagreen: "#3cb371",
+					mediumslateblue: "#7b68ee",
+					mediumspringgreen: "#00fa9a",
+					mediumturquoise: "#48d1cc",
+					mediumvioletred: "#c71585",
+					midnightblue: "#191970",
+					mintcream: "#f5fffa",
+					mistyrose: "#ffe4e1",
+					moccasin: "#ffe4b5",
+					navajowhite: "#ffdead",
+					olivedrab: "#6b8e23",
+					orangered: "#ff4500",
+					palegoldenrod: "#eee8aa",
+					palegreen: "#98fb98",
+					paleturquoise: "#afeeee",
+					palevioletred: "#db7093",
+					papayawhite: "#ffefd5",
+					peachpuff: "#ffdab9",
+					powderblue: "#b0e0e6",
+					rosybrown: "#bc8f8f",
+					royalblue: "#4169e1",
+					saddlebrown: "#8b4513",
+					sandybrown: "#f4a460",
+					seagreen: "#2e8b57",
+					seashell: "#fff5ee",
+					slateblue: "#6a5acd",
+					slategray: "#708090",
+					springgreen: "#00ff7f",
+					steelblue: "#4682b4",
+					turquoise: "#40e0d0",
+					white: "#fff",
+					whitesmoke: "#f5f5f5",
+					yellow: "#ff0",
+					yellowgreen: "#9acd32",
+					"#f0ffff": "azure",
+					"#f5f5dc": "beige",
+					"#ffe4c4": "bisque",
+					"#a52a2a": "brown",
+					"#ff7f50": "coral",
+					"#ffd700": "gold",
+					"#808080": "gray",
+					"#008000": "green",
+					"#4b0082": "indigo",
+					"#fffff0": "ivory",
+					"#f0e68c": "khaki",
+					"#faf0e6": "linen",
+					"#800000": "maroon",
+					"#000080": "navy",
+					"#808000": "olive",
+					"#ffa500": "orange",
+					"#da70d6": "orchid",
+					"#cd853f": "peru",
+					"#ffc0cb": "pink",
+					"#dda0dd": "plum",
+					"#800080": "purple",
+					"#ff0000": "red",
+					"#f00": "red",
+					"#fa8072": "salmon",
+					"#a0522d": "sienna",
+					"#c0c0c0": "silver",
+					"#fffafa": "snow",
+					"#d2b48c": "tan",
+					"#008080": "teal",
+					"#ff6347": "tomato",
+					"#ee82ee": "violet",
+					"#f5deb3": "wheat"
+				}, h;
+				CSSBlock.init(b);
+				for (h in color) {
+					for (var i = 0, j = CSSBlock.length; i < j; i += 1) {
+						if (-1 !== CSSBlock.eq(i).properties.indexOf(h)) {
+							var now=CSSBlock.eq(i);
+							b = b.replace(now.string,now.string.replace(now.properties, now.properties.replace(RegExp("([: ,\)\(]|[\t ]?:[\t ]?)([^;\{\}]*?)" + h + "((?:!important)|[, )(;}\n\r])", "gim"), "$1$2" + color[h] + "$3")))
+						}
+					}
+				}
+			}
+			if (-1 !== b.indexOf("padding") && InputOption.padding) b = makeshort(b, "padding"); //パディング最適化
+			if (-1 !== b.indexOf("margin") && InputOption.margin) b = makeshort(b, "margin"); //マージン最適化
+			if (InputOption.color) {
+				CSSBlock.init(b)
+				for (var i = 0, j = CSSBlock.length; i < j; i += 1) {
+					var now=CSSBlock.eq(i);
+					b = b.replace(now.string,now.string.replace(now.properties, now.properties.replace(/\#([0-9a-fA-F])\1([0-9a-fA-F])\2([0-9a-fA-F])\3/g, "#$1$2$3"))); //カラーを6桁から3桁へ
+				}
+			}
+			if (InputOption.lower) {
+				CSSBlock.init(b)
+				for (var i = 0, j = CSSBlock.length; i < j; i += 1) {
+					var now=CSSBlock.eq(i)
+					b = b.replace(now.string,now.string.replace(now.properties, now.properties.replace(/([: ,)(]|[\t ]?:[\t ]?)(#[0-9a-fA-F][0-9a-fA-F]?[0-9a-fA-F][0-9a-fA-F]?[0-9a-fA-F][0-9a-fA-F]?)/g, function (all, prop, one) {
+						return prop + (one.toLowerCase()) //カラーを小文字か大文字に
+					})))
+				}
+			}
+			var afterSize = cb(b);
+			$aft.val(b).select();
+			if (1024 > beforeSize) {
+				$befB.text(beforeSize + " B");
+				$aftB.text(afterSize + " B");
+				$minus.text(beforeSize === afterSize ? "±0B(0%)" : "-" + (beforeSize - afterSize) + " B(" + (100 - afterSize * 100 / beforeSize).toFixed(2) + "%)");
+			} else {
+				$befB.text(m.floor(beforeSize / 1024) + " KB(" + beforeSize + " B)");
+				$aftB.text(m.floor(afterSize / 1024) + " KB(" + afterSize + " B)");
+				$minus.text(beforeSize === afterSize ? "±0B(0%)" : "-" + m.floor((beforeSize - afterSize) / 1024) + " KB(" + (beforeSize - afterSize) + " B)(" + (100 - afterSize * 100 / beforeSize).toFixed(2) + "%)");
+			}
+			$mes.stop(true, false).addClass("on").css("opacity", "1").fadeTo(1500, 0.3, function () {
+				$(this).removeClass("on")
+			})
+		}
+		$lform.on("click", ".select , .reset", function (event) {
+			//リセットボタンとセレクトボタンを押した時に選択状態にする
+			event.sp();
+			$(this).siblings("textarea").select();
+		}).on("click", "#compress", compress).find("#bef").select();
+		if (window.File) {
+			$bef.on("dragenter", function (event) {
+				event.pd().sp();
+			}).on("dragover", function (event) {
+				event.originalEvent.dataTransfer.dropEffect = "copy";
+				event.pd().sp();
+			}).on("drop", function (event) {
+				//ドラッグアンドドロップ
+				event.pd().sp();
+				event = event.originalEvent;
+				var files = event.dataTransfer.files;
+				SelectOption.encode = $select.filter("#encode").find("option:selected").val();
+				for (i = 0, j = files.length; i < j; i += 1) {
+					var reader = new FileReader(),
+						f = files[i];
+					reader.readAsText(f, SelectOption.encode);
+					reader.onload = $.proxy(function () {
+						$(this).val(reader.result);
+						$compress.trigger("click")
+					}, this)
+				}
+			})
+		} else {
+			$bef.attr("placeholder", "ここにコードをペーストしてください。どうやらお使いのブラウザではドラッグアンドドロップは対応していないようです。");
+		}
+		$(window).on("keydown", function (e) {
+			if (!((!e.metaKey && e.ctrlKey) || (e.metaKey && !e.ctrlKey))) return;
+			if (e.keyCode === 13) $compress.trigger("click") //Ctrl+Enterで圧縮
+			else if (e.altKey && (e.keyCode === 80 || e.keyCode === 83)) {
+				event.pd().sp();
+				$compress.trigger("click");
+				if (e.keyCode === 80) $aft.val($aft.val().replace(/(http:\/\/)/g, "//")); //http://を省略
+				else $aft.val($aft.val().replace(/(https:\/\/)/g, "//")); //https://を省略
+				return false;
+			}
+		})
+		$option.on("click", function (e) {
+			//一部だけ圧縮するを押した際の挙動。
+			//ここでのメニューは一部圧縮時メニューのこと
+			e.sp();
+			if ($custom.is(":animated") || $menu.is(":animated")) return;
+			else if ($option.attr("checked")) {
+				//メニューが表示されていたら非表示にする
+				$option_show.text("Show").removeClass("show hide").addClass("show");
+				$menu.hide();
+				$options.css("border-left", "3px solid #CCC");
+				$custom.show().css("width", $customWid);
+			} else {
+				//メニューが非表示だったら表示する
+				$option_show.text("Hide");
+				$menu.show();
+				$options.css("border-left", "none");
+			}
+		});
+		$option_show.on("click", function (e) {
+			e.pd().sp();
+			//Show、Hideボタンの動作
+			if ($custom.is(":animated") || $menu.is(":animated")) return;
+			else if ($custom.is(":visible")) {
+				//チェックボックスが表示されてたら非表示にする
+				$option_show.text("Show").removeClass("show hide").addClass("hide");
+				$custom.parent().hide();
+			} else {
+				//チェックボックスが非表示だったら表示する
+				$option_show.text("Hide").removeClass("show hide").addClass("show");
+				$custom.parent().show();
+			}
+		});
+		$option_all.on("click", function (e) {
+			e.pd().sp();
+			//Allボタンの挙動
+			if (!$custom.is(":visible")) return
+			for (i = 0, j = $custom.length; i < j; i += 1) {
+				if (!toggle) {
+					if (!$custom.eq(i).hasClass("checked")) $custom.eq(i).click()
+					//trueにする
+				} else {
+					if ($custom.eq(i).hasClass("checked")) $custom.eq(i).click()
+					//falseにする
+				}
+			}
+			toggle = !toggle;
+		});
+		$rform.on("click", "#save", function (event) {
+			event.pd().sp();
+			for (i = 0, j = $input.length; i < j; i += 1) {
+				InputOption[$input.eq(i).attr("id")] = ($input.eq(i).attr("checked") === "checked");
+			}
+			for (i = 0, j = $select.length; i < j; i += 1) {
+				SelectOption[$select.eq(i).attr("id")] = $select.eq(i).find("option:selected").val();
+			}
+			ls.setItem("input_option", $json.stringify(InputOption));
+			ls.setItem("select_option", $json.stringify(SelectOption));
+			//オプション設定の保存
+		})
+		$("#wrench").on("click", function (event) {
+			event.pd().sp();
+			$options.toggle();
+			$results.toggle();
+		});
+	});
+}(this, jQuery));
