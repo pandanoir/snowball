@@ -6,14 +6,15 @@
 		<script>
 		(function($){
 			$(function(){
+				$.Event.prototype=$.extend({pd:function(){this.preventDefault();return this},sp:function(){this.stopPropagation();return this}},$.Event.prototype);
 				var $aft=$("#aft"),$bef=$("#bef");
 				$bef.select()
 				$("#replace").on("click",function(event){
-					event.preventDefault();event.stopPropagation();
+					event.pd();event.sp();
 					$aft.val($bef.val().replace(/\n/g,"\\n").replace(/\t/g,"\\t")).select()
 				})
 				$("#back").on("click",function(event){
-					event.preventDefault();event.stopPropagation();
+					event.pd();event.sp();
 					$aft.val($bef.val().replace(/\\n/g,"\n").replace(/\\t/g,"\t")).select()
 				})
 			});
