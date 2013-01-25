@@ -1,15 +1,6 @@
 /*global $,escape */
 (function (window, $) {
 	$(function () {
-		$.Event.fn = $.Event.prototype;
-		$.Event.fn.pd = function () {
-			this.preventDefault();
-			return this;
-		};
-		$.Event.fn.sp = function () {
-			this.stopPropagation();
-			return this;
-		};
 		$("body").on("dragover", function (event) {
 			event.pd().sp();
 			return false;
