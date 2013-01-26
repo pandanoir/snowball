@@ -86,79 +86,8 @@
 			}
 			var b = $bef.val(),
 				beforeSize = cb(b),
-				m = Math,
-				CSSBlock = function () {
-					var that = {},
-						blocks = [];
-					that.length = 0;
-
-					function push(block) {
-						blocks[blocks.length] = block;
-						that.length += 1;
-					};
-					function eq(num) {
-						var result, key;
-						if (typeof num === "number") {
-							result = {};
-							for (key in blocks[num]) {
-								if (blocks[num].hasOwnProperty(key)) {
-									result[key] = blocks[num][key];
-								}
-							}
-						} else {
-							result = [];
-							for (i = 0, j = blocks.length; i < j; i += 1) {
-								result[i] = {};
-								for (key in blocks[i]) {
-									if (blocks[i].hasOwnProperty(key)) {
-										result[i][key] = blocks[i][key];
-									}
-								}
-							}
-						}
-						return result;
-					};
-					function init(str) {
-						blocks = [];
-						that.length = 0;
-						if (-1 !== str.indexOf("{")) {
-							var block = str.match(/([.#a-zA-Z ,:\-\[\] = \"\']+?)\{([\s\S]*?)\}/gim),//ブロックでわける
-								change = function (str) {
-									this.string = str;
-									this.selector = /\{([\s\S]+?)\}/.exec(str)[1];
-									this.properties = /\{([\s\S]+?)\}/.exec(str)[1];
-								};
-							for (i = 0, j = block.length; i < j; i += 1) {
-								str.replace(block[i], "");
-								block[i] = {
-									selector: /([^\{]+?)\{/.exec(block[i])[1],//セレクタ
-									properties: /\{([\s\S]*?)\}/.exec(block[i])[1],//プロパティ
-									string: block[i],//全体
-									change: change
-								};
-								push(block[i]);
-							}
-						} else {
-						   var change = function (str) {
-								this.string = str;
-								this.properties = str;
-							}
-							str = {
-								properties: str,//プロパティ
-								string: str,//全体
-								//セレクタは存在しない。
-								change: change
-							}
-							push(str)
-						}
-					}
-					that.push = push;
-					that.eq = eq
-					that.init = init
-					return that
-				}
-			CSSBlock = CSSBlock()
-			CSSBlock.init(b);
+				m = Math;
+			cssBlock.init(b);
 			event.pd().sp();
 			if (!$befB) {
 				var $befB = $results.find("#befB")
@@ -208,13 +137,15 @@
 			*/
 			//makeshort開始
 			function makeshort(str, pm) {
-				CSSBlock.init(str)
-				var block = CSSBlock.eq(),
-					beforeblock = CSSBlock.eq(),
+				cssBlock.init(str)
+				var block = cssBlock.eq(),
+					beforeblock = cssBlock.eq(),
 					pattern = new RegExp("(" + pm + "(?:\-left|\-right|\-top|\-bottom)? ?: ?([^;$]+)([;$]?))", "gim");
-				for (var bi = 0, bj = CSSBlock.length; bi < bj; bi += 1) {
-					var before = CSSBlock.eq(bi),
-						after = CSSBlock.eq(bi),
+				for (var bi = 0, bj = cssBlock.length; bi < bj; bi += 1) {
+					var before = cssBlock.eq(bi),
+						after = cssBlock.eq(bi),
+
+
 						paddings = after.properties.match(pattern);
 
 					if (paddings !== null) {
@@ -297,18 +228,14 @@
 			}
 			$.each(InputPartOption, function (Chara, replaces) {
 				if (InputOption[Chara]) {
-					CSSBlock.init(b)
-					for (var i = 0, j = CSSBlock.length; i < j; i += 1) {
-						var now=CSSBlock.eq(i);
-						b = b.replace(now.string,now.string.replace(now.properties, now.properties.replace(replaces[0], replaces[1]))); //0pxなどの単位を削除
-					}
+					b=cssBlock.replace(b,replaces[0], replaces[1]); //0pxなどの単位を削除
 				}
 			});
 			if (!InputOption.option) {
 				//一部圧縮の際のオプション
-				CSSBlock.init(b)
-				for (var i = 0, j = CSSBlock.length; i < j; i += 1) {
-					var now=CSSBlock.eq(i);
+				cssBlock.init(b)
+				for (var i = 0, j = cssBlock.length; i < j; i += 1) {
+					var now=cssBlock.eq(i);
 					b = b.replace(now.string,now.string
 							.replace(now.properties, now.properties.replace(/^[\s]*/gm, ""))
 							.replace(/[\r\n]/g, "")
@@ -336,11 +263,7 @@
 				}
 				$.each(InputPartOption, function (Chara, replaces) {
 					if (InputOption[Chara]){
-						CSSBlock.init(b)
-						for (var i = 0, j = CSSBlock.length; i < j; i += 1) {
-							var now=CSSBlock.eq(i);
-							b = b.replace(now.string,now.string.replace(now.properties,now.properties.replace(replaces[0], replaces[1])))
-						}
+						b=cssBlock.replace(b,replaces[0], replaces[1])
 						if(Chara!=="needlessSemi")b=b.replace(replaces[0], replaces[1]);
 						else b=b.replace(/[\t ]*;[\t ]*\}[\t\d]*/g, "}");
 					}
@@ -480,33 +403,21 @@
 					"#ee82ee": "violet",
 					"#f5deb3": "wheat"
 				}, h;
-				CSSBlock.init(b);
 				for (h in color) {
-					for (var i = 0, j = CSSBlock.length; i < j; i += 1) {
-						if (-1 !== CSSBlock.eq(i).properties.indexOf(h)) {
-							var now=CSSBlock.eq(i);
-							b = b.replace(now.string,now.string.replace(now.properties, now.properties.replace(RegExp("([: ,\)\(]|[\t ]?:[\t ]?)([^;\{\}]*?)" + h + "((?:!important)|[, )(;}\n\r])", "gim"), "$1$2" + color[h] + "$3")))
-						}
+					if (-1 !== b.indexOf(h)) {
+						b=cssBlock.replace(b,RegExp("([: ,\)\(]|[\t ]?:[\t ]?)([^;\{\}]*?)" + h + "((?:!important)|[, )(;}\n\r])", "gim"), "$1$2" + color[h] + "$3")
 					}
 				}
 			}
 			if (-1 !== b.indexOf("padding") && InputOption.padding) b = makeshort(b, "padding"); //パディング最適化
 			if (-1 !== b.indexOf("margin") && InputOption.margin) b = makeshort(b, "margin"); //マージン最適化
 			if (InputOption.color) {
-				CSSBlock.init(b)
-				for (var i = 0, j = CSSBlock.length; i < j; i += 1) {
-					var now=CSSBlock.eq(i);
-					b = b.replace(now.string,now.string.replace(now.properties, now.properties.replace(/\#([0-9a-fA-F])\1([0-9a-fA-F])\2([0-9a-fA-F])\3/g, "#$1$2$3"))); //カラーを6桁から3桁へ
-				}
+				b=cssBlock.replace(b,/\#([0-9a-fA-F])\1([0-9a-fA-F])\2([0-9a-fA-F])\3/g, "#$1$2$3"); //カラーを6桁から3桁へ
 			}
 			if (InputOption.lower) {
-				CSSBlock.init(b)
-				for (var i = 0, j = CSSBlock.length; i < j; i += 1) {
-					var now=CSSBlock.eq(i)
-					b = b.replace(now.string,now.string.replace(now.properties, now.properties.replace(/([: ,)(]|[\t ]?:[\t ]?)(#[0-9a-fA-F][0-9a-fA-F]?[0-9a-fA-F][0-9a-fA-F]?[0-9a-fA-F][0-9a-fA-F]?)/g, function (all, prop, one) {
-						return prop + (one.toLowerCase()) //カラーを小文字か大文字に
-					})))
-				}
+				b=cssBlock.replace(b,/([: ,)(]|[\t ]?:[\t ]?)(#[0-9a-fA-F][0-9a-fA-F]?[0-9a-fA-F][0-9a-fA-F]?[0-9a-fA-F][0-9a-fA-F]?)/g, function (all, prop, one) {
+					return prop + (one.toLowerCase()) //カラーを小文字か大文字に
+				})
 			}
 			var afterSize = cb(b);
 			$aft.val(b).select();

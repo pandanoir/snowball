@@ -1,0 +1,84 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>CSSBlock.js</title>
+		<style>
+		h3{
+			padding:5px;
+			background:#EEE;
+			border-left:3px solid #CCC;
+		}
+		pre{
+			padding:5px;
+			background:#EEE;
+			border:1px solid #CCC;
+			font-size:13px;
+			border-radius:5px;
+		}
+		ul{
+			list-style: none;
+			background: #CCC;
+			font-size: 0;
+			padding: 5px;
+		}
+		li{
+			display: inline-block;
+			font-size: 16px;
+			border: 1px solid transparent;
+			padding: 3px 5px;
+			border-radius: 5px;
+		}
+		li:hover{
+			border:1px solid #999;
+		}
+		section{background: #F9F9F9;
+border: 1px solid #CCC;
+padding: 5px;
+		}
+		</style>
+	</head>
+	
+	<body>
+		<header>
+			<h1>CSSBlock.js</h1>
+			<nav>
+			<ul>
+			<li>Download</li>
+			<li>Documents</li>
+			<li>GitHub</li>
+			</ul>
+			</nav>
+		</header>
+		<section>
+			<h3>CSSBlock.jsとは</h3>
+			<p>
+				CSSBlock.jsとは、javascriptでCSSをブロックに分けて扱うことを目的とした軽量なライブラリです。CSSBlock.jsを使えば、セレクタ部分のみを扱ったり、プロパティのみを取り出したりできます。<br>
+			</p>
+			<h3>例</h3>
+			<p>
+				例えばCSSBlockに以下のようなコードを渡したとします。
+			</p>
+			<code><pre>CSS
+
+.button{
+	color:#000;
+	border:1px solid #999;
+	border-radius:5px;
+}</pre></code>
+			<code><pre>Javascript
+
+CSSBlock.init(code);</pre></code>
+			<p>
+				すると、セレクタ部分とプロパティ部分は次のようになります。
+			</p>
+			<code><pre>cssBlock.eq(0).selector;// ".button"
+cssBlock.eq(0).properties;
+/*
+	color:#000;
+	border:1px solid #999;
+	border-radius:5px;
+*/</pre></code>
+	</section>
+	</body>
+</html>
