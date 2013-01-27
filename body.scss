@@ -172,11 +172,8 @@ a.button, .button, .Rbutton, .inlinebutton, .inlineRbutton{
 		box-shadow: none;
 	}
 }
-#option_show{
-	border-radius: 5px 0 0 5px;
-}
 #option_all{
-	border-radius: 0 5px 5px 0;
+	border-radius:5px;
 }
 .customCheckBox a{
 	$thisPadding: 5px;

@@ -13,7 +13,6 @@
 			$select = $options.find("select"),
 			$menu = $options.find("#option_menu"),
 			$option = $options.find("#option"),
-			$option_show = $menu.find("#option_show"),
 			$option_all = $menu.find("#option_all"),
 			$results = $rform.find("#results"),
 			$aft = $lform.find("#aft"),
@@ -61,9 +60,7 @@
 				SelectOption[$select.eq(i).attr("id")] = $select.eq(i).find("option:selected").val();
 			}
 		}
-
 		if ($option.attr("checked")) {
-			$option_show.text("Hide");
 			$menu.show();
 		} else {
 			$options.css("border-left", "3px solid #CCC");
@@ -482,29 +479,13 @@
 			if ($custom.is(":animated") || $menu.is(":animated")) return;
 			else if ($option.attr("checked")) {
 				//メニューが表示されていたら非表示にする
-				$option_show.text("Show").removeClass("show hide").addClass("show");
 				$menu.hide();
 				$options.css("border-left", "3px solid #CCC");
 				$custom.show().css("width", $customWid);
 			} else {
 				//メニューが非表示だったら表示する
-				$option_show.text("Hide");
 				$menu.show();
 				$options.css("border-left", "none");
-			}
-		});
-		$option_show.on("click", function (e) {
-			e.pd().sp();
-			//Show、Hideボタンの動作
-			if ($custom.is(":animated") || $menu.is(":animated")) return;
-			else if ($custom.is(":visible")) {
-				//チェックボックスが表示されてたら非表示にする
-				$option_show.text("Show").removeClass("show hide").addClass("hide");
-				$custom.parent().hide();
-			} else {
-				//チェックボックスが非表示だったら表示する
-				$option_show.text("Hide").removeClass("show hide").addClass("show");
-				$custom.parent().show();
 			}
 		});
 		$option_all.on("click", function (e) {
