@@ -34,14 +34,36 @@ cssBlock = function () {
 		blocks = [];
 		that.length = 0;
 		if (-1 !== str.indexOf("{")) {
-			var block = str.match(/([.#a-zA-Z ,:\-\[\] = \"\']+?)\{([\s\S]*?)\}/gim),//ブロックでわける
-				change = function (str) {
+			var pos=0,start=[],end=[],block=[],change = function (str) {
 					this.string = str;
-					this.selector = /\{([\s\S]+?)\}/.exec(str)[1];
+					this.selector = /([^\{]+?)\{/.exec(str)[1];
 					this.properties = /\{([\s\S]+?)\}/.exec(str)[1];
 				};
+			while(str.indexOf("}",pos)>=0){
+				end[end.length]=str.indexOf("}",pos);
+				pos=str.indexOf("}",pos)+1;
+			}
+			pos=str.length;
+			while(str.lastIndexOf("{",pos)>=0&&pos>=0){
+				start[start.length]=str.lastIndexOf("{",pos);
+				pos=str.lastIndexOf("{",pos)-1;
+			}
+			for(var i=0,j=start.length;i<j;i++){
+				loop:for(var k=0,l=end.length;k<l;k++){
+					if(start[i]<end[k] && (start[i+1]<end[k-1]||!end[k-1]) && end[k]!=null){
+						strs:while(start[i]>0){
+							if(str.charAt(start[i]-1)=="}"){
+								break strs;
+							}
+							start[i]-=1;
+						}
+						block[block.length]=str.slice(start[i],end[k]+1);
+						end[k]=null;
+						break loop;
+					}
+				}
+			}//ブロックでわける
 			for (i = 0, j = block.length; i < j; i += 1) {
-				str.replace(block[i], "");
 				block[i] = {
 					selector: /([^\{]+?)\{/.exec(block[i])[1],//セレクタ
 					properties: /\{([\s\S]*?)\}/.exec(block[i])[1],//プロパティ
