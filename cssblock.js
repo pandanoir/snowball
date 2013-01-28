@@ -103,6 +103,7 @@
 		}
 		function noConflict(){
 			window.cssBlock=_cssBlock;
+			return cssBlock;
 		}
 		that.push = push;
 		that.eq = eq;
