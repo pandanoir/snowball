@@ -70,8 +70,11 @@ body{
 		width: round($lformWid * 0.48 - 4 - 4);
 		height: 15em;
 		padding: 2px;
-		border:none;
+		border: 2px solid #666;
+		border-top: none;
+		border-radius: 0 0 5px 5px;
 		background: #FFF;
+		box-shadow: -1px -1px 0 #FFF inset, 1px 1px 0 #DDD inset;
 		color: #000;
 		word-break: break-all;
 		font-family: "Gill sans", Osaka, Arial;
@@ -81,6 +84,7 @@ body{
 		display: inline-block;
 	}
 	.reset{
+		border-right: none;
 		border-radius: 5px 0 0 5px;
 	}
 	.select{
@@ -93,30 +97,20 @@ body{
 legend{
 	padding: 8px 2px;
 	width: round($lformWid * 0.48 - 4 - 4);
-	border-bottom: 2px solid #666;
+	border: 2px solid #666;
+	border-radius: 5px 5px 0 0;
+	@include bg(#EFEFEF);
+	box-shadow: 1px 1px 0 #FFF inset, -1px -1px 0 #DDD inset;
 	color: #000;
 }
 a.button, .button, .Rbutton, .inlinebutton, .inlineRbutton{
-	background: none;
-	color: #666;
-	box-shadow: none;
-	text-shadow: none;
-	border: 1px solid transparent;
-	&:hover{
-		border: 1px solid #CCC;
-	}
-	&:active{
-		top:0
-	}
+	border: 1px solid #666;
 }
-.Rbutton, .inlineRbutton{
-	&:active,&:hover{
-		color:#FFF;
-	}
-}
-.resultmes,.resultmes+span{
+#befB, #aftB, #minus, .resultmes{
+	display: inline-block;
 	display: inline-block;
 	width: 80px;
+	border-bottom: 1px solid #666;
 }
 #mes{
 	padding: 5px;
@@ -151,25 +145,28 @@ a.button, .button, .Rbutton, .inlinebutton, .inlineRbutton{
 	padding: 0 4px;
 	border-left: 3px solid #CCC;
 }
+.option_menu_btn, .customCheckBox a{
+	background: #EFEFEF;
+	@include VP("background", "linear-gradient(#FFF, #F3F3F3)");
+	background: -webkit-gradient(linear, left top, left bottom, from(#FFF), to(#F3F3F3));
+}
 .option_menu_btn{
 	@include userselect;
 	$thisBorder: 1px;
 	$thisPadding: 7px;
+	position: relative;
 	position: relative;
 	top: 0;
 	left: 0;
 	display: inline-block;
 	padding: 2px $thisPadding;
 	width: 100px-($thisPadding*2)-($thisBorder*2);
-	border: $thisBorder solid transparent;
 	height: 24px;
+	border: $thisBorder solid #666;
+	box-shadow: 0 1px 0 #666;
 	color: #333;
 	white-space: nowrap;
 	cursor: pointer;
-	&:hover{
-		border: $thisBorder solid #666;
-		box-shadow: 0 1px 0 #666;
-	}
 	&:active{
 		top: 1px;
 		box-shadow: none;
@@ -181,13 +178,17 @@ a.button, .button, .Rbutton, .inlinebutton, .inlineRbutton{
 .customCheckBox a{
 	$thisPadding: 5px;
 	$thisBorder: 1px;
+	position: relative;
+	top: -2px;
 	display: inline-block;
 	overflow: hidden;
 	margin: 2px 0;
 	padding: $thisPadding;
 	width: 200px-($thisPadding*2)-($thisBorder*2);
-	border:#{$thisBorder} solid transparent;
+	border:#{$thisBorder} solid #666;
 	border-radius: 5px;
+	box-shadow: 0 1px 0 #222, 0 2px 0 #999, inset 1px 1px 0 #FFF;
+	@include VP("background", "linear-gradient(top, white 0%, white 50%, #EEE 51%, #DDD 100%)");
 	color: #222;
 	text-decoration: none;
 	white-space: nowrap;
@@ -197,10 +198,9 @@ a.button, .button, .Rbutton, .inlinebutton, .inlineRbutton{
 	line-height: 1;
 	text-align:left;
 	&.checked{
+		top: 0;
 		background: #DEF;
-	}
-	&:hover{
-		border:#{$thisBorder} solid #999;
+		box-shadow: inset 1px 1px 0 #FFF;
 	}
 }
 #cse-search-box{
@@ -245,12 +245,15 @@ a.button, .button, .Rbutton, .inlinebutton, .inlineRbutton{
 }
 #nav{
 	padding: 0;
+	border-bottom: 1px solid #666;
 	font-size: 0;
 	li{
 		@include PP(transition, background .1s linear 0);
 		display: inline-block;
 		margin-right: 3px;
-		border-radius: 3px;
+		border: 1px solid #666;
+		border-bottom: none;
+		border-radius: 3px 3px 0 0;
 		list-style: none;
 		font-size: 16px;
 	}
