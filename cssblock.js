@@ -61,7 +61,6 @@
 								}
 								start[i]-=1;
 							}
-							console.log(start[i],str.slice(start[i],end[k]+1))
 							block[block.length]=str.slice(start[i],end[k]+1);
 							end[k]=null;
 							break loop;
