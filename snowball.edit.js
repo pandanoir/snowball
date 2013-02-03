@@ -20,6 +20,10 @@
 			ls = localStorage,
 			$json = JSON,
 			toggle = true,
+			$befB = $results.find("#befB"),
+			$aftB = $results.find("#aftB"),
+			$minus = $results.find("#minus"),
+			$mes = $lform.find("#mes"),
 			App = {
 				trace: true,
 				log: function () {
@@ -47,7 +51,7 @@
 				}
 			}
 			for (i = 0, j = $select.length; i < j; i += 1) {
-				$select.eq(i).val(SelectOption[$select.eq(i).attr("id")]);
+				SelectOption[$select.eq(i).attr("id")]&&$select.eq(i).val(SelectOption[$select.eq(i).attr("id")]);
 			}
 			//オプション設定の読み込み
 		} else {
@@ -86,18 +90,6 @@
 				m = Math;
 			cssBlock.init(b);
 			event.pd().sp();
-			if (!$befB) {
-				var $befB = $results.find("#befB")
-			}
-			if (!$aftB) {
-				var $aftB = $results.find("#aftB")
-			}
-			if (!$minus) {
-				var $minus = $results.find("#minus")
-			}
-			if (!$mes) {
-				var $mes = $lform.find("#mes")
-			}
 			/*		function g(a) {
 				var b = pro,c = fonts,a = a + "(.+?)[\r\n;}]",f = 0;
 				if (c = b.match(RegExp(a, "gi"))) {
@@ -414,6 +406,15 @@
 			if (InputOption.lower) {
 				b=cssBlock.replace(b,/([: ,)(]|[\t ]?:[\t ]?)(#[0-9a-fA-F][0-9a-fA-F]?[0-9a-fA-F][0-9a-fA-F]?[0-9a-fA-F][0-9a-fA-F]?)/g, function (all, prop, one) {
 					return prop + (one.toLowerCase()) //カラーを小文字か大文字に
+				})
+			}
+			if (InputOption.none) {
+				b=cssBlock.replace(b,/(.+?):(.+?(?:;|$))/g,function(all,prop,val){
+					if(prop.indexOf("background-image")!=-1) return all;
+					if(prop.indexOf("border")!=-1||prop.indexOf("background")!=-1){
+						return all.replace(val,val.replace(/none/g,"0"))
+					}
+					return all
 				})
 			}
 			var afterSize = cb(b);
