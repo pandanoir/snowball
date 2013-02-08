@@ -38,7 +38,8 @@
 			j,
 			$custom,
 			$customWid,
-			$menuWid;
+			$menuWid,
+			css=cssBlock;
 
 		if ($json.parse(ls.getItem("input_option")) !== null) {
 			InputOption = $json.parse(ls.getItem("input_option"));
@@ -88,7 +89,7 @@
 			var b = $bef.val(),
 				beforeSize = cb(b),
 				m = Math;
-			cssBlock.init(b);
+			css.init(b);
 			event.pd().sp();
 			/*		function g(a) {
 				var b = pro,c = fonts,a = a + "(.+?)[\r\n;}]",f = 0;
@@ -126,13 +127,13 @@
 			*/
 			//makeshort開始
 			function makeshort(str, pm) {
-				cssBlock.init(str)
-				var block = cssBlock.eq(),
-					beforeblock = cssBlock.eq(),
+				css.init(str)
+				var block = css.eq(),
+					beforeblock = css.eq(),
 					pattern = new RegExp("(" + pm + "(?:\-left|\-right|\-top|\-bottom)? ?: ?([^;$]+)([;$]?))", "gim");
-				for (var bi = 0, bj = cssBlock.length; bi < bj; bi += 1) {
-					var before = cssBlock.eq(bi),
-						after = cssBlock.eq(bi),
+				for (var bi = 0, bj = css.length; bi < bj; bi += 1) {
+					var before = css.eq(bi),
+						after = css.eq(bi),
 
 
 						paddings = after.properties.match(pattern);
@@ -217,14 +218,14 @@
 			}
 			$.each(InputPartOption, function (Chara, replaces) {
 				if (InputOption[Chara]) {
-					b=cssBlock.replace(b,replaces[0], replaces[1]); //0pxなどの単位を削除
+					b=css.replace(b,replaces[0], replaces[1]); //0pxなどの単位を削除
 				}
 			});
 			if (!InputOption.option) {
 				//一部圧縮の際のオプション
-				cssBlock.init(b)
-				for (var i = 0, j = cssBlock.length; i < j; i += 1) {
-					var now=cssBlock.eq(i);
+				css.init(b)
+				for (var i = 0, j = css.length; i < j; i += 1) {
+					var now=css.eq(i);
 					b = b.replace(now.string,now.string
 							.replace(now.properties, now.properties.replace(/^[\s]*/gm, ""))
 							.replace(/[\r\n]/g, "")
@@ -252,7 +253,7 @@
 				}
 				$.each(InputPartOption, function (Chara, replaces) {
 					if (InputOption[Chara]){
-						b=cssBlock.replace(b,replaces[0], replaces[1])
+						b=css.replace(b,replaces[0], replaces[1])
 						if(Chara!=="needlessSemi")b=b.replace(replaces[0], replaces[1]);
 						else b=b.replace(/[\t ]*;[\t ]*\}[\t\d]*/g, "}");
 					}
@@ -394,22 +395,22 @@
 				}, h;
 				for (h in color) {
 					if (-1 !== b.indexOf(h)) {
-						b=cssBlock.replace(b,RegExp("([: ,\)\(]|[\t ]?:[\t ]?)([^;\{\}]*?)" + h + "((?:!important)|[, )(;}\n\r])", "gim"), "$1$2" + color[h] + "$3")
+						b=css.replace(b,RegExp("([: ,\)\(]|[\t ]?:[\t ]?)([^;\{\}]*?)" + h + "((?:!important)|[, )(;}\n\r])", "gim"), "$1$2" + color[h] + "$3")
 					}
 				}
 			}
 			if (-1 !== b.indexOf("padding") && InputOption.padding) b = makeshort(b, "padding"); //パディング最適化
 			if (-1 !== b.indexOf("margin") && InputOption.margin) b = makeshort(b, "margin"); //マージン最適化
 			if (InputOption.color) {
-				b=cssBlock.replace(b,/\#([0-9a-fA-F])\1([0-9a-fA-F])\2([0-9a-fA-F])\3/g, "#$1$2$3"); //カラーを6桁から3桁へ
+				b=css.replace(b,/\#([0-9a-fA-F])\1([0-9a-fA-F])\2([0-9a-fA-F])\3/g, "#$1$2$3"); //カラーを6桁から3桁へ
 			}
 			if (InputOption.lower) {
-				b=cssBlock.replace(b,/([: ,)(]|[\t ]?:[\t ]?)(#[0-9a-fA-F][0-9a-fA-F]?[0-9a-fA-F][0-9a-fA-F]?[0-9a-fA-F][0-9a-fA-F]?)/g, function (all, prop, one) {
+				b=css.replace(b,/([: ,)(]|[\t ]?:[\t ]?)(#[0-9a-fA-F][0-9a-fA-F]?[0-9a-fA-F][0-9a-fA-F]?[0-9a-fA-F][0-9a-fA-F]?)/g, function (all, prop, one) {
 					return prop + (one.toLowerCase()) //カラーを小文字か大文字に
 				})
 			}
 			if (InputOption.none) {
-				b=cssBlock.replace(b,/(.+?):(.+?(?:;|$))/g,function(all,prop,val){
+				b=css.replace(b,/(.+?):(.+?(?:;|$))/g,function(all,prop,val){
 					if(prop.indexOf("background-image")!=-1) return all;
 					if(prop.indexOf("border")!=-1||prop.indexOf("background")!=-1){
 						return all.replace(val,val.replace(/none/g,"0"))
