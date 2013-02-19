@@ -5,6 +5,12 @@
 			event.pd().sp();
 			return false;
 		});
+		Array.fn.has=function(str){
+			for(var i=0;i<this.length;i++){
+				if(this[i]==str) return true
+			}
+			return false;
+		}
 		var $rform = $("#rform"),
 			$lform = $("#lform"),
 			$compress = $lform.find("#compress"),
@@ -39,7 +45,8 @@
 			$custom,
 			$customWid,
 			$menuWid,
-			css=cssBlock;
+			css=cssBlock,
+			correctProperties=["azimuth","background","background-attachment","background-color","background-image","background-size","background-position","background-position-x","background-position-y","background-repeat","behavior","border","border-bottom","border-bottom-color","border-bottom-style","border-bottom-width","border-collapse","border-color","border-left","border-left-color","border-left-style","border-left-width","border-right","border-right-color","border-right-style","border-right-width","border-spacing","border-style","border-top","border-top-color","border-top-style","border-top-width","border-width","box-shadow","bottom","clear","clip","color","content","counter-increment","counter-reset","cue","cue-after","cue-before","cursor","direction","display","elevation","empty-cells","filter","float","font","font-family","font-size","font-size-adjust","font-stretch","font-style","font-variant","font-weight","height","include-source","layer-background-color","layer-background-image","layout-grid","layout-grid-char","layout-grid-line","layout-grid-mode","layout-grid-type","left","letter-spacing","line-break","line-height","list-style","list-style-image","list-style-position","list-style-type","margin","margin-bottom","margin-left","margin-right","margin-top","marker-offset","marks","max-height","max-width","min-height","min-width","orphans","outline","outline-color","outline-style","outline-width","overflow","overflow-x","overflow-y","padding","padding-bottom","padding-left","padding-right","padding-top","page","page-break-after","page-break-before","page-break-inside","pause","pause-after","pause-before","pitch","pitch-range","play-during","position","quotes","richness","right","ruby-align","ruby-overhang","ruby-position","scrollbar-3dlight-color","scrollbar-arrow-color","scrollbar-base-color","scrollbar-darkshadow-color","scrollbar-face-color","scrollbar-highlight-color","scrollbar-shadow-color","scrollbar-track-color","size","speak","speak-header","speak-numeral","speak-punctuation","speech-rate","stress","table-layout","text-align","text-autospace","text-decoration","text-indent","text-justify","text-shadow","text-transform","text-underline-position","top","unicode-bidi","vertical-align","visibility","voice-family","volume","white-space","widows","width","word-break","word-spacing","word-wrap","writing-mode","z-index","zoom"];
 
 		if ($json.parse(ls.getItem("input_option")) !== null) {
 			InputOption = $json.parse(ls.getItem("input_option"));
@@ -230,6 +237,25 @@
 			//makeshort終わり
 			for (var i = 0, j = $input.length; i < j; i += 1) {
 				InputOption[$input.eq(i).attr("id")] = $input.eq(i).attr("checked");
+			}
+			css.init(b)
+			for(var i=0;i<css.length;i+=1){
+				//正しいプロパティ名か判定(適当だからだめかも)
+				var prop=css.eq(i).properties.split(";"),changed=false;
+				loop:for(var k=0,l=prop.length;k<l;k+=1){
+					prop[k]=prop[k].split(":")[0].replace(/[^a-zA-Z0-9\-]/g,"");
+					if(prop[k]!=""){
+						if(!((prop[k].indexOf("-moz-")!=-1&&prop[k].indexOf("-moz-")==0)||(prop[k].indexOf("-webkit-")!=-1&&prop[k].indexOf("-webkit-")==0)||(prop[k].indexOf("-ms-")!=-1&&prop[k].indexOf("-ms-")==0)||(prop[k].indexOf("-o-")!=-1&&prop[k].indexOf("-o-")==0))){
+							//ベンダープレフィックスを含まない
+							if(!correctProperties.has(prop[k])){
+								$aft.val("エラー："+prop[k]+"というプロパティを発見しました。");
+								changed=true;
+								break loop;
+							}
+						}
+					}
+				}
+				if(changed==true) return;
 			}
 			if (InputOption["comment"]) b = b.replace(/(\/\*([\s]|.)+?\*\/)/g, ""); //コメントの削除
 			var InputPartOption = {
