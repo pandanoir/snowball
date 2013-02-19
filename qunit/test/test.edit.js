@@ -128,9 +128,9 @@
 				$sub.clicked();
 				if ($aft.val() !== resultStr[i]){
 					ng = !0;
-					ok(true,resultStr[i]+"\n"+$aft.val())
+					ok(true,"result:"+resultStr[i]+"\nafter:"+$aft.val())
 					break;
-				}else ok(true,i);
+				}else ok(true,TParts.sel(i).text());
 				TParts.change(i, !1);
 			}
 			equal(ng, !1, "Each true ok");
@@ -144,7 +144,7 @@
 				if ($aft.val() !== str){
 					ng = !0;
 					break;
-				}else ok(true,i);
+				}else ok(true,TParts.sel(i).text());
 			}
 			equal(ng, !1, "Each false ok")
 		});

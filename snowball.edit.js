@@ -134,8 +134,6 @@
 				for (var bi = 0, bj = css.length; bi < bj; bi += 1) {
 					var before = css.eq(bi),
 						after = css.eq(bi),
-
-
 						paddings = after.properties.match(pattern);
 
 					if (paddings !== null) {
@@ -143,9 +141,10 @@
 							t: null,
 							b: null,
 							r: null,
-							l: null
+							l: null,
+							ok:false
 						};
-						for (var i = 0, j = paddings.length; i < j; i += 1) {
+						loop:for (var i = paddings.length-1; i >=0; i -= 1) {
 							paddings[i] = paddings[i].replace(pattern, "$1:$2").split(":");
 							paddings[i][1] = paddings[i][1].replace(/;$/, "");
 							var property = paddings[i][0].toLowerCase();
@@ -153,16 +152,37 @@
 							if (property === pm) {
 								a = paddings[i][1].replace(/;/g, "").replace(/ /g, ",").split(",");
 								g = a.length;
-								if (2 === g) paddingsData.t = paddingsData.b = a[0], paddingsData.r = paddingsData.l = a[1];
-								else if (3 === g) paddingsData.t = a[0], paddingsData.r = paddingsData.l = a[1], paddingsData.b = a[2];
-								else if (4 === g) paddingsData.t = a[0], paddingsData.r = a[1], paddingsData.b = a[2], paddingsData.l = a[3];
-								else paddingsData.t = paddingsData.r = paddingsData.b = paddingsData.l = a[0];
-							} else if (property === pm + "-top") paddingsData.t = paddings[i][1];
-							else if (property === pm + "-right") paddingsData.r = paddings[i][1];
-							else if (property === pm + "-bottom") paddingsData.b = paddings[i][1];
-							else if (property === pm + "-left") paddingsData.l = paddings[i][1];
+								if (2 === g){
+									paddingsData.t==null&&(paddingsData.t = a[0]);
+									paddingsData.b==null&&(paddingsData.b = a[0]);
+									paddingsData.r==null&&(paddingsData.r = a[1]);
+									paddingsData.l==null&&(paddingsData.l = a[1]);
+								}else if (3 === g){
+									paddingsData.t==null&&(paddingsData.t = a[0]);
+									paddingsData.r==null&&(paddingsData.r = a[1]);
+									paddingsData.l==null&&(paddingsData.l = a[1]);
+									paddingsData.b==null&&(paddingsData.b = a[2]);
+								}else if (4 === g){
+									paddingsData.t==null&&(paddingsData.t = a[0]);
+									paddingsData.r==null&&(paddingsData.r = a[1]);
+									paddingsData.b==null&&(paddingsData.b = a[2]);
+									paddingsData.l==null&&(paddingsData.l = a[3]);
+								}else{
+									paddingsData.t==null&&(paddingsData.t = a[0]);
+									paddingsData.r==null&&(paddingsData.r = a[0]);
+									paddingsData.b==null&&(paddingsData.b = a[0]);
+									paddingsData.l==null&&(paddingsData.l = a[0]);
+								}
+							} else if (property === pm + "-top"&&paddingsData.t==null) paddingsData.t = paddings[i][1];
+							else if (property === pm + "-right"&&paddingsData.r==null) paddingsData.r = paddings[i][1];
+							else if (property === pm + "-bottom"&&paddingsData.b==null) paddingsData.b = paddings[i][1];
+							else if (property === pm + "-left"&&paddingsData.l==null) paddingsData.l = paddings[i][1];
+							if(paddingsData.t!=null&&paddingsData.r!=null&&paddingsData.b!=null&&paddingsData.l!=null){
+								paddingsData.ok=true;
+								break loop;
+							}
 						}
-						if (paddingsData.t !== null && paddingsData.r !== null && paddingsData.l !== null && paddingsData.b !== null) {
+						if (paddingsData.ok||(paddingsData.t !== null && paddingsData.r !== null && paddingsData.l !== null && paddingsData.b !== null)) {
 							var c = paddingsData.t === paddingsData.r && paddingsData.t === paddingsData.b && paddingsData.t === paddingsData.l ? paddingsData.t : paddingsData.t === paddingsData.b && paddingsData.r === paddingsData.l && paddingsData.t !== paddingsData.r ? paddingsData.t + " " + paddingsData.r : paddingsData.r === paddingsData.l && paddingsData.t !== paddingsData.b ? paddingsData.t + " " + paddingsData.r + " " + paddingsData.b : paddingsData.t + " " + paddingsData.r + " " + paddingsData.b + " " + paddingsData.l,
 								jjj = after.properties.match(pattern),
 								jjj = jjj !== null ? jjj.length : 0,
