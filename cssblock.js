@@ -38,17 +38,20 @@
 			blocks = [];
 			that.length = 0;
 			if (-1 !== str.indexOf("{")) {
+				//ブロックがあったら区切る
 				var pos=0,start=[],end=[],block=[],change = function (str) {
 						this.string = str;
 						this.selector = /([^\{]+?)\{/.exec(str)[1];
 						this.properties = /\{([\s\S]+?)\}/.exec(str)[1];
 					};
 				while(str.indexOf("}",pos)>=0){
+					//終わりかっこを収集
 					end[end.length]=str.indexOf("}",pos);
 					pos=str.indexOf("}",pos)+1;
 				}
 				pos=str.length;
 				while(str.lastIndexOf("{",pos)>=0&&pos>=0){
+					//はじめかっこを収集
 					start[start.length]=str.lastIndexOf("{",pos);
 					pos=str.lastIndexOf("{",pos)-1;
 				}
@@ -56,17 +59,19 @@
 					loop:for(var k=0,l=end.length;k<l;k++){
 						if(start[i]<end[k] && (start[i+1]<end[k-1]||!end[k-1]) && end[k]!=null){
 							strs:while(start[i]>0){
-								if(str.charAt(start[i]-1)=="}"||str.charAt(start[i]-1)==";"){
+								if(str.charAt(start[i]-1)=="}"||str.charAt(start[i]-1)=="{"||str.charAt(start[i]-1)==";"){
+									//セレクタ
 									break strs;
 								}
 								start[i]-=1;
 							}
+							//ブロックに収納
 							block[block.length]=str.slice(start[i],end[k]+1);
 							end[k]=null;
 							break loop;
 						}
 					}
-				}//ブロックでわける
+				}
 				for (i = 0, j = block.length; i < j; i += 1) {
 					block[i] = {
 						selector: /([^\{]+?)\{/.exec(block[i])[1],//セレクタ
@@ -74,7 +79,9 @@
 						string: block[i],//全体
 						change: change
 					};
-					push(block[i]);
+					if(block[i].selector.indexOf("@media")==-1){
+						push(block[i]);
+					}
 				}
 			} else {
 			   var change = function (str) {
