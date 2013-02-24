@@ -34,6 +34,7 @@ Snowball( http://pandanoir.web.fc2.com/snowball/snowball.html )のGitHubです�
 + カラーネームを最適化する
 + paddingを最短にする
 + marginを最短にする
++ noneを0に変換する
 + カラーコードを小文字にする
 
 以下は「一部だけ圧縮する」をオンにした場合のみ機能します。
@@ -42,6 +43,7 @@ Snowball( http://pandanoir.web.fc2.com/snowball/snowball.html )のGitHubです�
 + カンマ周辺の空白を消す
 + コロン周辺の空白を消す
 + セミコロン周辺の空白を消す
++ 不要なセミコロンを消す
 + !important周辺の空白を消す
 + 始め波括弧の空白を消す
 + 終わり波括弧の空白を消す
