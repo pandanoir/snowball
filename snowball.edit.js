@@ -7,6 +7,7 @@
 		});
 		Array.fn.has=function(key){
 			var start=0,end=this.length-1,mid,m=Math.floor;
+			if(this[this.length-1]<key) return false;
 			while(start<=end){
 				mid=m((start+end)/2);
 				if(this[mid]>key) end=mid-1;
@@ -27,7 +28,7 @@
 			$results = $rform.find("#results"),
 			$aft = $lform.find("#aft"),
 			$bef = $lform.find("#bef"),
-			ls = localStorage,
+			document=window.document,
 			$json = JSON,
 			toggle = true,
 			$befB = $results.find("#befB"),
@@ -50,11 +51,43 @@
 			$customWid,
 			$menuWid,
 			css=cssBlock,
-			correctProperties="alignment-adjust alignment-baseline animation animation-delay animation-direction animation-duration animation-iteration-count animation-name animation-play-state animation-timing-function appearance azimuth backface-visibility background background-attachment background-break background-clip background-color background-image background-origin background-position background-position-x background-position-y background-repeat background-size baseline-shift behavior binding bookmark-label bookmark-level bookmark-target border border-bottom border-bottom-color border-bottom-left-radius border-bottom-right-radius border-bottom-style border-bottom-width border-break border-collapse border-color border-image border-image-outset border-image-repeat border-image-slice border-image-source border-image-width border-left border-left-color border-left-style border-left-width border-length border-radius border-right border-right-color border-right-style border-right-width border-spacing border-style border-top border-top-color border-top-left-radius border-top-right-radius border-top-style border-top-width border-width bottom box-align box-decoration-break box-direction box-flex box-flex-group box-lines box-ordinal-group box-orient box-pack box-shadow box-sizing break-after break-before break-inside clear clip color color-profile column-count column-fill column-gap column-rule column-rule-color column-rule-style column-rule-width column-span column-width columns content counter-increment counter-reset crop cue cue-after cue-before cursor direction display display-model display-role dominant-baseline drop-initial-after-adjust drop-initial-after-align drop-initial-before-adjust drop-initial-before-align drop-initial-size drop-initial-value elevation empty-cells filter fit fit-position float float-offset font font-family font-size font-size-adjust font-stretch font-style font-variant font-weight grid-columns grid-rows hanging-punctuation height hyphenate-after hyphenate-before hyphenate-character hyphenate-lines hyphenate-resource hyphens icon image-orientation image-resolution include-source inline-box-align layer-background-color layer-background-image layout-grid layout-grid-char layout-grid-line layout-grid-mode layout-grid-type left letter-spacing line-break line-height line-stacking line-stacking-ruby line-stacking-shift line-stacking-strategy linear-gradient() list-style list-style-image list-style-position list-style-type margin margin-bottom margin-left margin-right margin-top mark mark-after mark-before marker-offset marks marquee-direction marquee-loop marquee-play-count marquee-speed marquee-style max-height max-width min-height min-width move-to nav-down nav-index nav-left nav-right nav-up opacity orphans outline outline-color outline-offset outline-style outline-width overflow overflow-style overflow-x overflow-y padding padding-bottom padding-left padding-right padding-top page page-break-after page-break-before page-break-inside page-policy pause pause-after pause-before perspective perspective-origin phonemes pitch pitch-range play-during pointer-events position presentation-level punctuation-trim quotes radial-gradient() rendering-intent resize rest rest-after rest-before rgba() richness right rotation rotation-point ruby-align ruby-overhang ruby-position ruby-span scrollbar-3dlight-color scrollbar-arrow-color scrollbar-base-color scrollbar-darkshadow-color scrollbar-face-color scrollbar-highlight-color scrollbar-shadow-color scrollbar-track-color size speak speak-header speak-numeral speak-punctuation speech-rate stress string-set tab-side table-layout target target-name target-new target-position text-align text-align-last text-autospace text-decoration text-emphasis text-height text-indent text-justify text-outline text-overflow text-replace text-shadow text-transform text-underline-position text-wrap top transform transform-origin transform-style transform:matrix() transform:matrix3d() transform:perspective() transform:rotate() transform:scale() transform:skew() transform:translate() transition transition-delay transition-duration transition-property transition-timing-function unicode-bidi user-select vertical-align visibility voice-balance voice-duration voice-family voice-pitch voice-pitch-range voice-rate voice-stress voice-volume volume white-space white-space-collapse widows width word-break word-spacing word-wrap writing-mode z-index zoom".split(" ");
+			correctProperties="alignment-adjust alignment-baseline animation animation-delay animation-direction animation-duration animation-iteration-count animation-name animation-play-state animation-timing-function appearance azimuth backface-visibility background background-attachment background-break background-clip background-color background-image background-origin background-position background-position-x background-position-y background-repeat background-size baseline-shift behavior binding bookmark-label bookmark-level bookmark-target border border-bottom border-bottom-color border-bottom-left-radius border-bottom-right-radius border-bottom-style border-bottom-width border-break border-collapse border-color border-image border-image-outset border-image-repeat border-image-slice border-image-source border-image-width border-left border-left-color border-left-style border-left-width border-length border-radius border-right border-right-color border-right-style border-right-width border-spacing border-style border-top border-top-color border-top-left-radius border-top-right-radius border-top-style border-top-width border-width bottom box-align box-decoration-break box-direction box-flex box-flex-group box-lines box-ordinal-group box-orient box-pack box-shadow box-sizing break-after break-before break-inside clear clip color color-profile column-count column-fill column-gap column-rule column-rule-color column-rule-style column-rule-width column-span column-width columns content counter-increment counter-reset crop cue cue-after cue-before cursor direction display display-model display-role dominant-baseline drop-initial-after-adjust drop-initial-after-align drop-initial-before-adjust drop-initial-before-align drop-initial-size drop-initial-value elevation empty-cells filter fit fit-position float float-offset font font-family font-size font-size-adjust font-stretch font-style font-variant font-weight grid-columns grid-rows hanging-punctuation height hyphenate-after hyphenate-before hyphenate-character hyphenate-lines hyphenate-resource hyphens icon image-orientation image-resolution include-source inline-box-align layer-background-color layer-background-image layout-grid layout-grid-char layout-grid-line layout-grid-mode layout-grid-type left letter-spacing line-break line-height line-stacking line-stacking-ruby line-stacking-shift line-stacking-strategy linear-gradient() list-style list-style-image list-style-position list-style-type margin margin-bottom margin-left margin-right margin-top mark mark-after mark-before marker-offset marks marquee-direction marquee-loop marquee-play-count marquee-speed marquee-style max-height max-width min-height min-width move-to nav-down nav-index nav-left nav-right nav-up opacity orphans outline outline-color outline-offset outline-style outline-width overflow overflow-style overflow-x overflow-y padding padding-bottom padding-left padding-right padding-top page page-break-after page-break-before page-break-inside page-policy pause pause-after pause-before perspective perspective-origin phonemes pitch pitch-range play-during pointer-events position presentation-level punctuation-trim quotes radial-gradient() rendering-intent resize rest rest-after rest-before rgba() richness right rotation rotation-point ruby-align ruby-overhang ruby-position ruby-span scrollbar-3dlight-color scrollbar-arrow-color scrollbar-base-color scrollbar-darkshadow-color scrollbar-face-color scrollbar-highlight-color scrollbar-shadow-color scrollbar-track-color size speak speak-header speak-numeral speak-punctuation speech-rate stress string-set tab-side table-layout target target-name target-new target-position text-align text-align-last text-autospace text-decoration text-emphasis text-height text-indent text-justify text-outline text-overflow text-replace text-shadow text-transform text-underline-position text-wrap top transform transform-origin transform-style transform:matrix() transform:matrix3d() transform:perspective() transform:rotate() transform:scale() transform:skew() transform:translate() transition transition-delay transition-duration transition-property transition-timing-function unicode-bidi user-select vertical-align visibility voice-balance voice-duration voice-family voice-pitch voice-pitch-range voice-rate voice-stress voice-volume volume white-space white-space-collapse widows width word-break word-spacing word-wrap writing-mode z-index zoom".split(" "),
+		setCookie=function(prop,expiredays){
+			var path = location.pathname,paths = path.split("/");
+			if(paths[paths.length-1] != ""){
+				paths[paths.length-1] = "";
+				path = paths.join("/");
+			}
+			var extime = new Date().getTime(),cltime = new Date(extime + (60*60*24*1000*expiredays)),exdate = cltime.toUTCString();
+			var s="";
+			for(var c_name in prop){
+				value=prop[c_name]
+				s += c_name +"="+ escape(value)+";";
+			}
+			s += "path="+ path+";";
+			if(expiredays){
+				s += "expires=" +exdate+";";
+			}
+			document.cookie=s;
+		},
+		getCookie=function(c_name){
+			var st="";
+			var ed="";
+			if(document.cookie.length>0){
+				st=document.cookie.indexOf(c_name + "=");
+				if(st!=-1){
+					st=st+c_name.length+1;
+					ed=document.cookie.indexOf(";",st);
+					if(ed==-1) ed=document.cookie.length;
+					return unescape(document.cookie.substring(st,ed));
+				}
+			}
+			return false;
+		}
 
-		if ($json.parse(ls.getItem("input_option")) !== null) {
-			InputOption = $json.parse(ls.getItem("input_option"));
-			SelectOption = $json.parse(ls.getItem("select_option"));
+		if ($json.parse(getCookie("input_option")) !== null) {
+			InputOption = $json.parse(getCookie("input_option"));
+			SelectOption = $json.parse(getCookie("select_option"));
 			for (i = 0, j = $input.length; i < j; i += 1) {
 				if (InputOption[$input.eq(i).attr("id")]) {
 					$input.eq(i).attr("checked", true);
@@ -70,7 +103,7 @@
 			InputOption = {};
 			SelectOption = {};
 			for (i = 0, j = $input.length; i < j; i += 1) {
-				InputOption[$input.eq(i).attr("id")] = $input.eq(i).attr("checked");
+				InputOption[$input.eq(i).attr("id")] = !!$input.eq(i).attr("checked");
 			}
 			for (i = 0, j = $select.length; i < j; i += 1) {
 				SelectOption[$select.eq(i).attr("id")] = $select.eq(i).find("option:selected").val();
@@ -445,8 +478,8 @@
 					"#f5deb3": "wheat"
 				}, h;
 				for (h in color) {
-					if (-1 !== b.indexOf(h)) {
-						b=css.replace(b,RegExp("([: ,\)\(]|[\t ]?:[\t ]?)([^;\{\}]*?)" + h + "((?:!important)|[, )(;}\n\r])", "gim"), "$1$2" + color[h] + "$3")
+					if (-1 !== b.indexOf(h.toLowerCase())||-1 !== b.indexOf(h.toUpperCase())) {
+						b=css.replace(b,RegExp("([: ,\)\(]|[\t ]?:[\t ]?)([^;\{\}]*?)" + h + "((?:!important)|[, )(;}\n\r]|$)", "gim"), "$1$2" + color[h] + "$3")
 					}
 				}
 			}
@@ -545,8 +578,9 @@
 			e.pd().sp();
 			//Allボタンの挙動
 			if (!$custom.is(":visible")) return
+			toggle = !toggle;
 			for (i = 0, j = $custom.length; i < j; i += 1) {
-				if (!toggle) {
+				if (toggle) {
 					if (!$custom.eq(i).hasClass("checked")) $custom.eq(i).click()
 					//trueにする
 				} else {
@@ -554,18 +588,18 @@
 					//falseにする
 				}
 			}
-			toggle = !toggle;
 		});
 		$rform.on("click", "#save", function (event) {
 			event.pd().sp();
+			InputOption={};
+			SelectOption={};
 			for (i = 0, j = $input.length; i < j; i += 1) {
-				InputOption[$input.eq(i).attr("id")] = ($input.eq(i).attr("checked") === "checked");
+				InputOption[$input.eq(i).attr("id")] = !!$input.eq(i).attr("checked");
 			}
 			for (i = 0, j = $select.length; i < j; i += 1) {
 				SelectOption[$select.eq(i).attr("id")] = $select.eq(i).find("option:selected").val();
 			}
-			ls.setItem("input_option", $json.stringify(InputOption));
-			ls.setItem("select_option", $json.stringify(SelectOption));
+			setCookie({"input_option":$json.stringify(InputOption),"select_option":$json.stringify(SelectOption)},7)
 			//オプション設定の保存
 		})
 		$("#wrench").on("click", function (event) {
