@@ -278,11 +278,17 @@
 			css.init(b)
 			for(var i=0;i<css.length;i+=1){
 				//正しいプロパティ名か判定(適当だからだめかも)
-				var prop=css.eq(i).properties.split(";"),changed=false;
+				var prop=css.eq(i).properties.split(";"),changed=false,hasVendor=function(prop,vendor){
+					vendor=["-khtml-","-o-","-moz-","-webkit-","-ms-",vendor];
+					for(var i=0,j=vendor.length;i<j;i+=1){
+						if(prop.indexOf(vendor[i])!=-1&&prop.indexOf(vendor[i])==0) return true;
+					}
+					return false;
+				};
 				loop:for(var k=0,l=prop.length;k<l;k+=1){
 					prop[k]=prop[k].split(":")[0].replace(/\/\*.+?\*\//gim,"").replace(/[^a-zA-Z0-9\-]/gim,"");
 					if(prop[k]!=""){
-						if(!(prop[k].indexOf("-moz-")!=-1&&prop[k].indexOf("-moz-")==0||prop[k].indexOf("-webkit-")!=-1&&prop[k].indexOf("-webkit-")==0||prop[k].indexOf("-ms-")!=-1&&prop[k].indexOf("-ms-")==0||prop[k].indexOf("-o-")!=-1&&prop[k].indexOf("-o-")==0||prop[k].indexOf("-khtml-")!=-1&&prop[k].indexOf("-khtml-")==0) ){
+						if(!hasVendor(prop[k],"-pie-")){
 							//ベンダープレフィックスを含まない
 							if(!correctProperties.has(prop[k])){
 								//正しくない
