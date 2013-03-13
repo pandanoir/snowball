@@ -515,7 +515,7 @@ assert = {
 			};
 
 		msg = escapeText( msg || (result ? "okay" : "failed" ) );
-		msg = "<span class='test-message'>" + msg + "</span>";
+		msg = "<span class='test-message'><pre>" + msg + "</pre></span>";
 
 		if ( !result ) {
 			source = sourceFromStacktrace( 2 );
@@ -910,7 +910,7 @@ extend( QUnit, {
 			};
 
 		message = escapeText( message ) || ( result ? "okay" : "failed" );
-		message = "<span class='test-message'>" + message + "</span>";
+		message = "<span class='test-message'><pre>" + message + "</pre></span>";
 		output = message;
 
 		if ( !result ) {
@@ -955,7 +955,7 @@ extend( QUnit, {
 			};
 
 		message = escapeText( message ) || "error";
-		message = "<span class='test-message'>" + message + "</span>";
+		message = "<span class='test-message'><pre>" + message + "</pre></span>";
 		output = message;
 
 		output += "<table>";
