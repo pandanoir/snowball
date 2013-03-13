@@ -120,6 +120,14 @@
 		$customWid = $custom.css("width");
 		$menuWid = $menu.css("width");
 
+		if(!!$("#HackMode").attr("checked")==true){
+			$options.find("a").eq($("#padding").attr("disabled",true).index("input[type='checkbox']")).addClass("Hack");
+			$options.find("a").eq($("#margin").attr("disabled",true).index("input[type='checkbox']")).addClass("Hack");
+		}else{
+			$options.find("a").eq($("#padding").attr("disabled",false).index("input[type='checkbox']")).removeClass("Hack");
+			$options.find("a").eq($("#margin").attr("disabled",false).index("input[type='checkbox']")).removeClass("Hack");
+		}//CSSハックモードの処理。onならpaddingとmarginを無効化
+		
 		function compress(event) {
 			function cb(g) {
 				//バイト数カウント
@@ -273,10 +281,10 @@
 
 			//makeshort終わり
 			for (var i = 0, j = $input.length; i < j; i += 1) {
-				InputOption[$input.eq(i).attr("id")] = $input.eq(i).attr("checked");
+				InputOption[$input.eq(i).attr("id")] = $input.eq(i).attr("checked")&&!$input.eq(i).is(":disabled");
 			}
 			css.init(b)
-			for(var i=0;i<css.length;i+=1){
+/*			for(var i=0;i<css.length;i+=1){
 				//正しいプロパティ名か判定(適当だからだめかも)
 				var prop=css.eq(i).properties.split(";"),changed=false,hasVendor=function(prop,vendor){
 					vendor=["-khtml-","-o-","-moz-","-webkit-","-ms-",vendor];
@@ -300,7 +308,7 @@
 					}
 				}
 				if(changed==true) return;
-			}
+			}*/
 			if (InputOption["comment"]) b = b.replace(/(\/\*([\s]|.)+?\*\/)/g, ""); //コメントの削除
 			var InputPartOption = {
 				"zero": [/(\D)[0](?:em|px|%)/g, "$10"], //0pxなどの単位を削除
@@ -523,6 +531,15 @@
 				$(this).removeClass("on")
 			})
 		}
+		$("#HackMode").on("click",function(){
+			if(!$("#HackMode").attr("checked")==true){
+				$options.find("a").eq($("#padding").attr("disabled",true).index("input[type='checkbox']")).addClass("Hack");
+				$options.find("a").eq($("#margin").attr("disabled",true).index("input[type='checkbox']")).addClass("Hack");
+			}else{
+				$options.find("a").eq($("#padding").attr("disabled",false).index("input[type='checkbox']")).removeClass("Hack");
+				$options.find("a").eq($("#margin").attr("disabled",false).index("input[type='checkbox']")).removeClass("Hack");
+			}
+		})
 		$lform.on("click", ".select , .reset", function (event) {
 			//リセットボタンとセレクトボタンを押した時に選択状態にする
 			event.sp();
@@ -554,6 +571,13 @@
 			$bef.attr("placeholder", "ここにコードをペーストしてください。どうやらお使いのブラウザではドラッグアンドドロップは対応していないようです。");
 		}
 		$(window).on("keydown", function (e) {
+			if(e.keyCode === 68 && e.altKey && e.metaKey && e.ctrlKey){
+				var $customA=$options.find(".customCheckBox").find("a");
+				for(var i=0,j=$customA.length;i<j;i+=1){
+					$customA.eq(i).hasClass("checked")&&$customA.eq(i).trigger("click");
+				}
+				$customA.eq($("#option").index("input[type='checkbox']")).trigger("click");
+			}
 			if (!((!e.metaKey && e.ctrlKey) || (e.metaKey && !e.ctrlKey))) return;
 			if (e.keyCode === 13) $compress.trigger("click") //Ctrl+Enterで圧縮
 			else if (e.altKey && (e.keyCode === 80 || e.keyCode === 83)) {
