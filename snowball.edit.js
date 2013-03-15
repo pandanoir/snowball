@@ -85,7 +85,7 @@
 			return false;
 		}
 
-		if ($json.parse(getCookie("input_option")) !== null) {
+		if ($json.parse(getCookie("input_option")) !== false) {
 			InputOption = $json.parse(getCookie("input_option"));
 			SelectOption = $json.parse(getCookie("select_option"));
 			for (i = 0, j = $input.length; i < j; i += 1) {
