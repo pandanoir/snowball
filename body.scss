@@ -88,7 +88,7 @@ body{
 	}
 }
 #board{
-	height: 370px;
+	height: 400px;
 }
 legend{
 	padding: 8px 2px;
@@ -204,6 +204,7 @@ a.button, .button, .Rbutton, .inlinebutton, .inlineRbutton{
 	}
 	&.Hack{
 		color:#CCC;
+		pointer-events:none;
 		&:hover{
 			border:1px solid transparent;
 		}

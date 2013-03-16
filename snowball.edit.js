@@ -119,13 +119,16 @@
 		$custom = $menu.find("div.customCheckBox").find("a");
 		$customWid = $custom.css("width");
 		$menuWid = $menu.css("width");
+		$options.finda=function(id){
+			return $options.find("a").eq(id.index("input[type='checkbox']"))
+		}
 
 		if(!!$("#HackMode").attr("checked")==true){
-			$options.find("a").eq($("#padding").attr("disabled",true).index("input[type='checkbox']")).addClass("Hack");
-			$options.find("a").eq($("#margin").attr("disabled",true).index("input[type='checkbox']")).addClass("Hack");
+			$options.finda($("#padding").attr("disabled",true)).addClass("Hack");
+			$options.finda($("#margin").attr("disabled",true)).addClass("Hack");
 		}else{
-			$options.find("a").eq($("#padding").attr("disabled",false).index("input[type='checkbox']")).removeClass("Hack");
-			$options.find("a").eq($("#margin").attr("disabled",false).index("input[type='checkbox']")).removeClass("Hack");
+			$options.finda($("#padding").attr("disabled",false)).removeClass("Hack");
+			$options.finda($("#margin").attr("disabled",false)).removeClass("Hack");
 		}//CSSハックモードの処理。onならpaddingとmarginを無効化
 		
 		function compress(event) {
@@ -533,16 +536,15 @@
 		}
 		$("#HackMode").on("click",function(){
 			if(!$("#HackMode").attr("checked")==true){
-				$options.find("a").eq($("#padding").attr("disabled",true).index("input[type='checkbox']")).addClass("Hack");
-				$options.find("a").eq($("#margin").attr("disabled",true).index("input[type='checkbox']")).addClass("Hack");
+				$options.finda($("#padding").attr("disabled",true)).addClass("Hack");
+				$options.finda($("#margin").attr("disabled",true)).addClass("Hack");
 			}else{
-				$options.find("a").eq($("#padding").attr("disabled",false).index("input[type='checkbox']")).removeClass("Hack");
-				$options.find("a").eq($("#margin").attr("disabled",false).index("input[type='checkbox']")).removeClass("Hack");
+				$options.finda($("#padding").attr("disabled",false)).removeClass("Hack");
+				$options.finda($("#margin").attr("disabled",false)).removeClass("Hack");
 			}
 		})
 		$lform.on("click", ".select , .reset", function (event) {
 			//リセットボタンとセレクトボタンを押した時に選択状態にする
-			event.sp();
 			$(this).siblings("textarea").select();
 		}).on("click", "#compress", compress).find("#bef").select();
 		if (window.File) {
@@ -591,7 +593,6 @@
 		$option.on("click", function (e) {
 			//一部だけ圧縮するを押した際の挙動。
 			//ここでのメニューは一部圧縮時メニューのこと
-			e.sp();
 			if ($custom.is(":animated") || $menu.is(":animated")) return;
 			else if ($option.attr("checked")) {
 				//メニューが表示されていたら非表示にする
@@ -605,7 +606,6 @@
 			}
 		});
 		$option_all.on("click", function (e) {
-			e.pd().sp();
 			//Allボタンの挙動
 			if (!$custom.is(":visible")) return
 			toggle = !toggle;
@@ -620,7 +620,6 @@
 			}
 		});
 		$rform.on("click", "#save", function (event) {
-			event.pd().sp();
 			InputOption={};
 			SelectOption={};
 			for (i = 0, j = $input.length; i < j; i += 1) {
