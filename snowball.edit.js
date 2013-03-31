@@ -444,7 +444,8 @@
 			$bef.attr("placeholder", "ここにコードをペーストしてください。どうやらお使いのブラウザではドラッグアンドドロップは対応していないようです。");
 		}
 		$(window).on("keydown", function (e) {
-			if(e.keyCode === 68 && e.altKey && e.metaKey && e.ctrlKey){
+			if(e.keyCode === 68 && e.shiftKey &&( e.ctrlKery && !e.metaKey || !e.ctrlKey && e.metaKey)){
+				e.pd()
 				var $customA=$options.find(".customCheckBox").find("a");
 				$("body").addClass("debug");
 				for(var i=0,j=$customA.length;i<j;i+=1){
@@ -454,7 +455,7 @@
 				$bef.val(".white-space{\n\twhite-space: nowrap;\n\tbackground :#FFF!important;\n\tcolor : #FFFFFF !important ;\n\t margin:3px 3px 5px 3px;\n}\n@media screen and (max-device-width:480px){\n\t.black , .button {\n\tbackground:none;\n\tbackground-image:none;\n\t color:black;\/*OK*\/\n\t margin: 0px;\n\t opacity:0.9;\n\t padding:3px 3px 3px 3px;\n\t}\n}")
 				return false;
 			}
-			if (!((!e.metaKey && e.ctrlKey) || (e.metaKey && !e.ctrlKey))) return;
+			if (!(e.ctrlKery && !e.metaKey || !e.ctrlKey && e.metaKey)) return;
 			if (e.keyCode === 13) $compress.trigger("click") //Ctrl+Enterで圧縮
 			else if (e.altKey && (e.keyCode === 80 || e.keyCode === 83)) {
 				event.pd().sp();
