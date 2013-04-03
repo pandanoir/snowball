@@ -382,7 +382,7 @@
 				if (InputOption.none) {
 					b=css.replace(b,/(.+?):(.+?(?:;|$))/g,function(all,prop,val){
 						if(prop.indexOf("background-image")!=-1) return all;
-						if(prop.indexOf("border")!=-1||prop.indexOf("background")!=-1){
+						if(prop.indexOf("border")!=-1||prop.indexOf("background")!=-1||prop.indexOf("outline")!=-1){
 							return all.replace(val,val.replace(/none/g,"0"))
 						}
 						return all
