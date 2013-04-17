@@ -147,7 +147,7 @@
 					"semicolon": [/[\t ]*;[\t ]*$/g, ";"], //セミコロン周辺のスペース
 					"needlessSemi":[/[\t ]*;[\t ]*([\r\n]*?[\t\r\n ]*?)$/, "$1"],//不要なセミコロン
 					"sc_bracket": [/[\t ]*[\{][\t ]*/g, "{"], // "{" 周辺のスペース
-					"important": [/[\t ]*(!important)[\t ]*/g, "$1"], //!important周辺のスペース
+					"important": [/[\t ]*(?:!important)[\t ]*/g, "!important"], //!important周辺のスペース
 					"ec_bracket": [/([^\t ]+?)[\t ]*;[\t ]*\}[\t ]*/g, "$1}"] // "}" 周辺のスペース
 				},
 				InputZeroOption = {
@@ -155,6 +155,7 @@
 					"decimals": [/([\D])0\.(\d)/g, "$1.$2"] //0.nの0を削除
 				},
 				color = {aliceblue: "#f0f8ff",antiquewhite: "#faebd7",aquamarine: "#7fffd4",black: "#000",blanchedalmond: "#ffebcd",blueviolet: "#8a2be2",burlywood: "#deb887",cadetblue: "#5f9ea0",chartreuse: "#7fff00",chocolate: "#d2691e",cornflowerblue: "#6495ed",cornsilk: "#fff8dc",darkblue: "#00008b",darkcyan: "#008b8b",darkgoldenrod: "#b8860b",darkgray: "#a9a9a9",darkgreen: "#006400",darkkhaki: "#bdb76b",darkmagenta: "#8b008b",darkolivegreen: "#556b2f",darkorange: "#ff8c00",darkorchid: "#9932cc",darksalmon: "#e9967a",darkseagreen: "#8fbc8f",darkslateblue: "#483d8b",darkslategray: "#2f4f4f",darkturquoise: "#00ced1",darkviolet: "#9400d3",deeppink: "#ff1493",deepskyblue: "#00bfff",dodgerblue: "#1e90ff",firebrick: "#b22222",floralwhite: "#fffaf0",forestgreen: "#228b22",fuchsia: "#f0f",gainsboro: "#dcdcdc",ghostwhite: "#f8f8ff",goldenrod: "#daa520",greenyellow: "#adff2f",honeydew: "#f0fff0",indianred: "#cd5c5c",lavendar: "#e6e6fa",lavenderblush: "#fff0f5",lawngreen: "#7cfc00",lemonchiffon: "#fffacd",lightblue: "#add8e6",lightcoral: "#f08080",lightcyan: "#e0ffff",lightgoldenrodyellow: "#fafad2",lightgray: "#d3d3d3",lightgreen: "#90ee90",lightpink: "#ffb6c1",lightsalmon: "#ffa07a",lightseagreen: "#20b2aa",lightskyblue: "#87cefa",lightslategray: "#789",lightsteelblue: "#b0c4de",lightyellow: "#ffffe0",limegreen: "#32cd32",magenta: "#f0f",mediumaquamarine: "#66cdaa",mediumblue: "#0000cd",mediumorchid: "#ba55d3",mediumpurple: "#9370db",mediumseagreen: "#3cb371",mediumslateblue: "#7b68ee",mediumspringgreen: "#00fa9a",mediumturquoise: "#48d1cc",mediumvioletred: "#c71585",midnightblue: "#191970",mintcream: "#f5fffa",mistyrose: "#ffe4e1",moccasin: "#ffe4b5",navajowhite: "#ffdead",olivedrab: "#6b8e23",orangered: "#ff4500",palegoldenrod: "#eee8aa",palegreen: "#98fb98",paleturquoise: "#afeeee",palevioletred: "#db7093",papayawhite: "#ffefd5",peachpuff: "#ffdab9",powderblue: "#b0e0e6",rosybrown: "#bc8f8f",royalblue: "#4169e1",saddlebrown: "#8b4513",sandybrown: "#f4a460",seagreen: "#2e8b57",seashell: "#fff5ee",slateblue: "#6a5acd",slategray: "#708090",springgreen: "#00ff7f",steelblue: "#4682b4",turquoise: "#40e0d0",white: "#fff",whitesmoke: "#f5f5f5",yellow: "#ff0",yellowgreen: "#9acd32","#f0ffff": "azure","#f5f5dc": "beige","#ffe4c4": "bisque","#a52a2a": "brown","#ff7f50": "coral","#ffd700": "gold","#808080": "gray","#008000": "green","#4b0082": "indigo","#fffff0": "ivory","#f0e68c": "khaki","#faf0e6": "linen","#800000": "maroon","#000080": "navy","#808000": "olive","#ffa500": "orange","#da70d6": "orchid","#cd853f": "peru","#ffc0cb": "pink","#dda0dd": "plum","#800080": "purple","#ff0000": "red","#f00": "red","#fa8072": "salmon","#a0522d": "sienna","#c0c0c0": "silver","#fffafa": "snow","#d2b48c": "tan","#008080": "teal","#ff6347": "tomato","#ee82ee": "violet","#f5deb3": "wheat"},
+				color_Reg={},
 				InputPartOptionAll=(function(){
 					var rep=[/[\r\n]/g, /[\t ]*([,:;\{]|!important)[\t ]*/g ,/[\t ]*;[\t ]*$/g ,/([^\t ]+?)[\t ]*$/g];
 					return function(b,now){
@@ -167,15 +168,17 @@
 								)
 					}
 				})(),
+				pattern=[/(padding(?:\-left|\-right|\-top|\-bottom)? ?: ?([^;$]+)([;$]?))/gim,/(margin(?:\-left|\-right|\-top|\-bottom)? ?: ?([^;$]+)([;$]?))/gim],
+				makeShortReg=[[/(padding(?:\-left|\-right|\-top|\-bottom)? ?: ?([^;$]+)([;$]?)([\r\n]?))/gim,/(margin(?:\-left|\-right|\-top|\-bottom)? ?: ?([^;$]+)([;$]?)([\r\n]?))/gim],[/(padding[\s]?:[\s]?)([^;$]+?[;$])/gi,/(margin[\s]?:[\s]?)([^;$]+?[;$])/gi]],
 				makeshort=function(str, pm) {
+					var RegPM=pm=="padding"?0:1;
 					css.init(str)
 					var block = css.eq(),
-						beforeblock = css.eq(),
-						pattern = new RegExp("(" + pm + "(?:\-left|\-right|\-top|\-bottom)? ?: ?([^;$]+)([;$]?))", "gim");
+						beforeblock = css.eq();
 					for (var bi = 0, bj = css.length; bi < bj; bi += 1) {
 						var before = css.eq(bi),
 							after = css.eq(bi),
-							paddings = after.properties.match(pattern);
+							paddings = after.properties.match(pattern[RegPM]);
 	
 						if (paddings !== null) {
 							var paddingsData = {
@@ -186,7 +189,7 @@
 								ok:false
 							};
 							loop:for (var i = paddings.length-1; i >=0; i -= 1) {
-								paddings[i] = paddings[i].replace(pattern, "$1:$2").split(":");
+								paddings[i] = paddings[i].replace(pattern[RegPM], "$1:$2").split(":");
 								paddings[i][1] = paddings[i][1].replace(/;$/, "");
 								var property = paddings[i][0].toLowerCase();
 	
@@ -225,10 +228,10 @@
 							}
 							if (paddingsData.ok||(paddingsData.t !== null && paddingsData.r !== null && paddingsData.l !== null && paddingsData.b !== null)) {
 								var c = paddingsData.t === paddingsData.r && paddingsData.t === paddingsData.b && paddingsData.t === paddingsData.l ? paddingsData.t : paddingsData.t === paddingsData.b && paddingsData.r === paddingsData.l && paddingsData.t !== paddingsData.r ? paddingsData.t + " " + paddingsData.r : paddingsData.r === paddingsData.l && paddingsData.t !== paddingsData.b ? paddingsData.t + " " + paddingsData.r + " " + paddingsData.b : paddingsData.t + " " + paddingsData.r + " " + paddingsData.b + " " + paddingsData.l,
-									jjj = after.properties.match(pattern),
+									jjj = after.properties.match(pattern[RegPM]),
 									jjj = jjj !== null ? jjj.length : 0,
 									iii = 0;
-								after.properties = after.properties.replace(RegExp("(" + pm + "(?:\-left|\-right|\-top|\-bottom)? ?: ?([^;$]+)([;$]?)([\r\n]?))", "gim"), function (a, b, cc, d, endl) {
+								after.properties = after.properties.replace(makeShortReg[0][RegPM], function (a, b, cc, d, endl) {
 									iii += 1
 									if (iii === jjj) {
 										return pm + ":" + c + (d || "") + endl;
@@ -243,7 +246,7 @@
 					for (var i = 0; i < bj; i += 1) {
 						if (beforeblock[i].string !== block[i].string) str = str.replace(beforeblock[i].string, block[i].string)
 					}
-					return str.replace(RegExp("(" + pm + "[\s]?:[\s]?)([^;$]+?[;$])", "gi"), function (a, property, b) {
+					return str.replace(makeShortReg[1][RegPM], function (a, property, b) {
 						var values = b.replace(/ /g, ",").split(","),
 							d = values.length,
 							result = b;
@@ -367,7 +370,12 @@
 				}
 				if (InputOption.color_name) {
 					//カラーネームの最適化
-					for (var h in color) if (-1 !== b.indexOf(h.toLowerCase())||-1 !== b.indexOf(h.toUpperCase())) b=css.replace(b,RegExp("([: ,\)\(]|[\t ]?:[\t ]?)([^;\{\}]*?)" + h + "((?:!important)|[, )(;}\n\r]|$)", "gim"), "$1$2" + color[h] + "$3")
+					for (var h in color){
+						if (-1 !== b.indexOf(h.toLowerCase())||-1 !== b.indexOf(h.toUpperCase())){
+							color_Reg[h]||(color_Reg[h]=new RegExp("([: ,\)\(]|[\t ]?:[\t ]?)([^;\{\}]*?)" + h + "((?:!important)|[, )(;}\n\r]|$)", "gim"));
+							b=css.replace(b,color_Reg[h], "$1$2" + color[h] + "$3")
+						}
+					}
 				}
 				if (-1 !== b.indexOf("padding") && InputOption.padding) b = makeshort(b, "padding"); //パディング最適化
 				if (-1 !== b.indexOf("margin") && InputOption.margin) b = makeshort(b, "margin"); //マージン最適化
@@ -444,7 +452,7 @@
 			$bef.attr("placeholder", "ここにコードをペーストしてください。どうやらお使いのブラウザではドラッグアンドドロップは対応していないようです。");
 		}
 		$(window).on("keydown", function (e) {
-			if(e.keyCode === 68 && e.shiftKey &&( e.ctrlKery && !e.metaKey || !e.ctrlKey && e.metaKey)){
+			if(e.keyCode === 68 && e.shiftKey && (e.ctrlKey&&!e.metaKey||!e.ctrlKey&&e.metaKey) && e.altKey){
 				e.pd()
 				var $customA=$options.find(".customCheckBox").find("a");
 				$("body").addClass("debug");
