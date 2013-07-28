@@ -9,17 +9,14 @@
   * Banner: Link should ignore "testNumber" and "module". Fixes #270
   * Rename assert.raises to assert.throws. Fixes #267
   * Change package.json name property to 'qunitjs' to avoid conflicht with node-qunit; will publish next release to npm
-
 1.8.0 / 2012-06-14
 ==================
   * Improve window.onerror handling
   * (issue #260) config.current should be reset at the right time.
   * Filter: Implement 'module' url parameter. Fixes #252
   * raises: ignore global exceptions stemming from test. Fixes #257 - Globally-executed errors sneak past raises in IE
-
 1.7.0 / 2012-06-07
 ==================
-
   * Add config.requireExpects. Fixes #207 - Add option to require all tests to call expect().
   * Improve extractStacktrace() implementation. Fixes #254 - Include all relevant stack lines
   * Make filters case-insensitive. Partial fix for #252
@@ -33,10 +30,8 @@
   * Update validTest() : Simplify logic, clarify vars and add comments
   * Refactor assertion helpers into QUnit.assert (backwards compatible)
   * Add Rerun link to placeholders. Fixes #240
-
 1.6.0 / 2012-05-04
 ==================
-
   * Save stack for each test, use that for failed expect() results, points at the line where test() was called. Fixes #209
   * Prefix test-output id and ignore that in noglobals check. Fixes #212
   * Only check for an exports object to detect a CommonJS enviroment. Fixes #237 - Incompatibility with require.js
@@ -46,19 +41,15 @@
   * Cleanup reset() test and usage - run testDone callback first, to allow listeneres ignoring reset assertions
   * Double clicking on composite test rows opens individual test page
   * test-message for all message-bearing API reporting details
-
 1.5.0 / 2012-04-04
 ==================
-
   * Modify "Running..." to display test name. Fixes #220
   * Fixed clearing of sessionStorage in Firefox 3.6.
   * Fixes #217 by calling "block" with config.current.testEnvironment
   * Add stats results to data. QUnit.jUnitReport function take one argument {   xml:'<?xml ...',   results:{failed:0, passed:0, total:0, time:0} }
   * Add link to MDN about stack property
-
 1.4.0 / 2012-03-10
 ==================
-
   * Prefix test-related session-storage items to make removal more specific. Fixes #213 - Keep hide-passed state when clearing session storage
   * Update grunt.js with seperate configs for qunit.js and grunt.js, also add tests but disable for now, not passing yet. Add grunt to devDependencies
   * typo
@@ -77,10 +68,8 @@
   * Make test fail if no assertions run. Fixes #178
   * Sort object output alphabetically in order to improve diffs of objects where properties were set in a different order. Fixes #206
   * Revert "Change fixture reset behavior", changing #194 and #195 to wontfix.
-
 1.3.0 / 2012-02-26
 ==================
-
   * Cleanup test markup
   * Fix the jQuery branch of fixture reset. Would break when no fixture exists.
   * Added initial version of a junitlogger addon.
@@ -117,10 +106,8 @@
   * Merge pull request #181 from simonz/development
   * Escaping test names
   * Show exception stack when test failed
-
 1.2.0 / 2011-11-24
 ==================
-
   * remove uses of equals(), as it's deprecated in favor of equal()
   * Code review of "Allow objects with no prototype to be tested against object literals."
   * Allow objects with no prototype to tested against object literals.
@@ -130,10 +117,8 @@
   * Fix globals in test.js, part 2
   * Fix globals in test.js. ?tell wwalser to use ?noglobals everyonce in a while
   * Extend readme regarding release process
-
 1.1.0 / 2011-10-11
 ==================
-
   * Fixes #134 - Add a window.onerror handler. Makes uncaught errors actually fail the testsuite, instead of going by unnoticed.
   * Whitespace cleanup
   * Merge remote branch 'trevorparscal/master'
@@ -155,10 +140,8 @@
   * Simplified check for assertion count and adjusted whitespace
   * Redo of fixing issue #156 (Support Object.prototype extending environment). * QUnit.diff: Throws exception without this if Object.prototype is set (Property 'length' of undefined. Since Object.prototype.foo doesn't have a property 'rows') * QUnit.url: Without this fix, if Object.prototype.foo is set, the url will be set to ?foo=...&the=rest. * saveGlobals: Without this fix, whenever a member is added to Object.prototype, saveGlobals will think it was a global variable in this loop. --- This time using the call method instead of obj.hasOwnProperty(key), which may fail if the object has that as it's own property (touché!).
   * Handle expect(0) as expected, i.e. expect(0); ok(true, foo); will cause a test to fail
-
 1.0.0 / 2011-10-06
 ==================
-
   * Make QUnit work with TestSwarm
   * Run other addons tests as composite addon demo. Need to move that to /test folder once this setup actually works
   * Add-on: New assertion-type: step()

@@ -1,12 +1,13 @@
-/*global $,escape */
+
 "use strict";
 (function (window, $) {
 	$(function () {
 		$("body").on("dragover", function (event) {
-			event.pd().sp();
+			event.preventDefault();
+			event.stopPropagation();
 			return false;
 		});
-		Array.fn.has=function(key){
+		Array.prototype.has=function(key){
 			var start=0,end=this.length-1,mid,m=Math.floor;
 			if(this[this.length-1]<key) return false;
 			while(start<=end){
@@ -127,7 +128,7 @@
 			$options.finda($("#padding").attr("disabled",false)).removeClass("Hack");
 			$options.finda($("#margin").attr("disabled",false)).removeClass("Hack");
 		}//CSSハックモードの処理。onならpaddingとmarginを無効化
-		
+
 		var compress=(function () {
 			var cb=function(g) {
 					//バイト数カウント
@@ -179,7 +180,7 @@
 						var before = css.eq(bi),
 							after = css.eq(bi),
 							paddings = after.properties.match(pattern[RegPM]);
-	
+
 						if (paddings !== null) {
 							var paddingsData = {
 								t: null,
@@ -192,7 +193,7 @@
 								paddings[i] = paddings[i].replace(pattern[RegPM], "$1:$2").split(":");
 								paddings[i][1] = paddings[i][1].replace(/;$/, "");
 								var property = paddings[i][0].toLowerCase();
-	
+
 								if (property === pm) {
 									var a = paddings[i][1].replace(/;/g, "").replace(/ /g, ",").split(",");
 									var g = a.length;
@@ -274,7 +275,8 @@
 				var b = $bef.val(),
 					beforeSize = cb(b);
 				css.init(b);
-				event.pd().sp();
+				event.preventDefault();
+				event.stopPropagation();
 				/*		function g(a) {
 					var b = pro,c = fonts,a = a + "(.+?)[\r\n;}]",f = 0;
 					if (c = b.match(RegExp(a, "gi"))) {
@@ -310,7 +312,7 @@
 				};
 				*/
 				//makeshort開始
-	
+
 				//makeshort終わり
 				for (var i = 0, j = $input.length; i < j; i += 1) {
 					InputOption[$input.eq(i).attr("id")] = $input.eq(i).attr("checked")&&!$input.eq(i).is(":disabled");
@@ -428,13 +430,16 @@
 		$compress.on("click", compress);
 		if (window.File) {
 			$bef.on("dragenter", function (event) {
-				event.pd().sp();
+				event.preventDefault();
+				event.stopPropagation();
 			}).on("dragover", function (event) {
 				event.originalEvent.dataTransfer.dropEffect = "copy";
-				event.pd().sp();
+				event.preventDefault();
+				event.stopPropagation();
 			}).on("drop", function (event) {
 				//ドラッグアンドドロップ
-				event.pd().sp();
+				event.preventDefault();
+				event.stopPropagation();
 				event = event.originalEvent;
 				var files = event.dataTransfer.files;
 				SelectOption.encode = $select.filter("#encode").find("option:selected").val();
@@ -453,7 +458,7 @@
 		}
 		$(window).on("keydown", function (e) {
 			if(e.keyCode === 68 && e.shiftKey && (e.ctrlKey&&!e.metaKey||!e.ctrlKey&&e.metaKey) && e.altKey){
-				e.pd()
+				e.preventDefault()
 				var $customA=$options.find(".customCheckBox").find("a");
 				$("body").addClass("debug");
 				for(var i=0,j=$customA.length;i<j;i+=1){
@@ -466,7 +471,8 @@
 			if (!(e.ctrlKery && !e.metaKey || !e.ctrlKey && e.metaKey)) return;
 			if (e.keyCode === 13) $compress.trigger("click") //Ctrl+Enterで圧縮
 			else if (e.altKey && (e.keyCode === 80 || e.keyCode === 83)) {
-				event.pd().sp();
+				event.preventDefault();
+				event.stopPropagation();
 				$compress.trigger("click");
 				if (e.keyCode === 80) $aft.val($aft.val().replace(/(http:\/\/)/g, "//")); //http://を省略
 				else $aft.val($aft.val().replace(/(https:\/\/)/g, "//")); //https://を省略
@@ -509,7 +515,8 @@
 			//オプション設定の保存
 		})
 		$("#wrench").on("click", function (event) {
-			event.pd().sp();
+			event.preventDefault();
+			event.stopPropagation();
 			$options.toggle();
 			$results.toggle();
 		});

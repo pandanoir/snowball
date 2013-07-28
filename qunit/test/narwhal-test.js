@@ -1,6 +1,5 @@
 // Run with: $ narwhal test/narwhal-test.js
 var QUnit = require("../qunit/qunit");
-
 QUnit.log(function(details) {
 	if (!details.result) {
 		var output = "FAILED: " + (details.message ? details.message + ", " : "");
@@ -13,7 +12,6 @@ QUnit.log(function(details) {
 		print(output);
 	}
 });
-
 QUnit.test("fail twice with stacktrace", function(assert) {
 	/*jshint expr:true */
 	assert.equal(true, false);

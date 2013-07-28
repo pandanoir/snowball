@@ -1,6 +1,5 @@
 // Run with: $ node test/node-test.js
 var QUnit = require("../qunit/qunit");
-
 QUnit.log(function(details) {
 	if (!details.result) {
 		var output = "FAILED: " + (details.message ? details.message + ", " : "");
@@ -13,7 +12,6 @@ QUnit.log(function(details) {
 		console.log(output);
 	}
 });
-
 QUnit.test("fail twice with stacktrace", function(assert) {
 	/*jshint expr:true */
 	assert.equal(true, false);

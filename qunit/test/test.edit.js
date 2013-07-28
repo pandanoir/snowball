@@ -189,7 +189,6 @@
 			$("#option_all").clicked()
 			for(var i=0,check=true;i<$cLen;i++) $custom.eq(i).isCheck()&&(check=false)
 			equal(check,true,"change all non checked");
-			
 			$("#option_all").clicked()
 			for(var i=0,check=true;i<$cLen;i++) $custom.eq(i).isCheck()||(check=false)
 			equal(check,true,"change all checked");

@@ -280,6 +280,8 @@ a.button, .button, .Rbutton, .inlinebutton, .inlineRbutton{
 	height: 40px;
 	background: url(./title.png) no-repeat;
 	text-indent: 100%;
+	overflow: hidden;
+	white-space: nowrap;
 }
 #body #fc2form input[type="text"], #body #fc2form textarea{
 	color: #000;
