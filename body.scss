@@ -25,7 +25,6 @@ $lformWid: 1000-$rformWid;
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(1.00, darken($main, 20%)), color-stop(0.51, darken($main, 13.5%)), color-stop(0.50, $main), color-stop(0.00, $main));
 }
 body{
-	background: #F3F3F3;
 	color: #000;
 	font-family: "Gill sans", Osaka, Arial;
 }
@@ -42,9 +41,6 @@ body{
 	margin: 0 auto;
 	padding: 10px;
 	width: 1000px;
-	border: 1px solid #666;
-	border-radius: 5px;
-	background: #FFF;
 }
 #footer{
 	border-top: 1px solid #999;
@@ -59,15 +55,18 @@ body{
 	width: 200px;
 }
 .form{
+    $trans:width 0.3s ease-in-out;
 	display: block;
 	float: left;
-	margin: 3px floor($lformWid * 0.005) 0;
+	margin: 3px 0 0;
 	padding: 0;
-	width: floor($lformWid * 0.49);
+	width: $lformWid;
 	border: none;
+    @include PP(transition, $trans);
 	textarea{
 		@include VP(white-space, pre-wrap);
-		width: round($lformWid * 0.48 - 4 - 4);
+        @include PP(transition, $trans);
+		width:$lformWid - 4;
 		height: 15em;
 		padding: 2px;
 		border:none;
@@ -77,6 +76,14 @@ body{
 		font-family: "Gill sans", Osaka, Arial;
 		resize: none;
 	}
+    legend{
+        @include PP(transition, $trans);
+        overflow:hidden;
+        padding: 8px 2px;
+        width: $lformWid - 4;
+        border-bottom: 2px solid #666;
+        color: #000;
+    }
 	.button, .Rbutton{
 		display: inline-block;
 	}
@@ -86,15 +93,40 @@ body{
 	.select{
 		border-radius: 0 5px 5px 0;
 	}
+    &.large{
+        display:block;
+        width:700px;
+        legend{
+            width:700px - 4px;
+        }
+        textarea{
+            width:700px - 4px;
+        }
+    }
+    &#after_form.hide{
+        width:0px;
+        padding:0;
+        legend{
+            width:0px;
+            padding:0;
+        }
+        textarea{
+            width:0px;
+            padding:0;
+        }
+    }
+    &.small{
+        width:$lformWid - 700;
+        legend{
+            width:($lformWid - 700 - 4);
+        }
+        textarea{
+            width:($lformWid - 700 - 4);
+        }
+    }
 }
 #board{
 	height: 400px;
-}
-legend{
-	padding: 8px 2px;
-	width: round($lformWid * 0.48 - 4 - 4);
-	border-bottom: 2px solid #666;
-	color: #000;
 }
 a.button, .button, .Rbutton, .inlinebutton, .inlineRbutton{
 	background: none;
@@ -214,11 +246,6 @@ a.button, .button, .Rbutton, .inlinebutton, .inlineRbutton{
 	display: inline-block;
 	margin: 2px 0;
 	vertical-align: middle;
-}
-#footer{
-	#cse_input, #cse_submit{
-		height: 17px;
-	}
 }
 #option_menu .customCheckBox .checked{
 	background: #FDE;

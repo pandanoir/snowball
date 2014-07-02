@@ -6,7 +6,6 @@
 		var that = {},
 			blocks = [];
 		that.length = 0;
-
 		function push(block) {
 			blocks[blocks.length] = block;
 			that.length += 1;
@@ -97,7 +96,6 @@
 				push(str)
 			}
 		}
-
 		function replace(b,searchValue,newValue){
 			var i,j;
 			init(b);

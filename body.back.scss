@@ -70,11 +70,8 @@ body{
 		width: round($lformWid * 0.48 - 4 - 4);
 		height: 15em;
 		padding: 2px;
-		border: 2px solid #666;
-		border-top: none;
-		border-radius: 0 0 5px 5px;
+		border:none;
 		background: #FFF;
-		box-shadow: -1px -1px 0 #FFF inset, 1px 1px 0 #DDD inset;
 		color: #000;
 		word-break: break-all;
 		font-family: "Gill sans", Osaka, Arial;
@@ -84,7 +81,6 @@ body{
 		display: inline-block;
 	}
 	.reset{
-		border-right: none;
 		border-radius: 5px 0 0 5px;
 	}
 	.select{
@@ -92,25 +88,35 @@ body{
 	}
 }
 #board{
-	height: 370px;
+	height: 400px;
 }
 legend{
 	padding: 8px 2px;
 	width: round($lformWid * 0.48 - 4 - 4);
-	border: 2px solid #666;
-	border-radius: 5px 5px 0 0;
-	@include bg(#EFEFEF);
-	box-shadow: 1px 1px 0 #FFF inset, -1px -1px 0 #DDD inset;
+	border-bottom: 2px solid #666;
 	color: #000;
 }
 a.button, .button, .Rbutton, .inlinebutton, .inlineRbutton{
-	border: 1px solid #666;
+	background: none;
+	color: #666;
+	box-shadow: none;
+	text-shadow: none;
+	border: 1px solid transparent;
+	&:hover{
+		border: 1px solid #CCC;
+	}
+	&:active{
+		top:0
+	}
 }
-#befB, #aftB, #minus, .resultmes{
-	display: inline-block;
+.Rbutton, .inlineRbutton{
+	&:active,&:hover{
+		color:#FFF;
+	}
+}
+.resultmes,.resultmes+span{
 	display: inline-block;
 	width: 80px;
-	border-bottom: 1px solid #666;
 }
 #mes{
 	padding: 5px;
@@ -145,28 +151,25 @@ a.button, .button, .Rbutton, .inlinebutton, .inlineRbutton{
 	padding: 0 4px;
 	border-left: 3px solid #CCC;
 }
-.option_menu_btn, .customCheckBox a{
-	background: #EFEFEF;
-	@include VP("background", "linear-gradient(#FFF, #F3F3F3)");
-	background: -webkit-gradient(linear, left top, left bottom, from(#FFF), to(#F3F3F3));
-}
 .option_menu_btn{
 	@include userselect;
 	$thisBorder: 1px;
 	$thisPadding: 7px;
-	position: relative;
 	position: relative;
 	top: 0;
 	left: 0;
 	display: inline-block;
 	padding: 2px $thisPadding;
 	width: 100px-($thisPadding*2)-($thisBorder*2);
+	border: $thisBorder solid transparent;
+	border-bottom:$thisBorder+1px solid transparent;
 	height: 24px;
-	border: $thisBorder solid #666;
-	box-shadow: 0 1px 0 #666;
 	color: #333;
 	white-space: nowrap;
 	cursor: pointer;
+	&:hover{
+		border-color: #666;
+	}
 	&:active{
 		top: 1px;
 		box-shadow: none;
@@ -178,17 +181,13 @@ a.button, .button, .Rbutton, .inlinebutton, .inlineRbutton{
 .customCheckBox a{
 	$thisPadding: 5px;
 	$thisBorder: 1px;
-	position: relative;
-	top: -2px;
 	display: inline-block;
 	overflow: hidden;
 	margin: 2px 0;
 	padding: $thisPadding;
 	width: 200px-($thisPadding*2)-($thisBorder*2);
-	border:#{$thisBorder} solid #666;
+	border:#{$thisBorder} solid transparent;
 	border-radius: 5px;
-	box-shadow: 0 1px 0 #222, 0 2px 0 #999, inset 1px 1px 0 #FFF;
-	@include VP("background", "linear-gradient(top, white 0%, white 50%, #EEE 51%, #DDD 100%)");
 	color: #222;
 	text-decoration: none;
 	white-space: nowrap;
@@ -198,9 +197,17 @@ a.button, .button, .Rbutton, .inlinebutton, .inlineRbutton{
 	line-height: 1;
 	text-align:left;
 	&.checked{
-		top: 0;
 		background: #DEF;
-		box-shadow: inset 1px 1px 0 #FFF;
+	}
+	&:hover{
+		border:#{$thisBorder} solid #999;
+	}
+	&.Hack{
+		color:#CCC;
+		pointer-events:none;
+		&:hover{
+			border:1px solid transparent;
+		}
 	}
 }
 #cse-search-box{
@@ -245,15 +252,12 @@ a.button, .button, .Rbutton, .inlinebutton, .inlineRbutton{
 }
 #nav{
 	padding: 0;
-	border-bottom: 1px solid #666;
 	font-size: 0;
 	li{
 		@include PP(transition, background .1s linear 0);
 		display: inline-block;
 		margin-right: 3px;
-		border: 1px solid #666;
-		border-bottom: none;
-		border-radius: 3px 3px 0 0;
+		border-radius: 3px;
 		list-style: none;
 		font-size: 16px;
 	}
@@ -276,6 +280,8 @@ a.button, .button, .Rbutton, .inlinebutton, .inlineRbutton{
 	height: 40px;
 	background: url(./title.png) no-repeat;
 	text-indent: 100%;
+	overflow: hidden;
+	white-space: nowrap;
 }
 #body #fc2form input[type="text"], #body #fc2form textarea{
 	color: #000;
@@ -296,4 +302,9 @@ iframe{
 	height: 315px;
 	border: none;
 	box-shadow: 1px 1px 3px rgba(0, 0, 0, .5);
+}
+.debug {
+	legend{
+		color: #B33;
+	}
 }

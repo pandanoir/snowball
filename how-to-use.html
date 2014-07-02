@@ -40,6 +40,19 @@
 					もし、圧縮前のコードをけしてしまった場合は、<a href="blackbox/blackbox.html">Black Box</a>をおつかいください。<br>
 					かぎりなく圧縮前のコードに近づきます。(コメントは復活しないのでご理解ください)<br>
 				</p>
+                <p>
+                オプションにある「noneを0に変換する」ですが、使う際には少し注意が必要です。
+                </p>
+                <p>
+                このオプションでは値にあるnoneを0に変換します。ただし、プロパティがborderもしくはbackgroundもしくはoutlineの場合のみです。
+                </p>
+                <p>
+                このオプションで変換を行うと、ややコードの意味が変わります。
+                border: 0; は border-width: 0; を設定します。しかし、border: none; は border-style: none;を設定します。
+                background: 0; は background-position: 0; を設定します。しかし、 background: none; は background-image: none;を設定します。
+                outlineはborderと同じです。
+                そのため、違いが出てきます。それでも構わない場合のみオンにしてください。
+                </p>
 				<h2>ショートカットキー</h2>
 				<p>
 					Snowballではショートカットキーが使えます。<br>

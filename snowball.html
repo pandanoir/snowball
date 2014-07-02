@@ -1,7 +1,8 @@
 <!DOCTYPE HTML>
 <html>
 	<head>
-		<base href="http://pandanoir.web.fc2.com/"><meta charset="utf-8"><meta name="author" content="Panda Noir"><link rel="stylesheet" href="css/all.css" type="text/css">
+        <base href="http://pandanoir.web.fc2.com/">
+        <meta charset="utf-8"><meta name="author" content="Panda Noir"><link rel="stylesheet" href="css/all.css" type="text/css">
 		<link rel="stylesheet" href="snowball/body.css" type="text/css">
 		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script><script src="js/all.js" async></script><script src="js/jquery.css3form.js"></script><script src="js/jquery.placeholder.js"></script><script src="snowball/cssblock.js"></script><script src="snowball/snowball.js"></script>
 		<meta name="description" content="最も圧縮できるCSSコンプレッサーの一つです。レイアウトをくずさず、高圧縮しファイルサイズを落とします。サイトの高速化にとても役立ちます。">
@@ -31,7 +32,7 @@
 						<textarea id="bef" placeholder="ここにファイルをドラッグ&amp;ドロップするか、コードをペーストしてください。"></textarea><br>
 						<input type="reset" value="クリア" class="reset inlineRbutton"><input type="button" value="選択" class="select inlinebutton"><br>
 					</form>
-					<form class="form">
+					<form class="form hide" id="after_form">
 						<legend>After</legend>
 						<textarea id="aft"></textarea><br>
 						<input type="reset" value="クリア" class="reset inlineRbutton"><input type="button" value="選択" class="select inlinebutton"><br>
@@ -53,7 +54,7 @@
 						<label for="color_name">カラーネームを最適化する</label><input type="checkbox" id="color_name" checked>
 						<label for="padding">paddingを最短にする</label><input type="checkbox" id="padding" checked>
 						<label for="margin">marginを最短にする</label><input type="checkbox" id="margin" checked>
-						<label for="none">noneを0に変換する</label><input type="checkbox" id="none" checked>
+						<label for="none">noneを0に変換する</label><input type="checkbox" id="none">
 						<label for="lower">カラーコードを小文字にする</label><input type="checkbox" id="lower">
 						<label for="option">一部だけ圧縮する</label><input type="checkbox" id="option">
 						<form id="option_menu">
