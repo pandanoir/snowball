@@ -154,13 +154,15 @@
             for(var i=0;i<blocks.length;i++){
                 if(blocks[i][1]==query){
                     var p=blocks[i].concat();
-                    p[2]=i;
+                    p.push(i);
                     result.push(p);
                 }
             }
             result.replace=function(){
                 for(var i=0;i<this.length;i++){
                     this[i][0]=this[i][0].replace.apply(this[i][0],arguments);
+                    console.log(this[i][2]);
+                    console.log(blocks[this[i][2]]);
                     blocks[this[i][2]][0]=blocks[this[i][2]][0].replace.apply(blocks[this[i][2]][0],arguments);
                 }
             };
