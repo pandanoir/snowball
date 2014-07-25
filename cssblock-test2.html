@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="../js/jquery.ba-tinypubsub.js"></script>
+    <script src="../js/base2.js"></script>
+    <script src="parser.js"></script>
+    <script>
+$(function(){
+    var types=cssBlock.types;
+    $.subscribe('parse',function(_,val){
+        console.log(val);
+        console.log(new Parser(val));
+        console.log(new cssBlock(val));
+    });
+    $('#parse').on('click',function(){
+        $.publish('parse',$('textarea').val());
+    });
+    $.publish('parse',['.cf:after{display:block;clear:both;}']);
+});
+    </script>
+</head>
+<body>
+<textarea></textarea>
+<button id='parse'>parse</button>
+</body>
+</html>

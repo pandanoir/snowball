@@ -1,1 +1,0 @@
-QUnit.extend(QUnit,{pixelEqual:function(a,c,d,b,e,f,g,h){a=Array.prototype.slice.apply(a.getContext("2d").getImageData(c,d,1,1).data);b=[b,e,f,g];QUnit.push(QUnit.equiv(a,b),a,b,h)}});

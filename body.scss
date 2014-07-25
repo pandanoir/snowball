@@ -60,6 +60,8 @@ body{
 	float: left;
 	margin: 3px 0 0;
 	padding: 0;
+    height:271px;
+    overflow:hidden;
 	width: $lformWid;
 	border: none;
     @include PP(transition, $trans);
@@ -67,7 +69,7 @@ body{
 		@include VP(white-space, pre-wrap);
         @include PP(transition, $trans);
 		width:$lformWid - 4;
-		height: 15em;
+		height: 195px;
 		padding: 2px;
 		border:none;
 		background: #FFF;
@@ -94,7 +96,7 @@ body{
 		border-radius: 0 5px 5px 0;
 	}
     &.large{
-        display:block;
+        //display:block;
         width:700px;
         legend{
             width:700px - 4px;
@@ -105,7 +107,9 @@ body{
     }
     &#after_form.hide{
         width:0px;
+        height:0;
         padding:0;
+        overflow:hidden;
         legend{
             width:0px;
             padding:0;
@@ -136,9 +140,12 @@ a.button, .button, .Rbutton, .inlinebutton, .inlineRbutton{
 	border: 1px solid transparent;
 	&:hover{
 		border: 1px solid #CCC;
+        box-shadow:0 2px 3px #ddd;
 	}
 	&:active{
-		top:0
+		top:0;
+        outline:0;
+        box-shadow:none;
 	}
 }
 .Rbutton, .inlineRbutton{

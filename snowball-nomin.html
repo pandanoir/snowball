@@ -1,0 +1,95 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+        <meta charset="utf-8"><meta name="author" content="Panda Noir"><link rel="stylesheet" href="../css/all.css" type="text/css">
+		<link rel="stylesheet" href="body.css" type="text/css">
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js" defer></script>
+        <script src="../js/jquery.css3form.js" defer></script>
+        <script src="../js/jquery.cookie.js" defer></script>
+        <script src="../js/jquery.placeholder.js" defer></script>
+        <script src="cssblock.js" defer></script>
+        <script src="compressor.js" defer></script>
+        <script src="snowball.js" defer></script>
+		<meta name="description" content="最も圧縮できるCSSコンプレッサーの一つです。レイアウトをくずさず、高圧縮しファイルサイズを落とします。サイトの高速化にとても役立ちます。">
+		<meta name="keywords" content="htmlツール集,javascriptツール集,webツール,html,javascript,CSS圧縮,サイト高速化,軽量化,snowball,snow ball,css compressor,CSS">
+        <title>Snowball -CSS Compressor-</title>
+        <style>#body>*{display:none}#body noscript{display:block;font-size:80px;color:#c00}</style>
+	</head>
+	<body>
+		<div id="body">
+			<header>
+				<h1 id="logo"><a href="snowball.html" id="logo_title">Snowball</a></h1>
+				<nav>
+				<ul id="nav">
+					<li class="now_location"><a href="snowball.html">Top</a></li>
+					<li><a href="about.html">About</a></li>
+					<li><a href="info.html">Info</a></li>
+					<li><a href="how-to-use.html">How to use</a></li>
+					<li><a href="contact.html">Contact</a></li>
+					<li><a href="en/snowball.html">English</a></li>
+				</ul>
+				</nav>
+			</header>
+			<div class="cf" id="board">
+				<div id="lform">
+					<div class="cf">
+					<form class="form">
+						<legend>Before</legend>
+						<textarea id="bef" placeholder="ここにファイルをドラッグ&amp;ドロップするか、コードをペーストしてください。"></textarea><br>
+						<input type="reset" value="クリア" class="reset inlineRbutton"><input type="button" value="選択" class="select inlinebutton"><br>
+					</form>
+					<form class="form hide" id="after_form">
+						<legend>After</legend>
+						<textarea id="aft"></textarea><br>
+						<input type="reset" value="クリア" class="reset inlineRbutton"><input type="button" value="選択" class="select inlinebutton"><br>
+					</form>
+					</div>
+					<div>
+						<div id="mes">Compressed</div>
+						<input type="button" class="inlinebutton" id="compress" value="圧縮">
+						<input type="button" class="inlinebutton" id="compare" value="比較">
+					</div>
+				</div>
+				<div id="rform">
+					<img src="wrench.png" id="wrench"><br>
+					<div id="options">
+						<label for="HackMode">CSSハックを使う</label><input type="checkbox" id="HackMode">
+						<label for="comment">コメントを残さない</label><input type="checkbox" id="comment" checked>
+						<label for="zero">値が0なら単位を省略</label><input type="checkbox" id="zero" checked>
+						<label for="decimals">0.xとあったら0を省略</label><input type="checkbox" id="decimals" checked>
+						<label for="color">カラーコードを短くする</label><input type="checkbox" id="color" checked>
+						<label for="color_name">カラーネームを最適化する</label><input type="checkbox" id="color_name" checked>
+						<label for="padding">paddingを最短にする</label><input type="checkbox" id="padding" checked>
+						<label for="margin">marginを最短にする</label><input type="checkbox" id="margin" checked>
+						<label for="none">noneを0に変換する</label><input type="checkbox" id="none">
+						<label for="lower">カラーコードを小文字にする</label><input type="checkbox" id="lower" checked>
+						<label for="option">一部だけ圧縮する</label><input type="checkbox" id="option">
+						<form id="option_menu">
+							<div id="option_all" class="option_menu_btn">All</div>
+							<label for="indent">インデントを消す</label><input type="checkbox" id="indent" checked>
+							<label for="line">改行を消す</label><input type="checkbox" id="line" checked>
+							<label for="comma">カンマ周辺の空白を消す</label><input type="checkbox" id="comma" checked>
+							<label for="colon">コロン周辺の空白を消す</label><input type="checkbox" id="colon" checked>
+							<label for="semicolon">セミコロン周辺の空白を消す</label><input type="checkbox" id="semicolon" checked>
+							<label for="needlessSemi">不要なセミコロンを消す</label><input type="checkbox" id="needlessSemi" checked>
+							<label for="important">!important周辺の空白を消す</label><input type="checkbox" id="important" checked>
+							<label for="sc_bracket">始め波括弧の空白を消す</label><input type="checkbox" id="sc_bracket" checked>
+							<label for="ec_bracket">終わり波括弧の空白を消す</label><input type="checkbox" id="ec_bracket" checked>
+						</form>
+						<select id="encode" class="no-css3form">
+							<option value="utf-8">UTF-8</option>
+							<option value="shift-jis">Shift-JIS</option>
+						</select>
+						<input type="button" class="inlinebutton" value="設定を保存" id="save">
+					</div>
+					<div id="results">
+						<span class="resultmes">Before</span><span id="befB">0 B</span><br>
+						<span class="resultmes">After</span><span id="aftB">0 B</span><br>
+						<span class="resultmes">Diff</span><span id="minus">-0 B</span>
+					</div>
+				</div>
+			</div>
+			<footer id="footer"><nav id="social"><form id="cse-search-box" action="search.html"><input type="text" name="q" size="31" id="cse_input"><input type="submit" id="cse_submit" name="sa" value="Search"></form></nav><aside id="address"><small>&copy; 2012 <a href="index.html">Panda noir</a>.</small></aside></footer>
+			<noscript>このサイトは、JavaScriptを使用しています。どうやらJavaScriptがオフになっているようですのでオンにしてください。</noscript>
+		</div>
+	</body></html>

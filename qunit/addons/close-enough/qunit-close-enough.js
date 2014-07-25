@@ -1,1 +1,0 @@
-QUnit.extend(QUnit,{close:function(a,b,c,d){c=a===b||Math.abs(a-b)<=c;QUnit.push(c,a,b,d)},notClose:function(a,b,c,d){QUnit.push(Math.abs(a-b)>c,a,b,d)}});

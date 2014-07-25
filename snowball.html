@@ -4,10 +4,17 @@
         <base href="http://pandanoir.web.fc2.com/">
         <meta charset="utf-8"><meta name="author" content="Panda Noir"><link rel="stylesheet" href="css/all.css" type="text/css">
 		<link rel="stylesheet" href="snowball/body.css" type="text/css">
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script><script src="js/all.js" async></script><script src="js/jquery.css3form.js"></script><script src="js/jquery.placeholder.js"></script><script src="snowball/compressor.js"></script><script src="snowball/cssblock.js"></script><script src="snowball/snowball.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js" defer></script>
+        <script src="js/jquery.css3form.min.js" defer></script>
+        <script src="js/jquery.cookie.js" defer></script>
+        <script src="js/jquery.placeholder.js" defer></script>
+        <script src="snowball/cssblock.min.js" defer></script>
+        <script src="snowball/compressor.min.js" defer></script>
+        <script src="snowball/snowball.min.js" defer></script>
 		<meta name="description" content="最も圧縮できるCSSコンプレッサーの一つです。レイアウトをくずさず、高圧縮しファイルサイズを落とします。サイトの高速化にとても役立ちます。">
 		<meta name="keywords" content="htmlツール集,javascriptツール集,webツール,html,javascript,CSS圧縮,サイト高速化,軽量化,snowball,snow ball,css compressor,CSS">
-<title>Snowball -CSS Compressor-</title>
+        <title>Snowball -CSS Compressor-</title>
+        <style>#body>*{display:none}#body noscript{display:block;font-size:80px;color:#c00}</style>
 	</head>
 	<body>
 		<div id="body">
@@ -41,6 +48,7 @@
 					<div>
 						<div id="mes">Compressed</div>
 						<input type="button" class="inlinebutton" id="compress" value="圧縮">
+						<input type="button" class="inlinebutton" id="compare" value="比較">
 					</div>
 				</div>
 				<div id="rform">
@@ -55,7 +63,7 @@
 						<label for="padding">paddingを最短にする</label><input type="checkbox" id="padding" checked>
 						<label for="margin">marginを最短にする</label><input type="checkbox" id="margin" checked>
 						<label for="none">noneを0に変換する</label><input type="checkbox" id="none">
-						<label for="lower">カラーコードを小文字にする</label><input type="checkbox" id="lower">
+						<label for="lower">カラーコードを小文字にする</label><input type="checkbox" id="lower" checked>
 						<label for="option">一部だけ圧縮する</label><input type="checkbox" id="option">
 						<form id="option_menu">
 							<div id="option_all" class="option_menu_btn">All</div>
@@ -83,6 +91,6 @@
 				</div>
 			</div>
 			<footer id="footer"><nav id="social"><form id="cse-search-box" action="search.html"><input type="text" name="q" size="31" id="cse_input"><input type="submit" id="cse_submit" name="sa" value="Search"></form></nav><aside id="address"><small>&copy; 2012 <a href="index.html">Panda noir</a>.</small></aside></footer>
-			<noscript>このサイトは、JavaScriptを使用しています。<br>だから、きちんとonにしてください。<br></noscript>
+			<noscript>このサイトは、JavaScriptを使用しています。どうやらJavaScriptがオフになっているようですのでオンにしてください。</noscript>
 		</div>
 	</body></html>

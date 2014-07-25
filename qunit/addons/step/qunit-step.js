@@ -1,1 +1,0 @@
-(function(a){a.extend(a,{step:function(b,c){this.config.current.step++;"undefined"===typeof c&&(c="step "+b);var d=this.config.current.step;a.push(a.equiv(d,b),d,b,c)}});a.testStart(function(){this.config.current.step=0})})(QUnit);

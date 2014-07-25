@@ -3,7 +3,67 @@
 	<head>
 		<meta charset="utf-8">
 		<title>CSSBlock.js</title>
-		<style>h3{padding:5px;background:#eee;border-left:3px solid #ccc}pre{padding:5px;background:#eee;border:1px solid #ccc;font-size:13px;border-radius:5px}ul{list-style:none;background:#ccc;font-size:0;padding:5px}li{display:inline-block;font-size:16px;border:1px solid transparent;padding:3px 5px;border-radius:5px;cursor:pointer;}li:hover{box-shadow:1px 1px 1px rgba(204, 204, 204, 0.3) inset,-1px -1px 1px rgba(75, 75, 75, 0.1),1px 1px 1px rgba(204, 204, 204, 0.3),-1px -1px 1px rgba(75, 75, 75, 0.1) inset;border:1px solid #AAA}section{background:#f9f9f9;border:1px solid #ccc;padding:5px}#logo span{background:#efefef;border:1px solid #bbb;position:relative;display:inline-block;margin:0 1px;border-radius:3px;box-shadow:1px 1px 0 rgba(255,255,255,.8) inset;width:41px;height:41px;font-size:27px;text-align:center}#logo span:nth-child(even){top:.5em}</style>
+        <style>
+
+h3{
+	padding: 5px;
+	background: #eee;
+	border-left: 3px solid #ccc;
+}
+dl{
+    width:49%;
+    display:inline-block;
+}
+dt {
+border-bottom: 1px solid #888;
+}
+pre{
+	padding: 5px;
+	background: #eee;
+	border: 1px solid #ccc;
+	font-size: 13px;
+	border-radius: 2px;
+}
+nav ul{
+	list-style: none;
+	background: #ccc;
+	font-size: 0;
+	padding: 5px;
+}
+nav li{
+	display: inline-block;
+	font-size: 16px;
+	border: 1px solid transparent;
+	padding: 3px 5px;
+	border-radius: 5px;
+	cursor: pointer;
+}
+nav li:hover{
+	box-shadow: 1px 1px 1px rgba(204, 204, 204, 0.3) inset, -1px -1px 1px rgba(75, 75, 75, 0.1), 1px 1px 1px rgba(204, 204, 204, 0.3), -1px -1px 1px rgba(75, 75, 75, 0.1) inset;
+	border: 1px solid #AAA;
+}
+section{
+	background: #f9f9f9;
+	border: 1px solid #ccc;
+	padding: 5px;
+}
+#logo span{
+	background: #efefef;
+	border: 1px solid #bbb;
+	position: relative;
+	display: inline-block;
+	margin: 0 1px;
+	border-radius: 3px;
+	box-shadow: 1px 1px 0 rgba(255, 255, 255, .8) inset;
+	width: 41px;
+	height: 41px;
+	font-size: 27px;
+	text-align: center;
+}
+#logo span:nth-child(even){
+	top: .5em;
+}
+        </style>
 	</head>
 	<body>
 		<header>
@@ -23,7 +83,7 @@
 			</p>
 			<h3>例</h3>
 			<p>
-				例えばCSSBlockに以下のようなコードを渡したとします。
+				例えばCSSBlockに以下のようなCSSソースを渡したとします。
 			</p>
 			<code><pre>CSS
 .button{
@@ -32,17 +92,41 @@
 	border-radius:5px;
 }</pre></code>
 			<code><pre>Javascript
-CSSBlock.init(code);</pre></code>
+var css=new cssBlock(code);</pre></code>
 			<p>
-				すると、セレクタ部分とプロパティ部分は次のようになります。
+            すると、渡したCSSソースを分解します。分解すると、次のようになります。
 			</p>
-			<code><pre>cssBlock.eq(0).selector;// ".button"
-cssBlock.eq(0).properties;
-/*
-	color:#000;
-	border:1px solid #999;
-	border-radius:5px;
-*/</pre></code>
+            <code><pre>Javascript
+css.parseType();//[[".button","OTHERS"],["{","LEFT_CURLY_BRACKET"],["\n","NEWLINE"],["\t","TAB"],["color","PROPERTY"],
+[":","COLON"],["#000","BLOCKS"],[";","SEMICOLON"],["\n","NEWLINE"],["\t","TAB"],
+["border","PROPERTY"],[":","COLON"],["1px solid #999","BLOCKS"],[";","SEMICOLON"],["\n","NEWLINE"],
+["\t","TAB"],["border-radius","PROPERTY"],[":","COLON"],["5px","BLOCKS"],[";","SEMICOLON"],
+["\n","NEWLINE"],["}","RIGHT_CURLY_BRACKET"]] 
+</pre></code>
+            <p>
+            cssBlockには以下のメソッドがあります。
+            </p>
+            <dl>
+                <dt>push()</dt><dd>cssBlockの最後尾に要素を追加します</dd>
+                <dt>noConflict()</dt><dd>cssBlockを無効化し、もしこのライブラリより前にcssBlockが定義されていたらそれに置き換えます。</dd>
+                <dt>getBlock()</dt><dd>要素の一覧を取得します。</dd>
+                <dt>joinBlock()</dt><dd>要素をつなげて文字列として返します</dd>
+                <dt>selector()</dt><dd>指定した属性のものを返します</dd>
+            </dl>
+            <dl>
+                <dt>setBlock()</dt><dd>要素を更新します</dd>
+                <dt>deleteBlock()</dt><dd>要素を削除します</dd>
+                <dt>insertBlock()</dt><dd>要素を指定箇所に挿入します</dd>
+                <dt>getOriginal()</dt><dd>cssBlockでパースしたコードを返します</dd>
+                <dt>parseType()</dt><dd>joinBlock()とほぼ同じですが、属性を数値ではなく文字列に変換して返します</dd>
+            </dl>
+            <p>
+            このライブラリを使ったものには以下の様なものがあります。
+            </p>
+            <ul>
+                <li><a href="http://pandanoir.web.fc2.com/snowball/snowball.html">Snowball</a></li>
+                <li><a href="http://pandanoir.web.fc2.com/blackbox/blackbox.html">Blackbox</a></li>
+            </ul>
 	</section>
 	</body>
 </html>

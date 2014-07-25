@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="../js/jquery.ba-tinypubsub.js"></script>
+    <script src="cssblock.js"></script>
+    <script>
+$(function(){
+    function escapeHTML(str){
+        var $div=$('<div>').text(str);
+        var text=$div.html();
+        $div.remove();
+        return text;
+    }
+    var types=cssBlock.types;
+    $.subscribe('parse',function(_,val){
+        console.log(val);
+        console.log(new cssBlock(val).parseType());
+        var blocks=new cssBlock(val).parseType();
+        var $div='';
+        for(var i=0,j=blocks.length;i<j;i++){
+            var str='';
+            if(blocks[i][0]==='\n') str='<span class="'+escapeHTML(blocks[i][1])+'">↩</span><br>';
+            else str='<span class="'+escapeHTML(blocks[i][1])+'">'+escapeHTML(blocks[i][0])+'</span>';
+            //str+='<span class="'+escapeHTML(blocks[i][1])+'">'+escapeHTML(blocks[i][1])+'</span>';
+            $div+='<span>'+str+'</span>';
+        }
+        $('#parsed').html($div);
+        console.log(JSON.stringify(new cssBlock(val).parseType(),null,'  '));
+        console.log(new cssBlock(val).joinBlock());
+    });
+    $('#parse').on('click',function(){
+        $.publish('parse',$('textarea').val());
+    });
+    $('body').on('mouseenter','#parsed span',function(){
+        $('#hover').text($(this).attr('class'));
+    });
+    //$.publish('parse',['.cf:after{display:block;clear:both;}']);
+    //$.publish('parse',['a{\ncolor:#fff;\nbackground:url(\'http://google.com/\') center;\npadding:30px;\n}\n']);
+    $.publish('parse',[$('textarea').val()]);
+});
+    </script>
+    <style>
+#parsed span{
+    margin:0 3px;
+}
+#parsed span span {
+border: 1px solid #DDD;
+background: #F3F3F3;
+}
+.BLOCKS{
+    color:#F0F;
+}
+.STRING{
+    color:#f00;
+}
+.SEMICOLON{
+    color:#ddd;
+}
+.OTHERS{
+    color:#e00;
+}
+.COLON{
+    color:#fabf14;
+}
+.LEFT_CURLY_BRACKET,.RIGHT_CURLY_BRACKET{
+    color:#0ef;
+}
+.PROPERTY{
+    color:#7D7;
+}
+    </style>
+</head>
+<body>
+<textarea>
+/* new clearfix */
+.clearfix:after {
+	visibility: hidden;
+	display: block;
+	font-size: 0;
+	content: " ";
+	clear: both;
+	height: 0;
+	}
+* html .clearfix             { zoom: 1; } /* IE6 */
+*:first-child+html .clearfix { zoom: 1; } /* IE7 */
+</textarea>
+<button id='parse'>parse</button>
+<div id="parsed">
+</div>
+<div id="hover">
+</div>
+</body>
+</html>
